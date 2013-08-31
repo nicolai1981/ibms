@@ -19,7 +19,13 @@ public class RequestResult {
         GET_COURSE_TYPE_LIST,
         GET_COURSE_TYPE_HISTORY_LIST,
 
-        GET_COURSE_INFORMATION_LIST,
+        CREATE_COURSE,
+        UPDATE_COURSE,
+        SUBSCRIBE_COURSE,
+        GET_COURSE_LIST,
+        SAVE_COURSE_TEACHER_LIST,
+        GET_COURSE_TEACHER_LIST,
+        GET_COURSE_SUBSCRIBE_LIST,
     };
 
     public enum CODE {

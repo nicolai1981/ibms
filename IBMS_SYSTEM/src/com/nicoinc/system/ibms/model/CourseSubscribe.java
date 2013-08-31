@@ -7,9 +7,11 @@ public class CourseSubscribe {
     public long mCourseId = 0;
     public long mMemberId = 0;
     public String mMemberName = null;
-    public Date mDate = new Date(0);
+    public Date mStartDate = new Date(0);
+    public Date mEndDate = new Date(0);
     public boolean mIsTeacher = false;
     public boolean mCompleted = false;
+    public int mTotalLessons = 0;
 
     @Override
     public String toString() {

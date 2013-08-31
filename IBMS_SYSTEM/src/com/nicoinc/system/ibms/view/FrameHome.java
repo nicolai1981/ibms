@@ -91,21 +91,74 @@ public class FrameHome {
         menuBar.add(mnEpb);
 
         JMenuItem mntmInscrio_1 = new JMenuItem("Inscri\u00E7\u00E3o");
+        mntmInscrio_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewCourseSubscribe();
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
         mnEpb.add(mntmInscrio_1);
 
         JMenu mnCurso = new JMenu("Curso");
         mnEpb.add(mnCurso);
 
         JMenuItem mntmNovoCurso = new JMenuItem("Novo");
+        mntmNovoCurso.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewCourseNew();
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
         mnCurso.add(mntmNovoCurso);
 
         JMenuItem mntmEditarCurso = new JMenuItem("Editar");
+        mntmEditarCurso.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewCourseEdit();
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
         mnCurso.add(mntmEditarCurso);
-
-        JMenuItem mntmExcluirCurso = new JMenuItem("Excluir");
-        mnCurso.add(mntmExcluirCurso);
+        
+        JMenuItem mntmProfessores = new JMenuItem("Professores");
+        mntmProfessores.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewCourseTeacher();
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
+        mnCurso.add(mntmProfessores);
 
         JMenuItem mntmVisualizarCurso = new JMenuItem("Visualizar");
+        mntmVisualizarCurso.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewCourseView();
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
+        
+        JMenuItem mntmAlunos = new JMenuItem("Alunos");
+        mnCurso.add(mntmAlunos);
         mnCurso.add(mntmVisualizarCurso);
 
         JMenu mnTipoDeCurso = new JMenu("Tipo de Curso");

@@ -3,6 +3,7 @@ package com.nicoinc.system.ibms.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseType;
 import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
@@ -12,6 +13,7 @@ public class Application {
     private List<Member> mLeaderList;
     private List<Generation> mGenerationList;
     private List<CourseType> mCourseTypeList;
+    private List<Course> mCourseList;
     private String mToken="NONE";
 
     public static Application getInstance() {
@@ -25,6 +27,7 @@ public class Application {
         mLeaderList = new ArrayList<Member>();
         mGenerationList = new ArrayList<Generation>();
         mCourseTypeList = new ArrayList<CourseType>();
+        mCourseList = new ArrayList<Course>();
     }
 
     public void setLeaderList(List<Member> list) {
@@ -61,6 +64,15 @@ public class Application {
 
     public List<CourseType> getCourseTypeList() {
         return mCourseTypeList;
+    }
+
+    public void setCourseList(List<Course> list) {
+        mCourseList.clear();
+        mCourseList.addAll(list);
+    }
+
+    public List<Course> getCourseList() {
+        return mCourseList;
     }
 
     public void setToken(String token) {

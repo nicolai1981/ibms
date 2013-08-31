@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.nicoinc.system.ibms.command.CommandListener;
+import com.nicoinc.system.ibms.command.CourseGetList;
 import com.nicoinc.system.ibms.command.CourseTypeGetList;
 import com.nicoinc.system.ibms.command.GenerationGetList;
 import com.nicoinc.system.ibms.command.LeaderGetList;
@@ -136,6 +137,10 @@ public class FrameStartLoading extends JFrame implements CommandListener {
                 mMessage.setText("Carregando lista de tipos de curso");
                 break;
             case GET_COURSE_TYPE_LIST:
+                new CourseGetList(this).start();
+                mMessage.setText("Carregando lista de cursos");
+                break;
+            case GET_COURSE_LIST:
                 try {
                     new FrameHome();
                     FrameStartLoading.this.dispose();

@@ -1,5 +1,6 @@
 package com.nicoinc.system.ibms.command;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import com.google.gson.JsonArray;
@@ -10,14 +11,14 @@ import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
 
-public class CourseGetInformation extends Command {
+public class CourseGetSubscribeList extends Command {
     public static final String SUBSCRIBE_LIST = "SUBSCRIBE_LIST";
     private HttpRequest mHttpRequest;
 
-    public CourseGetInformation(Course course, CommandListener listener) {
-        super(COMMAND.GET_COURSE_INFORMATION_LIST);
+    public CourseGetSubscribeList(Course course, CommandListener listener) {
+        super(COMMAND.GET_COURSE_SUBSCRIBE_LIST);
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "getCourseInformation.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "getCourseSubscribeList.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(course.mId));
     }
 
@@ -47,6 +48,16 @@ public class CourseGetInformation extends Command {
                 JsonObject item = jsonList.get(i).getAsJsonObject();
                 CourseSubscribe subscribe = new CourseSubscribe();
 
+                if (!item.has("ID")) {
+                    continue;
+                }
+                subscribe.mId = item.get("ID").getAsLong();
+
+                if (!item.has("COURSE_ID")) {
+                    continue;
+                }
+                subscribe.mCourseId = item.get("COURSE_ID").getAsLong();
+
                 if (!item.has("MEMBER_ID")) {
                     continue;
                 }
@@ -66,6 +77,34 @@ public class CourseGetInformation extends Command {
                     continue;
                 }
                 subscribe.mCompleted = item.get("COMPLETED").getAsInt() == 1;
+
+                if (!item.has("TOTAL_LESSONS")) {
+                    continue;
+                }
+                subscribe.mTotalLessons = item.get("TOTAL_LESSONS").getAsInt();
+
+                if (!item.has("START_DATE")) {
+                    continue;
+                }
+                try {
+                    subscribe.mStartDate = sDateFormatter.parse(item.get("START_DATE").getAsString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    continue;
+                }
+
+                if (!item.has("END_DATE")) {
+                    continue;
+                }
+                try {
+                    String endDate = item.get("END_DATE").getAsString();
+                    if (!endDate.equals("0000-00-00")) {
+                        subscribe.mEndDate = sDateFormatter.parse(endDate);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    continue;
+                }
 
                 subscribeList.add(subscribe);
             }
