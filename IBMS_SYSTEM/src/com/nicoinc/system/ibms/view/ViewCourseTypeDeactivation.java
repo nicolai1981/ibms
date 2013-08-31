@@ -24,7 +24,6 @@ import com.nicoinc.system.ibms.command.CourseTypeUpdate;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.CourseType;
-import com.nicoinc.system.ibms.model.Generation;
 
 public class ViewCourseTypeDeactivation extends JPanel implements CommandListener {
     private static final long serialVersionUID = 7561701453305316660L;

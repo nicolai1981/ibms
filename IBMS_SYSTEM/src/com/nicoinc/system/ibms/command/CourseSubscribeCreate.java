@@ -6,11 +6,11 @@ import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
 import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
 
-public class CourseSaveSubscribe extends Command {
+public class CourseSubscribeCreate extends Command {
     private HttpRequest mHttpRequest;
 
-    public CourseSaveSubscribe(CourseSubscribe subscribe, CommandListener listener) {
-        super(COMMAND.SUBSCRIBE_COURSE);
+    public CourseSubscribeCreate(CourseSubscribe subscribe, CommandListener listener) {
+        super(COMMAND.COURSE_SUBSCRIBE_CREATE);
         addListener(listener);
 
         mHttpRequest = new HttpRequest(WEB_URL + "courseSubscribe.php", mResult);

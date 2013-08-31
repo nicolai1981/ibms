@@ -23,11 +23,14 @@ public class RequestResult {
 
         CREATE_COURSE,
         UPDATE_COURSE,
-        SUBSCRIBE_COURSE,
         GET_COURSE_LIST,
         SAVE_COURSE_TEACHER_LIST,
         GET_COURSE_TEACHER_LIST,
+
+        COURSE_SUBSCRIBE_CREATE,
+        COURSE_SUBSCRIBE_UPDATE,
         GET_COURSE_SUBSCRIBE_LIST,
+
     };
 
     public enum CODE {

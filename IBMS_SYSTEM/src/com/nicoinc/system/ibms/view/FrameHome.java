@@ -145,6 +145,19 @@ public class FrameHome {
         });
         mnCurso.add(mntmProfessores);
 
+        JMenuItem mntmAlunos = new JMenuItem("Alunos");
+        mntmAlunos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewCourseStudent();
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
+        mnCurso.add(mntmAlunos);
+
         JMenuItem mntmVisualizarCurso = new JMenuItem("Visualizar");
         mntmVisualizarCurso.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -156,9 +169,6 @@ public class FrameHome {
                 mFrame.validate();
             }
         });
-        
-        JMenuItem mntmAlunos = new JMenuItem("Alunos");
-        mnCurso.add(mntmAlunos);
         mnCurso.add(mntmVisualizarCurso);
 
         JMenu mnTipoDeCurso = new JMenu("Tipo de Curso");
