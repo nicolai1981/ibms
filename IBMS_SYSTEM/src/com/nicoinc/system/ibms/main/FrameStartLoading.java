@@ -24,6 +24,7 @@ import com.nicoinc.system.ibms.command.CourseGetList;
 import com.nicoinc.system.ibms.command.CourseTypeGetList;
 import com.nicoinc.system.ibms.command.GenerationGetList;
 import com.nicoinc.system.ibms.command.LeaderGetList;
+import com.nicoinc.system.ibms.command.MemberGetList;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.view.FrameHome;
 
@@ -133,6 +134,10 @@ public class FrameStartLoading extends JFrame implements CommandListener {
                 mMessage.setText("Carregando lista de líderes");
                 break;
             case GET_LEADER_LIST:
+                new MemberGetList(this).start();
+                mMessage.setText("Carregando lista de membros");
+                break;
+            case GET_MEMBER_LIST:
                 new CourseTypeGetList(this).start();
                 mMessage.setText("Carregando lista de tipos de curso");
                 break;

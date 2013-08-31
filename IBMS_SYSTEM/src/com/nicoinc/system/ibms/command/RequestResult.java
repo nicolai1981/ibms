@@ -9,6 +9,8 @@ public class RequestResult {
     public enum COMMAND {
         GET_LEADER_LIST,
 
+        GET_MEMBER_LIST,
+
         CREATE_GENERATION,
         UPDATE_GENERATION,
         GET_GENERATION_LIST,

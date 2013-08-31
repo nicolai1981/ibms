@@ -11,6 +11,7 @@ import com.nicoinc.system.ibms.model.Member;
 public class Application {
     private static Application sInstance = null;
     private List<Member> mLeaderList;
+    private List<Member> mMemberList;
     private List<Generation> mGenerationList;
     private List<CourseType> mCourseTypeList;
     private List<Course> mCourseList;
@@ -25,6 +26,7 @@ public class Application {
 
     private Application() {
         mLeaderList = new ArrayList<Member>();
+        mMemberList = new ArrayList<Member>();
         mGenerationList = new ArrayList<Generation>();
         mCourseTypeList = new ArrayList<CourseType>();
         mCourseList = new ArrayList<Course>();
@@ -37,6 +39,15 @@ public class Application {
 
     public List<Member> getLeaderList() {
         return mLeaderList;
+    }
+
+    public void setMemberList(List<Member> list) {
+        mMemberList.clear();
+        mMemberList.addAll(list);
+    }
+
+    public List<Member> getMemberList() {
+        return mMemberList;
     }
 
     public Member getLeader(long id) {

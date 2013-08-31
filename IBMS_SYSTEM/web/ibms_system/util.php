@@ -123,6 +123,31 @@ function getCourseList() {
 	return $result."]";
 }
 
+function getMemberList() {
+	$result = "\"MEMBER_LIST\":[";
+
+	$sqlQuery = "SELECT MEMBRO.* FROM MEMBRO ORDER BY NOME";
+	$resultSelect = mysql_query($sqlQuery);
+	$resultArray = mysql_fetch_array($resultSelect);
+	while ($resultArray) {
+		$user_id = $resultArray["_ID"];
+		$user_name = $resultArray["NOME"];
+		$user_end_date = $resultArray["DATA_FINAL"];
+		$result = $result
+			."{"
+			."\"ID\":".$user_id.","
+			."\"NAME\":"."\"".$user_name."\","
+			."\"END_DATE\":"."\"".$user_end_date."\""
+			."}";
+
+		$resultArray = mysql_fetch_array($resultSelect);
+		if ($resultArray) {
+			$result = $result.",";
+		}
+	}
+	return $result."]";
+}
+
 
 
 

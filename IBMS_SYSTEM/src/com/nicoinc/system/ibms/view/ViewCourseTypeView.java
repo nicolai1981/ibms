@@ -34,6 +34,7 @@ import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
 import com.nicoinc.system.ibms.model.CourseType;
+import javax.swing.ListModel;
 
 public class ViewCourseTypeView extends JPanel implements CommandListener {
     private static final long serialVersionUID = -8908763683014288749L;
@@ -49,11 +50,13 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
     private JLabel mTotalStudents;
     private JLabel mTotalComplete;
     private JLabel mTotalIncomplete;
+    private JLabel mTotalEnd;
     private JProgressBar mProgressBar;
     private DefaultListModel mHistoryListModel; 
     private DefaultListModel mTeacherListModel; 
     private DefaultListModel mStudentCompleteListModel; 
     private DefaultListModel mStudentIncompleteListModel; 
+    private DefaultListModel mStudentEndListModel; 
 
     private CourseType mCurrentCourseType = null;
     private Course mCurrentCourse = null;
@@ -77,14 +80,17 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                         mEndDate.setText(sDateFormatter.format(mCurrentCourseType.mEndDate));
                     }
                 }
+
                 mStudentCompleteListModel.removeAllElements();
                 mStudentIncompleteListModel.removeAllElements();
+                mStudentEndListModel.removeAllElements();
                 mTeacherListModel.removeAllElements();
                 mHistoryListModel.removeAllElements();
                 mTotalCourse.setText("0");
                 mTotalTeachers.setText("0");
                 mTotalStudents.setText("0");
                 mTotalComplete.setText("0");
+                mTotalEnd.setText("0");
                 mTotalIncomplete.setText("0");
                 mCurrentCourse = null;
                 mCourse.setText("-");
@@ -92,17 +98,6 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                 mCourseTypeList.setEnabled(false);
                 mHistoryList.setEnabled(false);
                 mProgressBar.setVisible(true);
-                mStudentCompleteListModel.removeAllElements();
-                mStudentIncompleteListModel.removeAllElements();
-                mTeacherListModel.removeAllElements();
-                mHistoryListModel.removeAllElements();
-                mTotalCourse.setText("0");
-                mTotalTeachers.setText("0");
-                mTotalStudents.setText("0");
-                mTotalComplete.setText("0");
-                mTotalIncomplete.setText("0");
-                mCurrentCourse = null;
-                mCourse.setText("-");
 
                 new CourseTypeGetHistoryList(mCurrentCourseType, ViewCourseTypeView.this).start();
             }
@@ -148,24 +143,25 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         mHistoryList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    mCurrentCourse = (Course) mHistoryList.getSelectedValue();
-
-                    if (mCurrentCourse != null) {
-                        mCourse.setText(mCurrentCourse.toString());
-                        new CourseGetSubscribeList(mCurrentCourse, ViewCourseTypeView.this).start();
-                        mCourseTypeList.setEnabled(false);
-                        mHistoryList.setEnabled(false);
-                        mProgressBar.setVisible(true);
-                    }
-
                     mStudentCompleteListModel.removeAllElements();
                     mStudentIncompleteListModel.removeAllElements();
+                    mStudentEndListModel.removeAllElements();
                     mTeacherListModel.removeAllElements();
                     mTotalCourse.setText("0");
                     mTotalTeachers.setText("0");
                     mTotalStudents.setText("0");
                     mTotalComplete.setText("0");
                     mTotalIncomplete.setText("0");
+                    mTotalEnd.setText("0");
+
+                    mCurrentCourse = (Course) mHistoryList.getSelectedValue();
+                    if (mCurrentCourse != null) {
+                        mCourse.setText(mCurrentCourse.toString());
+                        mCourseTypeList.setEnabled(false);
+                        mHistoryList.setEnabled(false);
+                        mProgressBar.setVisible(true);
+                        new CourseGetSubscribeList(mCurrentCourse, ViewCourseTypeView.this).start();
+                    }
                 }
             }
         });
@@ -181,10 +177,7 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         mCourse = new JLabel("-");
         mCourse.setFont(new Font("Arial", Font.BOLD, 14));
 
-        JLabel lblDiscpulos = new JLabel("Professores");
-        lblDiscpulos.setFont(new Font("Arial", Font.BOLD, 14));
-
-        JLabel lblTotal_2 = new JLabel("Total:");
+        JLabel lblTotal_2 = new JLabel("Total de professores:");
         lblTotal_2.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mTotalTeachers = new JLabel("0");
@@ -200,9 +193,6 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         teacherList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPane_teachers.setViewportView(teacherList);
 
-        JLabel lblDesligados = new JLabel("Alunos");
-        lblDesligados.setFont(new Font("Arial", Font.BOLD, 14));
-
         JLabel lblTotalInscritos = new JLabel("Total Inscritos:");
         lblTotalInscritos.setFont(new Font("Arial", Font.PLAIN, 14));
 
@@ -213,7 +203,7 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         scrollPane_student_complete.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane_student_complete.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        JLabel lblTotal_3 = new JLabel("Total Formados:");
+        JLabel lblTotal_3 = new JLabel("Total de Alunos Formados:");
         lblTotal_3.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mTotalComplete = new JLabel("0");
@@ -225,21 +215,21 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         studentCompleteList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPane_student_complete.setViewportView(studentCompleteList);
 
-        JLabel lblTotalDesistentes = new JLabel("Total Desistentes:");
+        JLabel lblTotalDesistentes = new JLabel("Total de Alunos Desistentes:");
         lblTotalDesistentes.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mTotalIncomplete = new JLabel("0");
-        mTotalIncomplete.setFont(new Font("Arial", Font.BOLD, 14));
+        mTotalEnd = new JLabel("0");
+        mTotalEnd.setFont(new Font("Arial", Font.BOLD, 14));
 
         JScrollPane scrollPane_student_incomplete = new JScrollPane();
         scrollPane_student_incomplete.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane_student_incomplete.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        mStudentIncompleteListModel = new DefaultListModel(); 
-        JList studentIncompleteList = new JList(mStudentIncompleteListModel);
-        studentIncompleteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        studentIncompleteList.setFont(new Font("Arial", Font.BOLD, 14));
-        scrollPane_student_incomplete.setViewportView(studentIncompleteList);
+        mStudentEndListModel = new DefaultListModel(); 
+        JList studentEndList = new JList(mStudentEndListModel);
+        studentEndList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        studentEndList.setFont(new Font("Arial", Font.BOLD, 14));
+        scrollPane_student_incomplete.setViewportView(studentEndList);
 
         mProgressBar = new JProgressBar();
         mProgressBar.setIndeterminate(true);
@@ -310,46 +300,57 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                     .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(12, Short.MAX_VALUE))
         );
+        
+        JLabel lblTotalDeAlunos = new JLabel("Total de Alunos N\u00E3o Formados:");
+        lblTotalDeAlunos.setFont(new Font("Arial", Font.PLAIN, 14));
+        
+        mTotalIncomplete = new JLabel("0");
+        mTotalIncomplete.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         GroupLayout gl_panel = new GroupLayout(panel);
         gl_panel.setHorizontalGroup(
             gl_panel.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panel.createSequentialGroup()
-                    .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_panel.createSequentialGroup()
+                .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+                    .addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+                        .addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
                             .addGap(10)
                             .addComponent(lblCurso)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(mCourse, GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                            .addComponent(mCourse, GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(lblTotalInscritos)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(mTotalStudents, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(gl_panel.createSequentialGroup()
+                        .addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(lblTotal_2)
+                            .addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                                .addGroup(gl_panel.createSequentialGroup()
+                                    .addComponent(lblTotal_2)
+                                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                                    .addComponent(mTotalTeachers, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(gl_panel.createSequentialGroup()
+                                    .addComponent(lblTotalDeAlunos)
+                                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                                    .addComponent(mTotalIncomplete, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(scrollPane_teachers))
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(mTotalTeachers, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(gl_panel.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(scrollPane_teachers, GroupLayout.PREFERRED_SIZE, 368, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.UNRELATED)
                             .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-                                .addComponent(lblDesligados)
                                 .addGroup(gl_panel.createSequentialGroup()
                                     .addComponent(lblTotalDesistentes)
                                     .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(mTotalIncomplete, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))
-                                .addComponent(scrollPane_student_incomplete, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                                    .addComponent(mTotalEnd, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(scrollPane_student_incomplete, GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
                                 .addGroup(gl_panel.createSequentialGroup()
                                     .addComponent(lblTotal_3)
                                     .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(mTotalComplete, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(ComponentPlacement.RELATED, 235, Short.MAX_VALUE))
-                                .addComponent(scrollPane_student_complete, GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)))
-                        .addGroup(gl_panel.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lblDiscpulos)))
+                                    .addComponent(mTotalComplete, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(scrollPane_student_complete, GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE))
+                            .addPreferredGap(ComponentPlacement.RELATED)))
                     .addContainerGap())
         );
         gl_panel.setVerticalGroup(
@@ -363,28 +364,32 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                         .addComponent(lblTotalInscritos, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblDiscpulos)
-                        .addComponent(lblDesligados))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-                        .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                            .addComponent(lblTotal_2)
-                            .addComponent(mTotalTeachers)
-                            .addComponent(lblTotal_3))
+                        .addComponent(lblTotal_2)
+                        .addComponent(mTotalTeachers)
+                        .addComponent(lblTotal_3)
                         .addComponent(mTotalComplete, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(scrollPane_teachers, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
-                        .addGroup(gl_panel.createSequentialGroup()
-                            .addComponent(scrollPane_student_complete, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
-                            .addGap(5)
-                            .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                                .addComponent(mTotalIncomplete, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblTotalDesistentes, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                            .addComponent(scrollPane_student_incomplete, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(scrollPane_teachers, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scrollPane_student_complete, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(lblTotalDeAlunos, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mTotalIncomplete, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTotalDesistentes, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mTotalEnd, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+                        .addComponent(scrollPane_student_incomplete, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
+        
+        mStudentIncompleteListModel = new DefaultListModel(); 
+        JList mStudentIncompleteList = new JList(mStudentIncompleteListModel);
+        mStudentIncompleteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        mStudentIncompleteList.setFont(new Font("Arial", Font.BOLD, 14));
+        scrollPane.setViewportView(mStudentIncompleteList);
         panel.setLayout(gl_panel);
         setLayout(groupLayout);
 
@@ -451,6 +456,7 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                     int teacher = 0;
                     int complete = 0;
                     int incomplete = 0;
+                    int end = 0;
                     for (CourseSubscribe subscribe : list) {
                         if (subscribe.mIsTeacher) {
                             mTeacherListModel.addElement(subscribe);
@@ -458,16 +464,20 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                         } else if (subscribe.mCompleted) {
                             mStudentCompleteListModel.addElement(subscribe);
                             complete++;
-                        } else {
+                        } else if (subscribe.mEndDate.getTime() == 0) {
                             incomplete++;
                             mStudentIncompleteListModel.addElement(subscribe);
+                        } else {
+                            end++;
+                            mStudentEndListModel.addElement(subscribe);
                         }
                     }
 
                     mTotalTeachers.setText(String.valueOf(teacher));
-                    mTotalStudents.setText(String.valueOf(complete + incomplete));
+                    mTotalStudents.setText(String.valueOf(complete + incomplete + end));
                     mTotalComplete.setText(String.valueOf(complete));
                     mTotalIncomplete.setText(String.valueOf(incomplete));
+                    mTotalEnd.setText(String.valueOf(end));
 
                     enableFields();
                 }
