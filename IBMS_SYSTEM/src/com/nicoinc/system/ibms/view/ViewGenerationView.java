@@ -52,8 +52,6 @@ public class ViewGenerationView extends JPanel implements CommandListener {
     private DefaultListModel mMemberListModel; 
     private DefaultListModel mLeaderListModel; 
 
-    private Generation mCurrentGeneration = null;
-    
     public ViewGenerationView() {
         JLabel lblGerao = new JLabel("Gera\u00E7\u00E3o");
         lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -62,39 +60,28 @@ public class ViewGenerationView extends JPanel implements CommandListener {
         mGenerationList.setFont(new Font("Arial", Font.PLAIN, 14));
         mGenerationList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                mCurrentGeneration = (Generation) mGenerationList.getSelectedItem();
-                if (mCurrentGeneration != null) {
-                    mStartDate.setText(sDateFormatter.format(mCurrentGeneration.mStartDate));
-                    if (mCurrentGeneration.mEndDate.getTime() == 0) {
+                clearFields();
+
+                Generation currentGeneration = (Generation) mGenerationList.getSelectedItem();
+                if (currentGeneration != null) {
+                    mStartDate.setText(sDateFormatter.format(currentGeneration.mStartDate));
+                    if (currentGeneration.mEndDate.getTime() == 0) {
                         mStatus.setText("ATIVO");
                         mEndDate.setText("-");
                     } else {
                         mStatus.setText("INATIVO");
-                        mEndDate.setText(sDateFormatter.format(mCurrentGeneration.mEndDate));
+                        mEndDate.setText(sDateFormatter.format(currentGeneration.mEndDate));
                     }
-                    Member leader = Application.getInstance().getLeader(mCurrentGeneration.mLeaderId);
+                    Member leader = Application.getInstance().getLeader(currentGeneration.mLeaderId);
                     if (leader == null) {
                         mLeader.setText("-");
                     } else {
                         mLeader.setText(leader.mName);
                     }
 
-                    mGenerationList.setEnabled(false);
-                    mProgressBar.setVisible(true);
-
-                    new GenerationGetMemberList(mCurrentGeneration, ViewGenerationView.this).start();
+                    disableFields();
+                    new GenerationGetMemberList(currentGeneration, ViewGenerationView.this).start();
                 }
-                mOffListModel.removeAllElements();
-                mMemberListModel.removeAllElements();
-                mLeaderListModel.removeAllElements();
-                mQtdLeader.setText("0");
-                mQtdMemberTotal.setText("0");
-                mQtdMember.setText("0");
-                mQtdMemberNot.setText("0");
-                mQtdOffTotal.setText("0");
-                mQtdOffMember.setText("0");
-                mQtdOffMemberNot.setText("0");
-                mGenerationCount.setText("0");
             }
         });
 
@@ -368,7 +355,7 @@ public class ViewGenerationView extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_GENERATION_MEMBER_LIST:
+            case GENERATION_GET_MEMBER_LIST:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
@@ -433,5 +420,24 @@ public class ViewGenerationView extends JPanel implements CommandListener {
     private void enableFields() {
         mGenerationList.setEnabled(true);
         mProgressBar.setVisible(false);
+    }
+
+    private void disableFields() {
+        mGenerationList.setEnabled(true);
+        mProgressBar.setVisible(false);
+    }
+
+    private void clearFields() {
+        mOffListModel.removeAllElements();
+        mMemberListModel.removeAllElements();
+        mLeaderListModel.removeAllElements();
+        mQtdLeader.setText("0");
+        mQtdMemberTotal.setText("0");
+        mQtdMember.setText("0");
+        mQtdMemberNot.setText("0");
+        mQtdOffTotal.setText("0");
+        mQtdOffMember.setText("0");
+        mQtdOffMemberNot.setText("0");
+        mGenerationCount.setText("0");
     }
 }

@@ -11,10 +11,10 @@ public class CourseSaveTeacherList extends Command {
     private HttpRequest mHttpRequest;
 
     public CourseSaveTeacherList(Course course, List<CourseSubscribe> teacherList, CommandListener listener) {
-        super(COMMAND.SAVE_COURSE_TEACHER_LIST);
+        super(COMMAND.COURSE_SAVE_TEACHER_LIST);
         addListener(listener);
 
-        mHttpRequest = new HttpRequest(WEB_URL + "saveCourseTeacher.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "course_saveTeacherList.php", mResult);
         mHttpRequest.addParam("COURSE_ID", String.valueOf(course.mId));
 
         StringBuilder param = new StringBuilder();

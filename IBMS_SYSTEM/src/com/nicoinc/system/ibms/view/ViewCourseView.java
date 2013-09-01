@@ -365,7 +365,7 @@ public class ViewCourseView extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_SUBSCRIBE_LIST:
+            case COURSE_GET_SUBSCRIBE_LIST:
                 List<CourseSubscribe> subscriptionList = (List<CourseSubscribe>) result.getData(CourseGetSubscribeList.SUBSCRIBE_LIST);
                 for (CourseSubscribe subscription : subscriptionList) {
                     if (subscription.mIsTeacher) {

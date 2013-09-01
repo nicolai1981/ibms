@@ -227,7 +227,7 @@ public class ViewCourseEdit extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_LIST:
+            case COURSE_GET_LIST:
                 JOptionPane.showMessageDialog(this,"Curso alterado com sucesso.");
                 enableFields();
                 mCourseList.removeAllItems();
@@ -239,7 +239,7 @@ public class ViewCourseEdit extends JPanel implements CommandListener {
                     }
                 }
                 break;
-            case UPDATE_COURSE:
+            case COURSE_UPDATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {

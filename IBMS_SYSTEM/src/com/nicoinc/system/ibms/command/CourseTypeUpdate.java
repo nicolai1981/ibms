@@ -8,9 +8,9 @@ public class CourseTypeUpdate extends Command {
     private HttpRequest mHttpRequest;
 
     public CourseTypeUpdate(CourseType courseType, CommandListener listener) {
-        super(COMMAND.UPDATE_COURSE_TYPE);
+        super(COMMAND.COURSE_TYPE_UPDATE);
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "updateCourseType.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "courseType_update.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(courseType.mId));
         mHttpRequest.addParam("NAME", courseType.mName);
         mHttpRequest.addParam("START_DATE", sDateFormatter.format(courseType.mStartDate));

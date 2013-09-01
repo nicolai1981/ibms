@@ -11,14 +11,14 @@ import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseType;
 
-public class CourseTypeGetHistoryList extends Command {
+public class CourseTypeGetCourseList extends Command {
     public static final String HISTORY_LIST = "HISTORY_LIST";
     private HttpRequest mHttpRequest;
 
-    public CourseTypeGetHistoryList(CourseType courseType, CommandListener listener) {
-        super(COMMAND.GET_COURSE_TYPE_HISTORY_LIST);
+    public CourseTypeGetCourseList(CourseType courseType, CommandListener listener) {
+        super(COMMAND.COURSE_TYPE_COURSE_LIST);
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "getCourseTypeHistoryList.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "courseType_getCourseList.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(courseType.mId));
     }
 

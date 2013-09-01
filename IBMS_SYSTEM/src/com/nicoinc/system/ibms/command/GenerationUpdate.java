@@ -8,9 +8,9 @@ public class GenerationUpdate extends Command {
     private HttpRequest mHttpRequest;
 
     public GenerationUpdate(Generation generation, CommandListener listener) {
-        super(COMMAND.UPDATE_GENERATION);
+        super(COMMAND.GENERATION_UPDATE);
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "updateGeneration.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "generation_update.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(generation.mId));
         mHttpRequest.addParam("NAME", generation.mName);
         mHttpRequest.addParam("LEADER_ID", String.valueOf(generation.mLeaderId));

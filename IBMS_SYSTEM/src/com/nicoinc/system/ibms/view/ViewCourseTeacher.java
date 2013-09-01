@@ -27,7 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.nicoinc.system.ibms.command.CommandListener;
-import com.nicoinc.system.ibms.command.CourseGetTeacherList;
+import com.nicoinc.system.ibms.command.CourseGetSubscribeList;
 import com.nicoinc.system.ibms.command.CourseSaveTeacherList;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
@@ -82,7 +82,7 @@ public class ViewCourseTeacher extends JPanel implements CommandListener {
                     }
 
                     disableFields();
-                    new CourseGetTeacherList(currentCourse, ViewCourseTeacher.this).run();
+                    new CourseGetSubscribeList(currentCourse, ViewCourseTeacher.this).run();
                 }
             }
         });
@@ -345,16 +345,18 @@ public class ViewCourseTeacher extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_TEACHER_LIST:
-                List<CourseSubscribe> teacherList = (List<CourseSubscribe>) result.getData(CourseGetTeacherList.TEACHER_LIST);
-                for (CourseSubscribe teacher : teacherList) {
-                    mTeacherListModel.addElement(teacher);
+            case COURSE_GET_SUBSCRIBE_LIST:
+                List<CourseSubscribe> subscribeList = (List<CourseSubscribe>) result.getData(CourseGetSubscribeList.SUBSCRIBE_LIST);
+                for (CourseSubscribe subscribe : subscribeList) {
+                    if (subscribe.mIsTeacher) {
+                        mTeacherListModel.addElement(subscribe);
+                    }
                 }
                 fillLeaderList();
                 enableFields();
                 break;
 
-            case SAVE_COURSE_TEACHER_LIST:
+            case COURSE_SAVE_TEACHER_LIST:
                 JOptionPane.showMessageDialog(this,"Curso alterado com sucesso.");
                 enableFields();
                 break;

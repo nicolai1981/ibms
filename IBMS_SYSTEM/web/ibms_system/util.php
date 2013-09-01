@@ -15,29 +15,6 @@ function checkToken($token) {
 	return true;
 }
 
-function getLiderList() {
-	$result = "\"LEADER_LIST\":[";
-
-	$sqlQuery = "SELECT MEMBRO.* FROM MEMBRO WHERE IS_LIDER=1 AND DATA_FINAL='0000-00-00' ORDER BY NOME";
-	$resultSelect = mysql_query($sqlQuery);
-	$resultArray = mysql_fetch_array($resultSelect);
-	while ($resultArray) {
-		$user_id = $resultArray["_ID"];
-		$user_name = $resultArray["NOME"];
-		$result = $result
-			."{"
-			."\"ID\":".$user_id.","
-			."\"NAME\":"."\"".$user_name."\""
-			."}";
-
-		$resultArray = mysql_fetch_array($resultSelect);
-		if ($resultArray) {
-			$result = $result.",";
-		}
-	}
-	return $result."]";
-}
-
 function getGenerationList() {
 	$result = "\"GENERATION_LIST\":[";
 
@@ -133,11 +110,13 @@ function getMemberList() {
 		$user_id = $resultArray["_ID"];
 		$user_name = $resultArray["NOME"];
 		$user_end_date = $resultArray["DATA_FINAL"];
+		$user_is_leader = $resultArray["IS_LIDER"];
 		$result = $result
 			."{"
 			."\"ID\":".$user_id.","
 			."\"NAME\":"."\"".$user_name."\","
-			."\"END_DATE\":"."\"".$user_end_date."\""
+			."\"END_DATE\":"."\"".$user_end_date."\","
+			."\"IS_LEADER\":".$user_is_leader.""
 			."}";
 
 		$resultArray = mysql_fetch_array($resultSelect);

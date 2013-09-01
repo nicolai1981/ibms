@@ -31,7 +31,7 @@ import javax.swing.event.ListSelectionListener;
 
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseGetSubscribeList;
-import com.nicoinc.system.ibms.command.CourseSubscribeUpdate;
+import com.nicoinc.system.ibms.command.CourseUpdateSubscribe;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Course;
@@ -213,7 +213,7 @@ public class ViewCourseStudent extends JPanel implements CommandListener {
                         }
                     }
                     clearFields();
-                    new CourseSubscribeUpdate(student, ViewCourseStudent.this).run();
+                    new CourseUpdateSubscribe(student, ViewCourseStudent.this).run();
                 }
             }
         });
@@ -392,7 +392,7 @@ public class ViewCourseStudent extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_SUBSCRIBE_LIST:
+            case COURSE_GET_SUBSCRIBE_LIST:
                 List<CourseSubscribe> subscriptionList = (List<CourseSubscribe>) result.getData(CourseGetSubscribeList.SUBSCRIBE_LIST);
                 for (CourseSubscribe subscription : subscriptionList) {
                     if (!subscription.mIsTeacher) {
@@ -407,7 +407,7 @@ public class ViewCourseStudent extends JPanel implements CommandListener {
                 enableFields();
                 break;
 
-            case COURSE_SUBSCRIBE_UPDATE:
+            case COURSE_UPDATE_SUBSCRIBE:
                 mSaveAction = true;
                 new CourseGetSubscribeList((Course) mCourseList.getSelectedItem(), ViewCourseStudent.this).run();
                 break;
@@ -437,7 +437,7 @@ public class ViewCourseStudent extends JPanel implements CommandListener {
         mStudentCompleted.setSelectedIndex(-1);
         mStudentEnd.setSelectedIndex(-1);
         mStudentEndDate.setText("-");
-        mStudentTotalLessons.setText("-");
+        mStudentTotalLessons.setText("0");
     }
 
     private CourseSubscribe checkData() {

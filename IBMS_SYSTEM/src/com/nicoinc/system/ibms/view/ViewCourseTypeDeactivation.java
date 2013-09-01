@@ -36,8 +36,6 @@ public class ViewCourseTypeDeactivation extends JPanel implements CommandListene
     private JButton mButtonAction;
     private JProgressBar mProgressBar;
 
-    private CourseType mCurrentCourseType = null;
-    
     public ViewCourseTypeDeactivation() {
         JLabel lblAtivarDesativar = new JLabel("ATIVAR / DESATIVAR TIPO DE CURSO");
         lblAtivarDesativar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -50,16 +48,16 @@ public class ViewCourseTypeDeactivation extends JPanel implements CommandListene
         mCourseTypeList.setFont(new Font("Arial", Font.PLAIN, 14));
         mCourseTypeList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                mCurrentCourseType = (CourseType) mCourseTypeList.getSelectedItem();
-                if (mCurrentCourseType != null) {
-                    mStartDate.setText(sDateFormatter.format(mCurrentCourseType.mStartDate));
-                    if (mCurrentCourseType.mEndDate.getTime() == 0) {
+                CourseType currentCourseType = (CourseType) mCourseTypeList.getSelectedItem();
+                if (currentCourseType != null) {
+                    mStartDate.setText(sDateFormatter.format(currentCourseType.mStartDate));
+                    if (currentCourseType.mEndDate.getTime() == 0) {
                         mStatus.setText("ATIVO");
                         mEndDate.setText("-");
                         mButtonAction.setText("DESATIVAR");
                     } else {
                         mStatus.setText("INATIVO");
-                        mEndDate.setText(sDateFormatter.format(mCurrentCourseType.mEndDate));
+                        mEndDate.setText(sDateFormatter.format(currentCourseType.mEndDate));
                         mButtonAction.setText("ATIVAR");
                     }
                 }
@@ -87,22 +85,21 @@ public class ViewCourseTypeDeactivation extends JPanel implements CommandListene
         mButtonAction = new JButton("-");
         mButtonAction.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                if (mCurrentCourseType.mEndDate.getTime() == 0) {
-                    int result = JOptionPane.showConfirmDialog(ViewCourseTypeDeactivation.this, "Deseja realmente desativar o tipo do curso: " + mCurrentCourseType.mName);
+                CourseType currentCourseType = (CourseType) mCourseTypeList.getSelectedItem();
+                if (currentCourseType.mEndDate.getTime() == 0) {
+                    int result = JOptionPane.showConfirmDialog(ViewCourseTypeDeactivation.this, "Deseja realmente desativar o tipo do curso: " + currentCourseType.mName);
                     if (result != 0) {
                         return;
                     }
                 }
 
-                mCourseTypeList.setEnabled(false);
-                mButtonAction.setEnabled(false);
-                mProgressBar.setVisible(true);
+                disableFields();
 
                 CourseType courseType = new CourseType();
-                courseType.mId = mCurrentCourseType.mId;
-                courseType.mName = mCurrentCourseType.mName;
-                courseType.mStartDate = mCurrentCourseType.mStartDate;
-                if (mCurrentCourseType.mEndDate.getTime() == 0) {
+                courseType.mId = currentCourseType.mId;
+                courseType.mName = currentCourseType.mName;
+                courseType.mStartDate = currentCourseType.mStartDate;
+                if (currentCourseType.mEndDate.getTime() == 0) {
                     courseType.mEndDate = Calendar.getInstance().getTime();
                 }
                 new CourseTypeUpdate(courseType, ViewCourseTypeDeactivation.this).start();
@@ -192,7 +189,7 @@ public class ViewCourseTypeDeactivation extends JPanel implements CommandListene
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_TYPE_LIST:
+            case COURSE_TYPE_GET_LIST:
                 mCourseTypeList.removeAllItems();
                 for (CourseType item : Application.getInstance().getCourseTypeList()) {
                     mCourseTypeList.addItem(item);
@@ -200,7 +197,8 @@ public class ViewCourseTypeDeactivation extends JPanel implements CommandListene
                 JOptionPane.showMessageDialog(this,"Tipo de curso alterado com sucesso.");
                 enableFields();
                 break;
-            case UPDATE_COURSE_TYPE:
+
+            case COURSE_TYPE_UPDATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
@@ -227,5 +225,11 @@ public class ViewCourseTypeDeactivation extends JPanel implements CommandListene
         mCourseTypeList.setEnabled(true);
         mButtonAction.setEnabled(true);
         mProgressBar.setVisible(false);
+    }
+
+    private void disableFields() {
+        mCourseTypeList.setEnabled(false);
+        mButtonAction.setEnabled(false);
+        mProgressBar.setVisible(true);
     }
 }

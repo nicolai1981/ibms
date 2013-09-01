@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -166,11 +167,11 @@ public class ViewCourseNew extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_LIST:
+            case COURSE_GET_LIST:
                 JOptionPane.showMessageDialog(this,"Curso criado com sucesso.");
                 enableFields();
                 break;
-            case CREATE_COURSE:
+            case COURSE_CREATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
@@ -231,6 +232,10 @@ public class ViewCourseNew extends JPanel implements CommandListener {
             course.mStartDate = sDateFormatter.parse(startDate);
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this,"A data inicial deve estar no formato DD/MM/YYYY");
+            return null;
+        }
+        if (course.mStartDate.getTime() < Calendar.getInstance().getTimeInMillis()) {
+            JOptionPane.showMessageDialog(this,"A data inicial não pode ser antes da data de hoje.");
             return null;
         }
 

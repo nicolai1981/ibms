@@ -23,7 +23,6 @@ import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseGetList;
 import com.nicoinc.system.ibms.command.CourseTypeGetList;
 import com.nicoinc.system.ibms.command.GenerationGetList;
-import com.nicoinc.system.ibms.command.LeaderGetList;
 import com.nicoinc.system.ibms.command.MemberGetList;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.view.FrameHome;
@@ -129,23 +128,19 @@ public class FrameStartLoading extends JFrame implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_GENERATION_LIST:
-                new LeaderGetList(this).start();
-                mMessage.setText("Carregando lista de líderes");
-                break;
-            case GET_LEADER_LIST:
+            case GENERATION_GET_LIST:
                 new MemberGetList(this).start();
                 mMessage.setText("Carregando lista de membros");
                 break;
-            case GET_MEMBER_LIST:
+            case MEMBER_GET_LIST:
                 new CourseTypeGetList(this).start();
                 mMessage.setText("Carregando lista de tipos de curso");
                 break;
-            case GET_COURSE_TYPE_LIST:
+            case COURSE_TYPE_GET_LIST:
                 new CourseGetList(this).start();
                 mMessage.setText("Carregando lista de cursos");
                 break;
-            case GET_COURSE_LIST:
+            case COURSE_GET_LIST:
                 try {
                     new FrameHome();
                     FrameStartLoading.this.dispose();

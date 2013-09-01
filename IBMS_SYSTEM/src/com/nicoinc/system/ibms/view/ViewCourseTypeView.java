@@ -28,13 +28,12 @@ import javax.swing.event.ListSelectionListener;
 import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseGetSubscribeList;
-import com.nicoinc.system.ibms.command.CourseTypeGetHistoryList;
+import com.nicoinc.system.ibms.command.CourseTypeGetCourseList;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
 import com.nicoinc.system.ibms.model.CourseType;
-import javax.swing.ListModel;
 
 public class ViewCourseTypeView extends JPanel implements CommandListener {
     private static final long serialVersionUID = -8908763683014288749L;
@@ -58,9 +57,6 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
     private DefaultListModel mStudentIncompleteListModel; 
     private DefaultListModel mStudentEndListModel; 
 
-    private CourseType mCurrentCourseType = null;
-    private Course mCurrentCourse = null;
-    
     public ViewCourseTypeView() {
         JLabel lblGerao = new JLabel("Tipo do curso");
         lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -69,37 +65,24 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         mCourseTypeList.setFont(new Font("Arial", Font.PLAIN, 14));
         mCourseTypeList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                mCurrentCourseType = (CourseType) mCourseTypeList.getSelectedItem();
-                if (mCurrentCourseType != null) {
-                    mStartDate.setText(sDateFormatter.format(mCurrentCourseType.mStartDate));
-                    if (mCurrentCourseType.mEndDate.getTime() == 0) {
+                mHistoryListModel.removeAllElements();
+                mTotalCourse.setText("0");
+                clearFields();
+
+                CourseType currentCourseType = (CourseType) mCourseTypeList.getSelectedItem();
+                if (currentCourseType != null) {
+                    mStartDate.setText(sDateFormatter.format(currentCourseType.mStartDate));
+                    if (currentCourseType.mEndDate.getTime() == 0) {
                         mStatus.setText("ATIVO");
                         mEndDate.setText("-");
                     } else {
                         mStatus.setText("INATIVO");
-                        mEndDate.setText(sDateFormatter.format(mCurrentCourseType.mEndDate));
+                        mEndDate.setText(sDateFormatter.format(currentCourseType.mEndDate));
                     }
                 }
 
-                mStudentCompleteListModel.removeAllElements();
-                mStudentIncompleteListModel.removeAllElements();
-                mStudentEndListModel.removeAllElements();
-                mTeacherListModel.removeAllElements();
-                mHistoryListModel.removeAllElements();
-                mTotalCourse.setText("0");
-                mTotalTeachers.setText("0");
-                mTotalStudents.setText("0");
-                mTotalComplete.setText("0");
-                mTotalEnd.setText("0");
-                mTotalIncomplete.setText("0");
-                mCurrentCourse = null;
-                mCourse.setText("-");
-
-                mCourseTypeList.setEnabled(false);
-                mHistoryList.setEnabled(false);
-                mProgressBar.setVisible(true);
-
-                new CourseTypeGetHistoryList(mCurrentCourseType, ViewCourseTypeView.this).start();
+                disableFields();
+                new CourseTypeGetCourseList(currentCourseType, ViewCourseTypeView.this).start();
             }
         });
 
@@ -143,24 +126,12 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         mHistoryList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    mStudentCompleteListModel.removeAllElements();
-                    mStudentIncompleteListModel.removeAllElements();
-                    mStudentEndListModel.removeAllElements();
-                    mTeacherListModel.removeAllElements();
-                    mTotalCourse.setText("0");
-                    mTotalTeachers.setText("0");
-                    mTotalStudents.setText("0");
-                    mTotalComplete.setText("0");
-                    mTotalIncomplete.setText("0");
-                    mTotalEnd.setText("0");
-
-                    mCurrentCourse = (Course) mHistoryList.getSelectedValue();
-                    if (mCurrentCourse != null) {
-                        mCourse.setText(mCurrentCourse.toString());
-                        mCourseTypeList.setEnabled(false);
-                        mHistoryList.setEnabled(false);
-                        mProgressBar.setVisible(true);
-                        new CourseGetSubscribeList(mCurrentCourse, ViewCourseTypeView.this).start();
+                    clearFields();
+                    Course currentCourse = (Course) mHistoryList.getSelectedValue();
+                    if (currentCourse != null) {
+                        mCourse.setText(currentCourse.toString());
+                        disableFields();
+                        new CourseGetSubscribeList(currentCourse, ViewCourseTypeView.this).start();
                     }
                 }
             }
@@ -214,6 +185,22 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         studentCompleteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         studentCompleteList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPane_student_complete.setViewportView(studentCompleteList);
+
+        JLabel lblTotalDeAlunos = new JLabel("Total de Alunos N\u00E3o Formados:");
+        lblTotalDeAlunos.setFont(new Font("Arial", Font.PLAIN, 14));
+        
+        mTotalIncomplete = new JLabel("0");
+        mTotalIncomplete.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        mStudentIncompleteListModel = new DefaultListModel(); 
+        JList mStudentIncompleteList = new JList(mStudentIncompleteListModel);
+        mStudentIncompleteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        mStudentIncompleteList.setFont(new Font("Arial", Font.BOLD, 14));
+        scrollPane.setViewportView(mStudentIncompleteList);
 
         JLabel lblTotalDesistentes = new JLabel("Total de Alunos Desistentes:");
         lblTotalDesistentes.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -300,16 +287,6 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                     .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(12, Short.MAX_VALUE))
         );
-        
-        JLabel lblTotalDeAlunos = new JLabel("Total de Alunos N\u00E3o Formados:");
-        lblTotalDeAlunos.setFont(new Font("Arial", Font.PLAIN, 14));
-        
-        mTotalIncomplete = new JLabel("0");
-        mTotalIncomplete.setFont(new Font("Arial", Font.BOLD, 14));
-        
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         GroupLayout gl_panel = new GroupLayout(panel);
         gl_panel.setHorizontalGroup(
@@ -384,12 +361,6 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                         .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 184, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
-        
-        mStudentIncompleteListModel = new DefaultListModel(); 
-        JList mStudentIncompleteList = new JList(mStudentIncompleteListModel);
-        mStudentIncompleteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        mStudentIncompleteList.setFont(new Font("Arial", Font.BOLD, 14));
-        scrollPane.setViewportView(mStudentIncompleteList);
         panel.setLayout(gl_panel);
         setLayout(groupLayout);
 
@@ -417,7 +388,7 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         case OK:
             JsonObject root = result.getJSON();
             switch (result.getCommand()) {
-            case GET_COURSE_TYPE_HISTORY_LIST:
+            case COURSE_TYPE_COURSE_LIST:
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
                     case 0:
@@ -430,7 +401,7 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                         break;
                     }
                 } else {
-                    List<Course> list = (List<Course>) result.getData(CourseTypeGetHistoryList.HISTORY_LIST);
+                    List<Course> list = (List<Course>) result.getData(CourseTypeGetCourseList.HISTORY_LIST);
                     for (Course course : list) {
                         mHistoryListModel.addElement(course);
                     }
@@ -439,7 +410,7 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
                     enableFields();
                 }
                 break;
-            case GET_COURSE_SUBSCRIBE_LIST:
+            case COURSE_GET_SUBSCRIBE_LIST:
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
                     case 0:
@@ -492,5 +463,23 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         mCourseTypeList.setEnabled(true);
         mHistoryList.setEnabled(true);
         mProgressBar.setVisible(false);
+    }
+
+    private void disableFields() {
+        mCourseTypeList.setEnabled(true);
+        mHistoryList.setEnabled(true);
+        mProgressBar.setVisible(false);
+    }
+
+    private void clearFields() {
+        mTotalTeachers.setText("0");
+        mTeacherListModel.removeAllElements();
+        mTotalStudents.setText("0");
+        mTotalComplete.setText("0");
+        mStudentCompleteListModel.removeAllElements();
+        mTotalIncomplete.setText("0");
+        mStudentIncompleteListModel.removeAllElements();
+        mTotalEnd.setText("0");
+        mStudentEndListModel.removeAllElements();
     }
 }

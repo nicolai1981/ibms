@@ -38,7 +38,6 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
     private JComboBox mLeaderList;
     private JComboBox mGenerationList;
     private JProgressBar mProgressBar;
-    private Generation mCurrentGeneration;
     private JLabel mStartDate;
 
     public ViewGenerationEdit() {
@@ -52,13 +51,13 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
         mGenerationList = new JComboBox();
         mGenerationList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                mCurrentGeneration = (Generation) mGenerationList.getSelectedItem();
-                if (mCurrentGeneration != null) {
-                    mName.setText(mCurrentGeneration.mName);
-                    mStartDate.setText(sDateFormatter.format(mCurrentGeneration.mStartDate));
-                    Member leader = Application.getInstance().getLeader(mCurrentGeneration.mLeaderId);
+                Generation currentGeneration = (Generation) mGenerationList.getSelectedItem();
+                if (currentGeneration != null) {
+                    mName.setText(currentGeneration.mName);
+                    mStartDate.setText(sDateFormatter.format(currentGeneration.mStartDate));
+                    Member leader = Application.getInstance().getLeader(currentGeneration.mLeaderId);
                     if (leader == null) {
-                        mLeaderList.setSelectedIndex(-1);
+                        mLeaderList.setSelectedIndex(0);
                     } else {
                         mLeaderList.setSelectedItem(leader);
                     }
@@ -82,6 +81,9 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
 
         mLeaderList = new JComboBox();
         mLeaderList.setFont(new Font("Arial", Font.PLAIN, 14));
+        Member invalid = new Member();
+        invalid.mName = "NENHUM";
+        mLeaderList.addItem(invalid);
 
         JLabel lblDataDaCriao = new JLabel("Data da Cria\u00E7\u00E3o");
         lblDataDaCriao.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -94,11 +96,7 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 Generation generation = checkData();
                 if (generation != null) {
-                    mName.setEnabled(false);
-                    mGenerationList.setEnabled(false);
-                    mLeaderList.setEnabled(false);
-                    mButtonSave.setEnabled(false);
-                    mProgressBar.setVisible(true);
+                    disableFields();
                     new GenerationUpdate(generation, ViewGenerationEdit.this).run();
                 }
             }
@@ -192,9 +190,6 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
         }
 
         // Fill leader list
-        Member invalid = new Member();
-        invalid.mName = "NENHUM";
-        mLeaderList.addItem(invalid);
         for (Member item : Application.getInstance().getLeaderList()) {
             mLeaderList.addItem(item);
         }
@@ -217,7 +212,7 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_GENERATION_LIST:
+            case GENERATION_GET_LIST:
                 mGenerationList.removeAllItems();
                 for (Generation item : Application.getInstance().getGenerationList()) {
                     if (item.mEndDate.getTime() == 0) {
@@ -227,7 +222,8 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
                 JOptionPane.showMessageDialog(this,"Geração alterada com sucesso.");
                 enableFields();
                 break;
-            case UPDATE_GENERATION:
+
+            case GENERATION_UPDATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
@@ -244,6 +240,7 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
                     new GenerationGetList(this).start();
                 }
                 break;
+
             default:
                 break;
             }
@@ -258,7 +255,17 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
         mProgressBar.setVisible(false);
     }
 
+    private void disableFields() {
+        mName.setEnabled(false);
+        mGenerationList.setEnabled(false);
+        mLeaderList.setEnabled(false);
+        mButtonSave.setEnabled(false);
+        mProgressBar.setVisible(true);
+    }
+
     private Generation checkData() {
+        Generation currentGeneration = (Generation) mGenerationList.getSelectedItem();
+
         String name = mName.getText().trim().toUpperCase();
         if (name.length() == 0) {
             JOptionPane.showMessageDialog(this,"O nome da geração deve ser preenchido.");
@@ -266,7 +273,7 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
         }
 
         for (Generation item : Application.getInstance().getGenerationList()) {
-            if (name.equals(item.mName) && !name.equals(mCurrentGeneration.mName)) {
+            if (name.equals(item.mName) && !name.equals(currentGeneration.mName)) {
                 JOptionPane.showMessageDialog(this,"O nome da geração já existe.");
                 return null;
             }
@@ -279,17 +286,17 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
         }
 
         for (Generation item : Application.getInstance().getGenerationList()) {
-            if ((leader.mId != 0) && (leader.mId == item.mLeaderId) && (leader.mId != mCurrentGeneration.mLeaderId)) {
+            if ((leader.mId != 0) && (leader.mId == item.mLeaderId) && (leader.mId != currentGeneration.mLeaderId)) {
                 JOptionPane.showMessageDialog(this,"O líder já é líder de uma geração.");
                 return null;
             }
         }
 
         Generation generation = new Generation();
-        generation.mId = mCurrentGeneration.mId;
+        generation.mId = currentGeneration.mId;
         generation.mName = name;
         generation.mLeaderId = leader.mId;
-        generation.mStartDate = new Date(mCurrentGeneration.mStartDate.getTime());
+        generation.mStartDate = new Date(currentGeneration.mStartDate.getTime());
         return generation;
     }
 }

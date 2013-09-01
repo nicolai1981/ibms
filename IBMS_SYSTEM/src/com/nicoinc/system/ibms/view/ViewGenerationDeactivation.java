@@ -109,9 +109,7 @@ public class ViewGenerationDeactivation extends JPanel implements CommandListene
                     }
                 }
 
-                mGenerationList.setEnabled(false);
-                mButtonAction.setEnabled(false);
-                mProgressBar.setVisible(true);
+                disableFields();
 
                 Generation generation = new Generation();
                 generation.mId = mCurrentGeneration.mId;
@@ -223,7 +221,7 @@ public class ViewGenerationDeactivation extends JPanel implements CommandListene
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_GENERATION_LIST:
+            case GENERATION_GET_LIST:
                 mGenerationList.removeAllItems();
                 for (Generation item : Application.getInstance().getGenerationList()) {
                     mGenerationList.addItem(item);
@@ -231,7 +229,8 @@ public class ViewGenerationDeactivation extends JPanel implements CommandListene
                 JOptionPane.showMessageDialog(this,"Geração alterada com sucesso.");
                 enableFields();
                 break;
-            case UPDATE_GENERATION:
+
+            case GENERATION_UPDATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
@@ -248,6 +247,7 @@ public class ViewGenerationDeactivation extends JPanel implements CommandListene
                     new GenerationGetList(this).start();
                 }
                 break;
+
             default:
                 break;
             }
@@ -258,5 +258,11 @@ public class ViewGenerationDeactivation extends JPanel implements CommandListene
         mGenerationList.setEnabled(true);
         mButtonAction.setEnabled(true);
         mProgressBar.setVisible(false);
+    }
+
+    private void disableFields() {
+        mGenerationList.setEnabled(false);
+        mButtonAction.setEnabled(false);
+        mProgressBar.setVisible(true);
     }
 }

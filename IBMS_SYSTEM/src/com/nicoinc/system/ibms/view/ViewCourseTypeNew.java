@@ -49,9 +49,7 @@ public class ViewCourseTypeNew extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent event) {
                 CourseType courseType = checkData();
                 if (courseType != null) {
-                    mName.setEnabled(false);
-                    mButtonSave.setEnabled(false);
-                    mProgressBar.setVisible(true);
+                    disableFields();
                     new CourseTypeCreate(courseType, ViewCourseTypeNew.this).run();
                 }
             }
@@ -112,11 +110,11 @@ public class ViewCourseTypeNew extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_TYPE_LIST:
+            case COURSE_TYPE_GET_LIST:
                 JOptionPane.showMessageDialog(this,"Tipo de curso criado com sucesso.");
                 enableFields();
                 break;
-            case CREATE_COURSE_TYPE:
+            case COURSE_TYPE_CREATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
@@ -144,6 +142,12 @@ public class ViewCourseTypeNew extends JPanel implements CommandListener {
         mName.setEnabled(true);
         mButtonSave.setEnabled(true);
         mProgressBar.setVisible(false);
+    }
+
+    private void disableFields() {
+        mName.setEnabled(false);
+        mButtonSave.setEnabled(false);
+        mProgressBar.setVisible(true);
     }
 
     private CourseType checkData() {

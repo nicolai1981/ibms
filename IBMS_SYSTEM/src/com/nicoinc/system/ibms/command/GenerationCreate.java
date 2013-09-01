@@ -8,9 +8,9 @@ public class GenerationCreate extends Command {
     private HttpRequest mHttpRequest;
 
     public GenerationCreate(Generation generation, CommandListener listener) {
-        super(COMMAND.CREATE_GENERATION);
+        super(COMMAND.GENERATION_CREATE);
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "createGeneration.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "generation_create.php", mResult);
         mHttpRequest.addParam("NAME", generation.mName);
         mHttpRequest.addParam("LEADER_ID", String.valueOf(generation.mLeaderId));
         mHttpRequest.addParam("START_DATE", sDateFormatter.format(generation.mStartDate));

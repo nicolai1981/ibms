@@ -4,14 +4,14 @@ import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
 import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
 
-public class CourseSubscribeUpdate extends Command {
+public class CourseUpdateSubscribe extends Command {
     private HttpRequest mHttpRequest;
 
-    public CourseSubscribeUpdate(CourseSubscribe subscribe, CommandListener listener) {
-        super(COMMAND.COURSE_SUBSCRIBE_UPDATE);
+    public CourseUpdateSubscribe(CourseSubscribe subscribe, CommandListener listener) {
+        super(COMMAND.COURSE_UPDATE_SUBSCRIBE);
         addListener(listener);
 
-        mHttpRequest = new HttpRequest(WEB_URL + "courseSubscribeUpdate.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "course_updateSubscribe.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(subscribe.mId));
         mHttpRequest.addParam("COURSE_ID", String.valueOf(subscribe.mCourseId));
         mHttpRequest.addParam("MEMBER_ID", String.valueOf(subscribe.mMemberId));

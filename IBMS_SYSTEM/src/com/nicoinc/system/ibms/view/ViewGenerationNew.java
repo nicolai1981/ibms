@@ -57,10 +57,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent event) {
                 Generation generation = checkData();
                 if (generation != null) {
-                    mName.setEnabled(false);
-                    mLeader.setEnabled(false);
-                    mButtonSave.setEnabled(false);
-                    mProgressBar.setVisible(true);
+                    disableFields();
                     new GenerationCreate(generation, ViewGenerationNew.this).run();
                 }
             }
@@ -135,11 +132,11 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_GENERATION_LIST:
+            case GENERATION_GET_LIST:
                 JOptionPane.showMessageDialog(this,"Geração criada com sucesso.");
                 enableFields();
                 break;
-            case CREATE_GENERATION:
+            case GENERATION_CREATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
@@ -169,6 +166,13 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
         mLeader.setEnabled(true);
         mButtonSave.setEnabled(true);
         mProgressBar.setVisible(false);
+    }
+
+    private void disableFields() {
+        mName.setEnabled(false);
+        mLeader.setEnabled(false);
+        mButtonSave.setEnabled(false);
+        mProgressBar.setVisible(true);
     }
 
     private Generation checkData() {

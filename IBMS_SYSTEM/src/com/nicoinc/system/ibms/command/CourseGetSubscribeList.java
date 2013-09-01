@@ -16,9 +16,9 @@ public class CourseGetSubscribeList extends Command {
     private HttpRequest mHttpRequest;
 
     public CourseGetSubscribeList(Course course, CommandListener listener) {
-        super(COMMAND.GET_COURSE_SUBSCRIBE_LIST);
+        super(COMMAND.COURSE_GET_SUBSCRIBE_LIST);
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "getCourseSubscribeList.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "course_getSubscribeList.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(course.mId));
     }
 

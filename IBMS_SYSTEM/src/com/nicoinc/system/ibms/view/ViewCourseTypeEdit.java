@@ -33,12 +33,12 @@ import com.nicoinc.system.ibms.model.Generation;
 public class ViewCourseTypeEdit extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static final long serialVersionUID = -8213291145000189731L;
-    private JTextField mName;
-    private JButton mButtonSave;
+
     private JComboBox mCourseTypeList;
-    private JProgressBar mProgressBar;
-    private CourseType mCurrentCourseType;
+    private JTextField mName;
     private JLabel mStartDate;
+    private JButton mButtonSave;
+    private JProgressBar mProgressBar;
 
     public ViewCourseTypeEdit() {
         JLabel lblNewLabel = new JLabel("ALTERAR TIPO DO CURSO");
@@ -52,10 +52,10 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
         mCourseTypeList.setFont(new Font("Arial", Font.PLAIN, 14));
         mCourseTypeList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                mCurrentCourseType = (CourseType) mCourseTypeList.getSelectedItem();
-                if (mCurrentCourseType != null) {
-                    mName.setText(mCurrentCourseType.mName);
-                    mStartDate.setText(sDateFormatter.format(mCurrentCourseType.mStartDate));
+                CourseType currentCourseType = (CourseType) mCourseTypeList.getSelectedItem();
+                if (currentCourseType != null) {
+                    mName.setText(currentCourseType.mName);
+                    mStartDate.setText(sDateFormatter.format(currentCourseType.mStartDate));
                 }
             }
         });
@@ -83,10 +83,7 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 CourseType courseType = checkData();
                 if (courseType != null) {
-                    mName.setEnabled(false);
-                    mButtonSave.setEnabled(false);
-                    mCourseTypeList.setEnabled(false);
-                    mProgressBar.setVisible(true);
+                    disableFields();
                     new CourseTypeUpdate(courseType, ViewCourseTypeEdit.this).run();
                 }
             }
@@ -182,7 +179,7 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_TYPE_LIST:
+            case COURSE_TYPE_GET_LIST:
                 mCourseTypeList.removeAllItems();
                 for (CourseType item : Application.getInstance().getCourseTypeList()) {
                     if (item.mEndDate.getTime() == 0) {
@@ -192,7 +189,8 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
                 JOptionPane.showMessageDialog(this,"Tipo de curso alterado com sucesso.");
                 enableFields();
                 break;
-            case UPDATE_COURSE_TYPE:
+
+            case COURSE_TYPE_UPDATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
                     switch (root.getAsInt()) {
@@ -222,7 +220,16 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
         mProgressBar.setVisible(false);
     }
 
+    private void disableFields() {
+        mName.setEnabled(false);
+        mButtonSave.setEnabled(false);
+        mCourseTypeList.setEnabled(false);
+        mProgressBar.setVisible(true);
+    }
+
     private CourseType checkData() {
+        CourseType currentCourseType = (CourseType) mCourseTypeList.getSelectedItem();
+
         String name = mName.getText().trim().toUpperCase();
         if (name.length() == 0) {
             JOptionPane.showMessageDialog(this,"O nome do tipo de curso deve ser preenchido.");
@@ -230,16 +237,16 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
         }
 
         for (Generation item : Application.getInstance().getGenerationList()) {
-            if (name.equals(item.mName) && !name.equals(mCurrentCourseType.mName)) {
+            if (name.equals(item.mName) && !name.equals(currentCourseType.mName)) {
                 JOptionPane.showMessageDialog(this,"O nome do tipo de curso já existe.");
                 return null;
             }
         }
 
         CourseType courseType = new CourseType();
-        courseType.mId = mCurrentCourseType.mId;
+        courseType.mId = currentCourseType.mId;
         courseType.mName = name;
-        courseType.mStartDate = new Date(mCurrentCourseType.mStartDate.getTime());
+        courseType.mStartDate = new Date(currentCourseType.mStartDate.getTime());
         return courseType;
     }
 }

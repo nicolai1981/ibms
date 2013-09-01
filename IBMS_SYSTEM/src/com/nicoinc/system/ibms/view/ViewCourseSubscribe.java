@@ -26,7 +26,7 @@ import javax.swing.border.LineBorder;
 
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseGetSubscribeList;
-import com.nicoinc.system.ibms.command.CourseSubscribeCreate;
+import com.nicoinc.system.ibms.command.CourseCreateSubscribe;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Course;
@@ -136,7 +136,7 @@ public class ViewCourseSubscribe extends JPanel implements CommandListener {
                     subscribe.mMemberId = member.mId;
 
                     disableFields();
-                    new CourseSubscribeCreate(subscribe, ViewCourseSubscribe.this).run();
+                    new CourseCreateSubscribe(subscribe, ViewCourseSubscribe.this).run();
                 }
             }
         });
@@ -259,7 +259,7 @@ public class ViewCourseSubscribe extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GET_COURSE_SUBSCRIBE_LIST:
+            case COURSE_GET_SUBSCRIBE_LIST:
                 mMemberList.removeAllItems();
                 mStudentListModel.removeAllElements();
 
@@ -295,7 +295,7 @@ public class ViewCourseSubscribe extends JPanel implements CommandListener {
                 enableFields();
                 break;
 
-            case COURSE_SUBSCRIBE_CREATE:
+            case COURSE_CREATE_SUBSCRIBE:
                 mSubscribeAction = true;
                 new CourseGetSubscribeList((Course)mCourseList.getSelectedItem(), ViewCourseSubscribe.this).run();
                 break;

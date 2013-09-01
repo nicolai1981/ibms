@@ -14,13 +14,13 @@ import com.nicoinc.system.ibms.model.Generation;
 public class GenerationGetList extends Command {
 
     public GenerationGetList(CommandListener listener) {
-        super(COMMAND.GET_GENERATION_LIST);
+        super(COMMAND.GENERATION_GET_LIST);
         addListener(listener);
     }
 
     @Override
     public void doRun() {
-        new HttpRequest(WEB_URL + "getGenerationList.php", mResult).start();
+        new HttpRequest(WEB_URL + "generation_getList.php", mResult).start();
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);
             JsonObject root = mResult.getJSON();

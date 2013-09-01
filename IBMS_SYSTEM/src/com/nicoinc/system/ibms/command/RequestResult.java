@@ -7,29 +7,33 @@ import com.google.gson.JsonObject;
 
 public class RequestResult {
     public enum COMMAND {
-        GET_LEADER_LIST,
+        // Member
+        MEMBER_GET_LIST,
 
-        GET_MEMBER_LIST,
+        // Generation
+        GENERATION_CREATE,
+        GENERATION_UPDATE,
+        GENERATION_GET_LIST,
+        GENERATION_GET_MEMBER_LIST,
 
-        CREATE_GENERATION,
-        UPDATE_GENERATION,
-        GET_GENERATION_LIST,
-        GET_GENERATION_MEMBER_LIST,
+        // Course type
+        COURSE_TYPE_CREATE,
+        COURSE_TYPE_UPDATE,
+        COURSE_TYPE_GET_LIST,
+        COURSE_TYPE_COURSE_LIST,
 
-        CREATE_COURSE_TYPE,
-        UPDATE_COURSE_TYPE,
-        GET_COURSE_TYPE_LIST,
-        GET_COURSE_TYPE_HISTORY_LIST,
+        // COURSE
+        COURSE_CREATE,
+        COURSE_UPDATE,
+        COURSE_GET_LIST,
+        COURSE_GET_SUBSCRIBE_LIST,
+        COURSE_SAVE_TEACHER_LIST,
+        COURSE_CREATE_SUBSCRIBE,
+        COURSE_UPDATE_SUBSCRIBE,
 
-        CREATE_COURSE,
-        UPDATE_COURSE,
-        GET_COURSE_LIST,
-        SAVE_COURSE_TEACHER_LIST,
-        GET_COURSE_TEACHER_LIST,
 
-        COURSE_SUBSCRIBE_CREATE,
-        COURSE_SUBSCRIBE_UPDATE,
-        GET_COURSE_SUBSCRIBE_LIST,
+
+
 
     };
 

@@ -15,13 +15,13 @@ import com.nicoinc.system.ibms.model.CourseType;
 public class CourseGetList extends Command {
 
     public CourseGetList(CommandListener listener) {
-        super(COMMAND.GET_COURSE_LIST);
+        super(COMMAND.COURSE_GET_LIST);
         addListener(listener);
     }
 
     @Override
     public void doRun() {
-        new HttpRequest(WEB_URL + "getCourseList.php", mResult).start();
+        new HttpRequest(WEB_URL + "course_getList.php", mResult).start();
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);
             JsonObject root = mResult.getJSON();

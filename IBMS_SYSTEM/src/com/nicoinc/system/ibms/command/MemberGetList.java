@@ -14,13 +14,13 @@ import com.nicoinc.system.ibms.model.Member;
 public class MemberGetList extends Command {
 
     public MemberGetList(CommandListener listener) {
-        super(COMMAND.GET_MEMBER_LIST);
+        super(COMMAND.MEMBER_GET_LIST);
         addListener(listener);
     }
 
     @Override
     public void doRun() {
-        new HttpRequest(WEB_URL + "getMemberList.php", mResult).start();
+        new HttpRequest(WEB_URL + "member_getList.php", mResult).start();
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);
             JsonObject root = mResult.getJSON();
@@ -38,6 +38,7 @@ public class MemberGetList extends Command {
             }
 
             ArrayList<Member> memberList = new ArrayList<Member>();
+            ArrayList<Member> leaderList = new ArrayList<Member>();
             JsonArray jsonList = root.get("MEMBER_LIST").getAsJsonArray();
             for (int i = 0; i < jsonList.size(); i++) {
                 JsonObject item = jsonList.get(i).getAsJsonObject();
@@ -53,7 +54,6 @@ public class MemberGetList extends Command {
                 }
                 member.mName = item.get("NAME").getAsString();
 
-
                 if (!item.has("END_DATE")) {
                     continue;
                 }
@@ -67,10 +67,19 @@ public class MemberGetList extends Command {
                     continue;
                 }
 
+                if (!item.has("IS_LEADER")) {
+                    continue;
+                }
+                member.mIsLeader = (item.get("IS_LEADER").getAsInt() == 1);
+
                 memberList.add(member);
+                if (member.mIsLeader && (member.mEndDate.getTime() == 0)) {
+                    leaderList.add(member);
+                }
             }
 
             Application.getInstance().setMemberList(memberList);
+            Application.getInstance().setLeaderList(leaderList);
             mResult.setCode(CODE.OK);
         }
     }

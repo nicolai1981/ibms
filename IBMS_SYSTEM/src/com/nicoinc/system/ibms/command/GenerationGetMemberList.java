@@ -16,9 +16,9 @@ public class GenerationGetMemberList extends Command {
     private HttpRequest mHttpRequest;
 
     public GenerationGetMemberList(Generation generation, CommandListener listener) {
-        super(COMMAND.GET_GENERATION_MEMBER_LIST);
+        super(COMMAND.GENERATION_GET_MEMBER_LIST);
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "getGenerationMemberList.php", mResult);
+        mHttpRequest = new HttpRequest(WEB_URL + "generation_getMemberList.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(generation.mId));
     }
 
