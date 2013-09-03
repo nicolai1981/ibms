@@ -37,6 +37,16 @@ public class FrameHome {
         menuBar.add(mnMembros);
 
         JMenuItem mntmCadastrar = new JMenuItem("Novo Membro");
+        mntmCadastrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewMemberNew();
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
         mnMembros.add(mntmCadastrar);
 
         JMenuItem mntmEditar = new JMenuItem("Editar");

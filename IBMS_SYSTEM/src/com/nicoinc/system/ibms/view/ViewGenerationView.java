@@ -383,7 +383,7 @@ public class ViewGenerationView extends JPanel implements CommandListener {
                                 qtdLeader++;
                             } else {
                                 mMemberListModel.addElement(member);
-                                if (member.mEnterDate.getTime() == 0) {
+                                if (member.mStartDate.getTime() == 0) {
                                     qtdMemberNot++;
                                 } else {
                                     qtdMember++;
@@ -391,7 +391,7 @@ public class ViewGenerationView extends JPanel implements CommandListener {
                             }
                         } else {
                             mOffListModel.addElement(member);
-                            if (member.mEnterDate.getTime() == 0) {
+                            if (member.mStartDate.getTime() == 0) {
                                 qtdOffMemberNot++;
                             } else {
                                 qtdOffMember++;

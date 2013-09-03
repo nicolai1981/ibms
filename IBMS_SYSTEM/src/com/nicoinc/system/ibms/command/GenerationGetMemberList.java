@@ -81,7 +81,7 @@ public class GenerationGetMemberList extends Command {
                 String enterDate = item.get("ENTER_DATE").getAsString();
                 if (!enterDate.equals("0000-00-00")) {
                     try {
-                        member.mEnterDate = sDateFormatter.parse(enterDate);
+                        member.mStartDate = sDateFormatter.parse(enterDate);
                     } catch (ParseException e) {
                         e.printStackTrace();
                         continue;

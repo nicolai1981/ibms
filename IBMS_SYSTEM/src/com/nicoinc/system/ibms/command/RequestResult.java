@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 public class RequestResult {
     public enum COMMAND {
         // Member
+        MEMBER_CREATE,
         MEMBER_GET_LIST,
 
         // Generation
@@ -30,11 +31,6 @@ public class RequestResult {
         COURSE_SAVE_TEACHER_LIST,
         COURSE_CREATE_SUBSCRIBE,
         COURSE_UPDATE_SUBSCRIBE,
-
-
-
-
-
     };
 
     public enum CODE {
