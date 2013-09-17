@@ -12,16 +12,7 @@ $in_id = ($_POST['ID']);
 
 $result = "{\"CODE\":0, \"MEMBER_LIST\":[";
 
-$sqlQuery = "SELECT DISTINCT m.*".
-            " FROM LIDER_GERACAO l_g,".
-                  " MEMBRO m,".
-                  " MEMBRO_LIDER m_l". 
-            " WHERE l_g.FK_GERACAO=".$in_id.
-                  " AND l_g.DATA_FINAL='0000-00-00'".
-                  " AND ((l_g.FK_LIDER=m._ID)".
-                       " OR (l_g.FK_LIDER=m_l.FK_LIDER".
-                           " AND m_l.DATA_FINAL='0000-00-00'".
-                           " AND m_l.FK_MEMBRO=m._ID))";
+$sqlQuery = "SELECT * FROM MEMBRO WHERE FK_GERACAO=".$in_id." ORDER BY NOME";
 
 $resultSelect = mysql_query($sqlQuery);
 $resultArray = mysql_fetch_array($resultSelect);

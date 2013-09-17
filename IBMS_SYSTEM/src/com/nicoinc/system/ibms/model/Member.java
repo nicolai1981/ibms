@@ -23,6 +23,7 @@ public class Member {
     public String mCity = null;
     public String mZIP = null;
     
+    public Date mCreateDate = new Date(0);
     public Date mStartDate = new Date(0);
     public int mStartType = 0;
 

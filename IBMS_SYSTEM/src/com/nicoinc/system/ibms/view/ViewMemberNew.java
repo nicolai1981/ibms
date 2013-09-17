@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -21,6 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import br.com.caelum.stella.ValidationMessage;
+import br.com.caelum.stella.validation.CPFValidator;
 
 import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
@@ -56,6 +60,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
     private JComboBox mIsMember;
     private JTextField mStartDate;
     private JComboBox mStartType;
+    private JComboBox mIsLeader;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
 
@@ -225,6 +230,14 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         mStartType.addItem("ACLAMAÇÃO");
         mStartType.setFont(new Font("Arial", Font.PLAIN, 14));
 
+        JLabel lblLder_1 = new JLabel("\u00C9 L\u00EDder?");
+        lblLder_1.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        mIsLeader = new JComboBox();
+        mIsLeader.addItem("NÃO");
+        mIsLeader.addItem("SIM");
+        mIsLeader.setFont(new Font("Arial", Font.PLAIN, 14));
+
         mButtonSave = new JButton("Criar");
         mButtonSave.setIcon(new ImageIcon(ViewMemberNew.class.getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
         mButtonSave.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -247,7 +260,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
             groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                         .addGroup(groupLayout.createSequentialGroup()
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                                 .addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
@@ -339,7 +352,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(lblGerao_1, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                             .addContainerGap())
-                        .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+                        .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblMembro, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(lblDataDeEntrada, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
@@ -352,7 +365,13 @@ public class ViewMemberNew extends JPanel implements CommandListener {
                             .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.UNRELATED)
                             .addComponent(mStartType, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(837, Short.MAX_VALUE))))
+                            .addContainerGap(717, Short.MAX_VALUE))
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(lblLder_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(1040, Short.MAX_VALUE))
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(mIsLeader, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(1040, Short.MAX_VALUE))))
         );
         groupLayout.setVerticalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)
@@ -431,7 +450,11 @@ public class ViewMemberNew extends JPanel implements CommandListener {
                         .addComponent(mIsMember, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
                         .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
                         .addComponent(mStartType, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                    .addComponent(lblLder_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(mIsLeader, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                     .addComponent(mButtonSave)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -474,13 +497,13 @@ public class ViewMemberNew extends JPanel implements CommandListener {
             case MEMBER_CREATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
-                    switch (root.getAsInt()) {
+                    switch (root.get("ERROR_CODE").getAsInt()) {
                     case 0:
                         JOptionPane.showMessageDialog(this,"Erro");
                         enableFields();
                         break;
                     default:
-                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.getAsInt());
+                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.get("ERROR_CODE").getAsInt());
                         enableFields();
                         break;
                     }
@@ -517,6 +540,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         mIsMember.setEnabled(true);
         mStartDate.setEnabled(true);
         mStartType.setEnabled(true);
+        mIsLeader.setEnabled(true);
         mButtonSave.setEnabled(true);
         mProgressBar.setVisible(false);
     }
@@ -543,6 +567,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         mIsMember.setEnabled(false);
         mStartDate.setEnabled(false);
         mStartType.setEnabled(false);
+        mIsLeader.setEnabled(false);
         mButtonSave.setEnabled(false);
         mProgressBar.setVisible(true);
     }
@@ -569,6 +594,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         mIsMember.setSelectedIndex(0);
         mStartDate.setText("");
         mStartType.setSelectedIndex(0);
+        mIsLeader.setSelectedIndex(0);
     }
 
     private Member checkData() {
@@ -621,7 +647,23 @@ public class ViewMemberNew extends JPanel implements CommandListener {
 
         text = mCPF.getText().trim().toUpperCase();
         if (text.length() != 0) {
-            member.mCPF = text;
+            CPFValidator cpfValidator = new CPFValidator();
+            List<ValidationMessage> msgList = cpfValidator.invalidMessagesFor(text);
+            if (msgList.size() == 0) {
+                member.mCPF = text;
+            } else {
+                for (ValidationMessage item : msgList) {
+                    if ("CPFError : INVALID FORMAT".equals(item.getMessage())) {
+                        JOptionPane.showMessageDialog(this,"O formato do CPF deve ser XXX.XXX.XXX-XX.\nOs zeros devem ser colocados ex. 0004.270.720-00.");
+                        return null;
+                    } else if ("CPFError : INVALID CHECK DIGITS".equals(item.getMessage())) {
+                        JOptionPane.showMessageDialog(this,"Digito de verificação do CPF está errado.");
+                        return null;
+                    }
+                }
+                JOptionPane.showMessageDialog(this,"O número do CPF está errado.");
+                return null;
+            }
         }
 
         text = mMobile.getText().trim().toUpperCase();
@@ -670,7 +712,8 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         }
 
         Member leader = (Member) mLeaderList.getSelectedItem();
-        member.mLeaderId = leader.mGenerationId;
+        member.mLeaderId = leader.mId;
+        member.mGenerationId = leader.mGenerationId;
 
         if (mIsMember.getSelectedIndex() == 1) {
             String startDate = mStartDate.getText().trim().toUpperCase();
@@ -697,7 +740,11 @@ public class ViewMemberNew extends JPanel implements CommandListener {
                 JOptionPane.showMessageDialog(this,"O modo de entrada deve ser definido.");
                 return null;
             }
+            
         }
+
+        member.mIsLeader = mIsLeader.getSelectedIndex() == 1;
+
         return member;
     }
 }

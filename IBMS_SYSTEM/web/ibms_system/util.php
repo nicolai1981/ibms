@@ -15,35 +15,6 @@ function checkToken($token) {
 	return true;
 }
 
-function getGenerationList() {
-	$result = "\"GENERATION_LIST\":[";
-
-	$sqlQuery = "SELECT GERACAO.* FROM GERACAO ORDER BY NOME";
-	$resultSelect = mysql_query($sqlQuery);
-	$resultArray = mysql_fetch_array($resultSelect);
-	while ($resultArray) {
-		$user_id = $resultArray["_ID"];
-		$user_name = $resultArray["NOME"];
-		$user_start_date = $resultArray["DATA_INICIAL"];
-		$user_end_date = $resultArray["DATA_FINAL"];
-		$user_leaderId = $resultArray["FK_LEADER_ID"];
-		$result = $result
-			."{"
-			."\"ID\":".$user_id.","
-			."\"NAME\":"."\"".$user_name."\","
-			."\"START_DATE\":"."\"".$user_start_date."\","
-			."\"END_DATE\":"."\"".$user_end_date."\","
-			."\"LEADER_ID\":".$user_leaderId
-			."}";
-
-		$resultArray = mysql_fetch_array($resultSelect);
-		if ($resultArray) {
-			$result = $result.",";
-		}
-	}
-	return $result."]";
-}
-
 function getCourseTypeList() {
 	$result = "\"COURSE_TYPE_LIST\":[";
 
@@ -100,32 +71,7 @@ function getCourseList() {
 	return $result."]";
 }
 
-function getMemberList() {
-	$result = "\"MEMBER_LIST\":[";
 
-	$sqlQuery = "SELECT MEMBRO.* FROM MEMBRO ORDER BY NOME";
-	$resultSelect = mysql_query($sqlQuery);
-	$resultArray = mysql_fetch_array($resultSelect);
-	while ($resultArray) {
-		$user_id = $resultArray["_ID"];
-		$user_name = $resultArray["NOME"];
-		$user_end_date = $resultArray["DATA_FINAL"];
-		$user_is_leader = $resultArray["IS_LIDER"];
-		$result = $result
-			."{"
-			."\"ID\":".$user_id.","
-			."\"NAME\":"."\"".$user_name."\","
-			."\"END_DATE\":"."\"".$user_end_date."\","
-			."\"IS_LEADER\":".$user_is_leader.""
-			."}";
-
-		$resultArray = mysql_fetch_array($resultSelect);
-		if ($resultArray) {
-			$result = $result.",";
-		}
-	}
-	return $result."]";
-}
 
 
 

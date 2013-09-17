@@ -182,16 +182,16 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
         panel.setLayout(gl_panel);
         setLayout(groupLayout);
 
+        // Fill leader list
+        for (Member item : Application.getInstance().getLeaderList()) {
+            mLeaderList.addItem(item);
+        }
+
         // Fill generation list
         for (Generation item : Application.getInstance().getGenerationList()) {
             if (item.mEndDate.getTime() == 0) {
                 mGenerationList.addItem(item);
             }
-        }
-
-        // Fill leader list
-        for (Member item : Application.getInstance().getLeaderList()) {
-            mLeaderList.addItem(item);
         }
     }
 

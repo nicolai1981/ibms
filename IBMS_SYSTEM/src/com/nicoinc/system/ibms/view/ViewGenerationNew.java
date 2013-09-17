@@ -22,6 +22,7 @@ import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.GenerationCreate;
 import com.nicoinc.system.ibms.command.GenerationGetList;
+import com.nicoinc.system.ibms.command.MemberGetList;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
@@ -111,7 +112,16 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
         invalid.mName = "NENHUM";
         mLeader.addItem(invalid);
         for (Member item : Application.getInstance().getLeaderList()) {
-            mLeader.addItem(item);
+            boolean found = false;
+            for (Generation generation : Application.getInstance().getGenerationList()) {
+                if (generation.mLeaderId == item.mId) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                mLeader.addItem(item);
+            }
         }
     }
 
@@ -133,9 +143,33 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
         case OK:
             switch (result.getCommand()) {
             case GENERATION_GET_LIST:
+                new MemberGetList(this).start();
+                break;
+
+            case MEMBER_GET_LIST:
                 JOptionPane.showMessageDialog(this,"Geração criada com sucesso.");
+
+                // Update leader list
+                mLeader.removeAllItems();
+                Member invalid = new Member();
+                invalid.mName = "NENHUM";
+                mLeader.addItem(invalid);
+
+                for (Member item : Application.getInstance().getLeaderList()) {
+                    boolean found = false;
+                    for (Generation generation : Application.getInstance().getGenerationList()) {
+                        if (generation.mLeaderId == item.mId) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        mLeader.addItem(item);
+                    }
+                }
                 enableFields();
                 break;
+
             case GENERATION_CREATE:
                 JsonObject root = result.getJSON();
                 if (root.has("ERROR_CODE")) {
