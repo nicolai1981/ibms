@@ -34,7 +34,7 @@ import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
 
-public class ViewMemberNew extends JPanel implements CommandListener {
+public class ViewMemberEdit extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static final long serialVersionUID = -8213291145000189731L;
 
@@ -63,7 +63,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
 
-    public ViewMemberNew() {
+    public ViewMemberEdit() {
         JLabel lblNewLabel = new JLabel("CRIAR MEMBRO");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -238,14 +238,14 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         mIsLeader.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mButtonSave = new JButton("Criar");
-        mButtonSave.setIcon(new ImageIcon(ViewMemberNew.class.getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
+        mButtonSave.setIcon(new ImageIcon(ViewMemberEdit.class.getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
         mButtonSave.setFont(new Font("Arial", Font.PLAIN, 14));
         mButtonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 Member member = checkData();
                 if (member != null) {
                     disableFields();
-                    new MemberCreate(member, ViewMemberNew.this).run();
+                    new MemberCreate(member, ViewMemberEdit.this).run();
                 }
             }
         });

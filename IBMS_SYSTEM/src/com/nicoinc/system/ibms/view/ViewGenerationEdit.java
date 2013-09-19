@@ -21,11 +21,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.GenerationGetList;
-import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.command.GenerationUpdate;
+import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
@@ -224,21 +223,7 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
                 break;
 
             case GENERATION_UPDATE:
-                JsonObject root = result.getJSON();
-                if (root.has("ERROR_CODE")) {
-                    switch (root.getAsInt()) {
-                    case 0:
-                        JOptionPane.showMessageDialog(this,"Erro");
-                        enableFields();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.getAsInt());
-                        enableFields();
-                        break;
-                    }
-                } else {
-                    new GenerationGetList(this).start();
-                }
+                new GenerationGetList(this).start();
                 break;
 
             default:

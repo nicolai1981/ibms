@@ -20,7 +20,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 
-import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.GenerationGetMemberList;
 import com.nicoinc.system.ibms.command.RequestResult;
@@ -356,61 +355,48 @@ public class ViewGenerationView extends JPanel implements CommandListener {
         case OK:
             switch (result.getCommand()) {
             case GENERATION_GET_MEMBER_LIST:
-                JsonObject root = result.getJSON();
-                if (root.has("ERROR_CODE")) {
-                    switch (root.getAsInt()) {
-                    case 0:
-                        JOptionPane.showMessageDialog(this,"Erro");
-                        enableFields();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.getAsInt());
-                        enableFields();
-                        break;
-                    }
-                } else {
-                    List<Member> list = (List<Member>) result.getData(GenerationGetMemberList.GENERATION_LIST);
-                    int qtdLeader = 0;
-                    int qtdMember = 0;
-                    int qtdMemberNot = 0;
-                    int qtdOffMember = 0;
-                    int qtdOffMemberNot = 0;
-                    
-                    for (Member member : list) {
-                        if (member.mEndDate.getTime() == 0) {
-                            if (member.mIsLeader) {
-                                mLeaderListModel.addElement(member);
-                                qtdLeader++;
-                            } else {
-                                mMemberListModel.addElement(member);
-                                if (member.mStartDate.getTime() == 0) {
-                                    qtdMemberNot++;
-                                } else {
-                                    qtdMember++;
-                                }
-                            }
+                List<Member> list = (List<Member>) result.getData(GenerationGetMemberList.GENERATION_LIST);
+                int qtdLeader = 0;
+                int qtdMember = 0;
+                int qtdMemberNot = 0;
+                int qtdOffMember = 0;
+                int qtdOffMemberNot = 0;
+                
+                for (Member member : list) {
+                    if (member.mEndDate.getTime() == 0) {
+                        if (member.mIsLeader) {
+                            mLeaderListModel.addElement(member);
+                            qtdLeader++;
                         } else {
-                            mOffListModel.addElement(member);
+                            mMemberListModel.addElement(member);
                             if (member.mStartDate.getTime() == 0) {
-                                qtdOffMemberNot++;
+                                qtdMemberNot++;
                             } else {
-                                qtdOffMember++;
+                                qtdMember++;
                             }
                         }
+                    } else {
+                        mOffListModel.addElement(member);
+                        if (member.mStartDate.getTime() == 0) {
+                            qtdOffMemberNot++;
+                        } else {
+                            qtdOffMember++;
+                        }
                     }
-
-                    mQtdLeader.setText(String.valueOf(qtdLeader));
-                    mQtdMemberTotal.setText(String.valueOf(qtdMember + qtdMemberNot));
-                    mQtdMember.setText(String.valueOf(qtdMember));
-                    mQtdMemberNot.setText(String.valueOf(qtdMemberNot));
-                    mQtdOffTotal.setText(String.valueOf(qtdOffMember + qtdOffMemberNot));
-                    mQtdOffMember.setText(String.valueOf(qtdOffMember));
-                    mQtdOffMemberNot.setText(String.valueOf(qtdOffMemberNot));
-                    mGenerationCount.setText(String.valueOf(qtdLeader + qtdMember + qtdMemberNot));
-
-                    enableFields();
                 }
+
+                mQtdLeader.setText(String.valueOf(qtdLeader));
+                mQtdMemberTotal.setText(String.valueOf(qtdMember + qtdMemberNot));
+                mQtdMember.setText(String.valueOf(qtdMember));
+                mQtdMemberNot.setText(String.valueOf(qtdMemberNot));
+                mQtdOffTotal.setText(String.valueOf(qtdOffMember + qtdOffMemberNot));
+                mQtdOffMember.setText(String.valueOf(qtdOffMember));
+                mQtdOffMemberNot.setText(String.valueOf(qtdOffMemberNot));
+                mGenerationCount.setText(String.valueOf(qtdLeader + qtdMember + qtdMemberNot));
+
+                enableFields();
                 break;
+
             default:
                 break;
             }

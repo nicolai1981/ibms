@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
-import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.GenerationCreate;
 import com.nicoinc.system.ibms.command.GenerationGetList;
@@ -171,24 +170,11 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
                 break;
 
             case GENERATION_CREATE:
-                JsonObject root = result.getJSON();
-                if (root.has("ERROR_CODE")) {
-                    switch (root.getAsInt()) {
-                    case 0:
-                        JOptionPane.showMessageDialog(this,"Erro");
-                        enableFields();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.getAsInt());
-                        enableFields();
-                        break;
-                    }
-                } else {
-                    mName.setText("");
-                    mLeader.setSelectedIndex(0);
-                    new GenerationGetList(this).start();
-                }
+                mName.setText("");
+                mLeader.setSelectedIndex(0);
+                new GenerationGetList(this).start();
                 break;
+
             default:
                 break;
             }

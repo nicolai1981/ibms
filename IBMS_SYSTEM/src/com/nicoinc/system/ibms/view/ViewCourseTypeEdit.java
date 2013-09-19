@@ -21,7 +21,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseTypeGetList;
 import com.nicoinc.system.ibms.command.CourseTypeUpdate;
@@ -191,22 +190,9 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
                 break;
 
             case COURSE_TYPE_UPDATE:
-                JsonObject root = result.getJSON();
-                if (root.has("ERROR_CODE")) {
-                    switch (root.getAsInt()) {
-                    case 0:
-                        JOptionPane.showMessageDialog(this,"Erro");
-                        enableFields();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.getAsInt());
-                        enableFields();
-                        break;
-                    }
-                } else {
-                    new CourseTypeGetList(this).start();
-                }
+                new CourseTypeGetList(this).start();
                 break;
+
             default:
                 break;
             }

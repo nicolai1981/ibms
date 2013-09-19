@@ -71,7 +71,15 @@ public class HttpRequest {
             EntityUtils.consume(entity);
 
             mResult.setJSON(new JsonParser().parse(content.toString()).getAsJsonObject());
-            mResult.setCode(CODE.OK);
+
+            switch (mResult.getJSON().get("CODE").getAsInt()) {
+                case 0:
+                    mResult.setCode(CODE.OK);
+                    break;
+                default:
+                    mResult.setCode(CODE.UNKNOWN);
+                    break;
+            }
         } catch (JsonSyntaxException e) {
             mResult.setCode(CODE.SERVER_ERROR);
             e.printStackTrace();

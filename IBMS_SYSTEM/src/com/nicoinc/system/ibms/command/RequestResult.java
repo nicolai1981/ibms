@@ -38,7 +38,6 @@ public class RequestResult {
         WITHOUT_CONNECTION,
         SERVER_ERROR,
         UNKNOWN,
-        
     };
 
     private static final String JSON_DATA = "JSON_DATA";

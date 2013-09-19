@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
-import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseTypeCreate;
 import com.nicoinc.system.ibms.command.CourseTypeGetList;
@@ -114,24 +113,12 @@ public class ViewCourseTypeNew extends JPanel implements CommandListener {
                 JOptionPane.showMessageDialog(this,"Tipo de curso criado com sucesso.");
                 enableFields();
                 break;
+
             case COURSE_TYPE_CREATE:
-                JsonObject root = result.getJSON();
-                if (root.has("ERROR_CODE")) {
-                    switch (root.getAsInt()) {
-                    case 0:
-                        JOptionPane.showMessageDialog(this,"Erro");
-                        enableFields();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.getAsInt());
-                        enableFields();
-                        break;
-                    }
-                } else {
-                    mName.setText("");
-                    new CourseTypeGetList(this).start();
-                }
+                mName.setText("");
+                new CourseTypeGetList(this).start();
                 break;
+
             default:
                 break;
             }

@@ -389,70 +389,45 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
             JsonObject root = result.getJSON();
             switch (result.getCommand()) {
             case COURSE_TYPE_COURSE_LIST:
-                if (root.has("ERROR_CODE")) {
-                    switch (root.getAsInt()) {
-                    case 0:
-                        JOptionPane.showMessageDialog(this,"Erro");
-                        enableFields();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.getAsInt());
-                        enableFields();
-                        break;
-                    }
-                } else {
-                    List<Course> list = (List<Course>) result.getData(CourseTypeGetCourseList.HISTORY_LIST);
-                    for (Course course : list) {
-                        mHistoryListModel.addElement(course);
-                    }
-
-                    mTotalCourse.setText(String.valueOf(list.size()));
-                    enableFields();
+                List<Course> list = (List<Course>) result.getData(CourseTypeGetCourseList.HISTORY_LIST);
+                for (Course course : list) {
+                    mHistoryListModel.addElement(course);
                 }
+
+                mTotalCourse.setText(String.valueOf(list.size()));
+                enableFields();
                 break;
+
             case COURSE_GET_SUBSCRIBE_LIST:
-                if (root.has("ERROR_CODE")) {
-                    switch (root.getAsInt()) {
-                    case 0:
-                        JOptionPane.showMessageDialog(this,"Erro");
-                        enableFields();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this,"Código de erro desconhecido. Código: " + root.getAsInt());
-                        enableFields();
-                        break;
+                List<CourseSubscribe> listSubscribe = (List<CourseSubscribe>) result.getData(CourseGetSubscribeList.SUBSCRIBE_LIST);
+                int teacher = 0;
+                int complete = 0;
+                int incomplete = 0;
+                int end = 0;
+                for (CourseSubscribe subscribe : listSubscribe) {
+                    if (subscribe.mIsTeacher) {
+                        mTeacherListModel.addElement(subscribe);
+                        teacher++;
+                    } else if (subscribe.mCompleted) {
+                        mStudentCompleteListModel.addElement(subscribe);
+                        complete++;
+                    } else if (subscribe.mEndDate.getTime() == 0) {
+                        incomplete++;
+                        mStudentIncompleteListModel.addElement(subscribe);
+                    } else {
+                        end++;
+                        mStudentEndListModel.addElement(subscribe);
                     }
-                } else {
-                    List<CourseSubscribe> list = (List<CourseSubscribe>) result.getData(CourseGetSubscribeList.SUBSCRIBE_LIST);
-                    int teacher = 0;
-                    int complete = 0;
-                    int incomplete = 0;
-                    int end = 0;
-                    for (CourseSubscribe subscribe : list) {
-                        if (subscribe.mIsTeacher) {
-                            mTeacherListModel.addElement(subscribe);
-                            teacher++;
-                        } else if (subscribe.mCompleted) {
-                            mStudentCompleteListModel.addElement(subscribe);
-                            complete++;
-                        } else if (subscribe.mEndDate.getTime() == 0) {
-                            incomplete++;
-                            mStudentIncompleteListModel.addElement(subscribe);
-                        } else {
-                            end++;
-                            mStudentEndListModel.addElement(subscribe);
-                        }
-                    }
-
-                    mTotalTeachers.setText(String.valueOf(teacher));
-                    mTotalStudents.setText(String.valueOf(complete + incomplete + end));
-                    mTotalComplete.setText(String.valueOf(complete));
-                    mTotalIncomplete.setText(String.valueOf(incomplete));
-                    mTotalEnd.setText(String.valueOf(end));
-
-                    enableFields();
                 }
+
+                mTotalTeachers.setText(String.valueOf(teacher));
+                mTotalStudents.setText(String.valueOf(complete + incomplete + end));
+                mTotalComplete.setText(String.valueOf(complete));
+                mTotalIncomplete.setText(String.valueOf(incomplete));
+                mTotalEnd.setText(String.valueOf(end));
+                enableFields();
                 break;
+
             default:
                 break;
             }

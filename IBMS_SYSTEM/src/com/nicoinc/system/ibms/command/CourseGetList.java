@@ -25,15 +25,6 @@ public class CourseGetList extends Command {
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);
             JsonObject root = mResult.getJSON();
-            if (!root.has("CODE")) {
-                return;
-            }
-            int code = root.get("CODE").getAsInt();
-            if (code != 0) {
-                mResult.setCode(CODE.UNKNOWN);
-                return;
-            }
-
             if (!root.has("COURSE_LIST")) {
                 return;
             }
