@@ -10,6 +10,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.nicoinc.system.ibms.model.Member;
+
 public class FrameHome {
 
     private JFrame mFrame;
@@ -36,7 +38,7 @@ public class FrameHome {
         JMenu mnMembros = new JMenu("Membro");
         menuBar.add(mnMembros);
 
-        JMenuItem mntmCadastrar = new JMenuItem("Novo Membro");
+        JMenuItem mntmCadastrar = new JMenuItem("Novo");
         mntmCadastrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
@@ -50,13 +52,17 @@ public class FrameHome {
         mnMembros.add(mntmCadastrar);
 
         JMenuItem mntmEditar = new JMenuItem("Editar");
+        mntmEditar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewMemberSelect(FrameHome.this);
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
         mnMembros.add(mntmEditar);
-
-        JMenuItem mntmExcluir = new JMenuItem("Excluir");
-        mnMembros.add(mntmExcluir);
-
-        JMenuItem mntmVisualizar = new JMenuItem("Visualizar");
-        mnMembros.add(mntmVisualizar);
 
         JMenu mnEncontros = new JMenu("Encontro");
         menuBar.add(mnEncontros);
@@ -318,6 +324,24 @@ public class FrameHome {
         mnClula.add(mnRelatrios_3);
 
         mFrame.setVisible(true);
+    }
+
+    public void showEditMember(Member member) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewMemberEdit(FrameHome.this, member);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showSelectMember() {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewMemberSelect(FrameHome.this);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
     }
 
 }

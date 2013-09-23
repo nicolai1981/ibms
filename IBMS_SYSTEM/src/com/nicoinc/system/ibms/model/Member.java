@@ -28,7 +28,9 @@ public class Member {
     public int mStartType = 0;
 
     public long mGenerationId = 0;
+    public String mGenerationName = null;
     public long mLeaderId = 0;
+    public String mLeaderName = null;
     public boolean mIsLeader = false;
     public Date mEndDate = new Date(0);
 

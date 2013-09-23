@@ -62,9 +62,14 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
     private JComboBox mIsLeader;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
+    private Member mMember;
+    private FrameHome mHome;
 
-    public ViewMemberEdit() {
-        JLabel lblNewLabel = new JLabel("CRIAR MEMBRO");
+    public ViewMemberEdit(FrameHome home, Member member) {
+        mHome = home;
+        mMember = member;
+
+        JLabel lblNewLabel = new JLabel("EDITAR MEMBRO");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
@@ -462,9 +467,9 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         setLayout(groupLayout);
 
         // Fill leader list
-        Member member = new Member();
-        member.mName = "NENHUM";
-        mLeaderList.addItem(member);
+        Member memberNone = new Member();
+        memberNone.mName = "NENHUM";
+        mLeaderList.addItem(memberNone);
         for (Member item : Application.getInstance().getLeaderList()) {
             if (item.mEndDate.getTime() == 0) {
                 mLeaderList.addItem(item);

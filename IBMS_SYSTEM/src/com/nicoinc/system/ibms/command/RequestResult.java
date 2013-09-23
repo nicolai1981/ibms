@@ -10,6 +10,7 @@ public class RequestResult {
         // Member
         MEMBER_CREATE,
         MEMBER_GET_LIST,
+        MEMBER_GET_MEMBER,
 
         // Generation
         GENERATION_CREATE,

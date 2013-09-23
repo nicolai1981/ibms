@@ -13,16 +13,21 @@ import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
 
-public class MemberGetList extends Command {
+public class MemberGetMember extends Command {
+    private HttpRequest mHttpRequest;
 
-    public MemberGetList(CommandListener listener) {
-        super(COMMAND.MEMBER_GET_LIST);
+    public MemberGetMember(long id, CommandListener listener) {
+        super(COMMAND.MEMBER_GET_MEMBER);
         addListener(listener);
+
+        mHttpRequest = new HttpRequest(WEB_URL + "member_getMember.php", mResult);
+        mHttpRequest.addParam("ID", String.valueOf(id));
     }
 
     @Override
     public void doRun() {
-        new HttpRequest(WEB_URL + "member_getList.php", mResult).start();
+        mHttpRequest.start();
+
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);
             JsonObject root = mResult.getJSON();
