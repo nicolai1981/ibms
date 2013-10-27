@@ -88,7 +88,7 @@ $sqlQuery = "INSERT INTO MEMBRO ("
 			.")";
 $result = mysql_query($sqlQuery);
 if (!$result) {
-	echo "{\"ERROR_CODE\":2}";
+	echo "{\"CODE\":2}";
 	exit;
 }
 
@@ -96,7 +96,7 @@ $sqlQuery = "SELECT _ID FROM MEMBRO WHERE NOME='".$in_name."' AND DATA_INICIAL='
 $result = mysql_query($sqlQuery);
 $resultArray = mysql_fetch_array($result);
 if (!$resultArray) {
-	echo "{\"ERROR_CODE\":2}";
+	echo "{\"CODE\":3}";
 	exit;
 }
 $user_id = $resultArray["_ID"];
@@ -104,8 +104,8 @@ $user_id = $resultArray["_ID"];
 $sqlQuery = "INSERT INTO MEMBRO_LIDER (FK_MEMBRO, FK_LIDER, DATA_INICIAL, DATA_FINAL) VALUES (".$user_id.",".$in_leader_id.",'".$in_create_date."','0000-00-00')";
 $result = mysql_query($sqlQuery);
 if (!$result) {
-	echo "{\"ERROR_CODE\":2}";
+	echo "{\"CODE\":4}";
 	exit;
 }
-echo "{}";
+echo "{\"CODE\":0}";
 ?>

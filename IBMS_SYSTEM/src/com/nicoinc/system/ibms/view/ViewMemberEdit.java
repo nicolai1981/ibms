@@ -39,10 +39,10 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
     private static final long serialVersionUID = -8213291145000189731L;
 
     private JTextField mName;
-    private JComboBox mGender;
+    private JComboBox<String> mGender;
     private JTextField mBirthday;
-    private JComboBox mMaritialStatus;
-    private JComboBox mBloodType;
+    private JComboBox<String> mMaritialStatus;
+    private JComboBox<String> mBloodType;
     private JTextField mRG;
     private JTextField mCPF;
     private JTextField mMobile;
@@ -54,12 +54,12 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
     private JTextField mDistrict;
     private JTextField mCity;
     private JTextField mZIP;
-    private JComboBox mLeaderList;
+    private JComboBox<Member> mLeaderList;
     private JLabel mGeneration;
-    private JComboBox mIsMember;
+    private JComboBox<String> mIsMember;
     private JTextField mStartDate;
-    private JComboBox mStartType;
-    private JComboBox mIsLeader;
+    private JComboBox<String> mStartType;
+    private JComboBox<String> mIsLeader;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
     private Member mMember;
@@ -78,10 +78,11 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
 
         mName = new JTextField();
         mName.setFont(new Font("Arial", Font.PLAIN, 14));
+        mName.setText(mMember.mName);
 
         JLabel lblNewLabel_1 = new JLabel("Sexo (*)");
         lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
-        mGender = new JComboBox();
+        mGender = new JComboBox<String>();
         mGender.addItem("-");
         mGender.addItem("M");
         mGender.addItem("F");
@@ -95,7 +96,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         JLabel lblEstadoCivil = new JLabel("Estado civil (*)");
         lblEstadoCivil.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mMaritialStatus = new JComboBox();
+        mMaritialStatus = new JComboBox<String>();
         mMaritialStatus.addItem("-");
         mMaritialStatus.addItem("SOLTEIRO");
         mMaritialStatus.addItem("CASADO");
@@ -106,7 +107,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         JLabel lblSangue = new JLabel("Sangue");
         lblSangue.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mBloodType = new JComboBox();
+        mBloodType = new JComboBox<String>();
         mBloodType.addItem("-");
         mBloodType.addItem("O+");
         mBloodType.addItem("O-");
@@ -190,7 +191,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         JLabel lblLder = new JLabel("L\u00EDder");
         lblLder.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mLeaderList = new JComboBox();
+        mLeaderList = new JComboBox<Member>();
         mLeaderList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 Member leader = (Member)mLeaderList.getSelectedItem();
@@ -214,7 +215,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         JLabel lblMembro = new JLabel("Membro");
         lblMembro.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mIsMember = new JComboBox();
+        mIsMember = new JComboBox<String>();
         mIsMember.addItem("NÃO");
         mIsMember.addItem("SIM");
         mIsMember.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -228,7 +229,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         JLabel lblModoDeEntrada = new JLabel("Modo de entrada");
         lblModoDeEntrada.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mStartType = new JComboBox();
+        mStartType = new JComboBox<String>();
         mStartType.addItem("-");
         mStartType.addItem("BATISMO");
         mStartType.addItem("ACLAMAÇÃO");
@@ -237,7 +238,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         JLabel lblLder_1 = new JLabel("\u00C9 L\u00EDder?");
         lblLder_1.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mIsLeader = new JComboBox();
+        mIsLeader = new JComboBox<String>();
         mIsLeader.addItem("NÃO");
         mIsLeader.addItem("SIM");
         mIsLeader.setFont(new Font("Arial", Font.PLAIN, 14));

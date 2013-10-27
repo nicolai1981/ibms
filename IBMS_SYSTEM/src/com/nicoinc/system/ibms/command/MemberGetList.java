@@ -8,7 +8,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.RequestResult.CODE;
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
-import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
@@ -16,13 +15,14 @@ import com.nicoinc.system.ibms.model.Member;
 public class MemberGetList extends Command {
 
     public MemberGetList(CommandListener listener) {
-        super(COMMAND.MEMBER_GET_LIST);
+        super(COMMAND.MEMBER_GET_LIST, "member_getList.php");
         addListener(listener);
     }
 
     @Override
     public void doRun() {
-        new HttpRequest(WEB_URL + "member_getList.php", mResult).start();
+        super.doRun();
+
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);
             JsonObject root = mResult.getJSON();

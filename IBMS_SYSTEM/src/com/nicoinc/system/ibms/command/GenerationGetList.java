@@ -7,20 +7,20 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.RequestResult.CODE;
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
-import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
 
 public class GenerationGetList extends Command {
 
     public GenerationGetList(CommandListener listener) {
-        super(COMMAND.GENERATION_GET_LIST);
+        super(COMMAND.GENERATION_GET_LIST, "generation_getList.php");
         addListener(listener);
     }
 
     @Override
     public void doRun() {
-        new HttpRequest(WEB_URL + "generation_getList.php", mResult).start();
+        super.doRun();
+
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);
             JsonObject root = mResult.getJSON();

@@ -24,6 +24,16 @@ import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.command.RequestResult.CODE;
 import com.nicoinc.system.ibms.main.Application;
 
+/*
+ * CODE VALUES:
+ * 
+ * 0 - OK
+ * 1 - INVALID TOKEN
+ * 2 - COULD NOT SAVE MEMBER DATA
+ * 3 - COULD NOT FIND MEMBER DATA
+ * 4 - COULD NOT SAVE RELATION MEMBER-LEADER
+ */
+
 public class HttpRequest {
     private String mURL;
     private RequestResult mResult;
@@ -77,7 +87,8 @@ public class HttpRequest {
                     mResult.setCode(CODE.OK);
                     break;
                 default:
-                    mResult.setCode(CODE.UNKNOWN);
+                    mResult.setCode(CODE.SERVER_ERROR);
+                    mResult.setData("ERROR_CODE", mResult.getJSON().get("CODE").getAsInt());
                     break;
             }
         } catch (JsonSyntaxException e) {

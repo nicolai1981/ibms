@@ -7,6 +7,11 @@ import com.google.gson.JsonObject;
 
 public class RequestResult {
     public enum COMMAND {
+        // Security
+        LOGIN,
+        USER_CHANGE_PASSWORD,
+        USER_GET_LIST,
+
         // Member
         MEMBER_CREATE,
         MEMBER_GET_LIST,

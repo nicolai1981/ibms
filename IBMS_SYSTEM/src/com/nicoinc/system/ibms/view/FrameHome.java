@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import com.nicoinc.system.ibms.model.Member;
 
 public class FrameHome {
+    private static Member sUser;
+    private final int mType;
 
     private JFrame mFrame;
     private JPanel mCurrentJPanel = null;
@@ -20,7 +22,9 @@ public class FrameHome {
     /**
      * Create the application.
      */
-    public FrameHome() {
+    public FrameHome(int type, Member user) {
+        sUser = user;
+        mType = type;
         initialize();
     }
 
@@ -31,6 +35,7 @@ public class FrameHome {
         mFrame = new JFrame();
         mFrame.setBounds(100, 100, 1150, 700);
         mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mFrame.setTitle("Sistema IBMS. Usuário: " + sUser.mName);
 
         JMenuBar menuBar = new JMenuBar();
         mFrame.setJMenuBar(menuBar);
@@ -63,6 +68,19 @@ public class FrameHome {
             }
         });
         mnMembros.add(mntmEditar);
+        
+        JMenuItem mntmMudarSenha = new JMenuItem("Mudar senha");
+        mntmMudarSenha.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mCurrentJPanel != null) {
+                    mFrame.getContentPane().remove(mCurrentJPanel);
+                }
+                mCurrentJPanel = new ViewProfileChangePassword();
+                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+                mFrame.validate();
+            }
+        });
+        mnMembros.add(mntmMudarSenha);
 
         JMenu mnEncontros = new JMenu("Encontro");
         menuBar.add(mnEncontros);
@@ -344,4 +362,7 @@ public class FrameHome {
         mFrame.validate();
     }
 
+    public static Member getUser() {
+        return sUser;
+    }
 }

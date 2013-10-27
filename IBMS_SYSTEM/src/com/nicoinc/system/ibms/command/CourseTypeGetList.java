@@ -7,20 +7,20 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.RequestResult.CODE;
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
-import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.CourseType;
 
 public class CourseTypeGetList extends Command {
 
     public CourseTypeGetList(CommandListener listener) {
-        super(COMMAND.COURSE_TYPE_GET_LIST);
+        super(COMMAND.COURSE_TYPE_GET_LIST, "courseType_getList.php");
         addListener(listener);
     }
 
     @Override
     public void doRun() {
-        new HttpRequest(WEB_URL + "courseType_getList.php", mResult).start();
+        super.doRun();
+
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);
             JsonObject root = mResult.getJSON();
