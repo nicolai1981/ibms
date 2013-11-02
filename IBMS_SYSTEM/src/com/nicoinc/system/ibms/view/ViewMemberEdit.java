@@ -27,8 +27,8 @@ import br.com.caelum.stella.ValidationMessage;
 import br.com.caelum.stella.validation.CPFValidator;
 
 import com.nicoinc.system.ibms.command.CommandListener;
-import com.nicoinc.system.ibms.command.MemberCreate;
 import com.nicoinc.system.ibms.command.MemberGetList;
+import com.nicoinc.system.ibms.command.MemberUpdate;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
@@ -87,11 +87,13 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mGender.addItem("M");
         mGender.addItem("F");
         mGender.setFont(new Font("Arial", Font.PLAIN, 14));
+        mGender.setSelectedIndex(mMember.mGender);
 
         JLabel lblDataFinal = new JLabel("Data de nasc. (*)");
         lblDataFinal.setFont(new Font("Arial", Font.PLAIN, 14));
         mBirthday = new JTextField();
         mBirthday.setFont(new Font("Arial", Font.PLAIN, 14));
+        mBirthday.setText(sDateFormatter.format(mMember.mBirthday));
 
         JLabel lblEstadoCivil = new JLabel("Estado civil (*)");
         lblEstadoCivil.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -103,6 +105,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mMaritialStatus.addItem("VIUVO");
         mMaritialStatus.addItem("DESQUITADO");
         mMaritialStatus.setFont(new Font("Arial", Font.PLAIN, 14));
+        mMaritialStatus.setSelectedIndex(mMember.mMaritialStatus);
 
         JLabel lblSangue = new JLabel("Sangue");
         lblSangue.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -118,72 +121,84 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mBloodType.addItem("AB+");
         mBloodType.addItem("AB-");
         mBloodType.setFont(new Font("Arial", Font.PLAIN, 14));
+        mBloodType.setSelectedIndex(mMember.mBloodType);
 
         JLabel lblRg = new JLabel("RG");
         lblRg.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mRG = new JTextField();
         mRG.setFont(new Font("Arial", Font.PLAIN, 14));
+        mRG.setText(mMember.mRG);
 
         JLabel label = new JLabel("CPF");
         label.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mCPF = new JTextField();
         mCPF.setFont(new Font("Arial", Font.PLAIN, 14));
+        mCPF.setText(mMember.mCPF);
 
         JLabel lblCelular = new JLabel("Celular");
         lblCelular.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mMobile = new JTextField();
         mMobile.setFont(new Font("Arial", Font.PLAIN, 14));
+        mMobile.setText(mMember.mMobile);
 
         JLabel lblTelResidencial = new JLabel("Tel. Residencial");
         lblTelResidencial.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mPhoneHome = new JTextField();
         mPhoneHome.setFont(new Font("Arial", Font.PLAIN, 14));
+        mPhoneHome.setText(mMember.mPhoneHome);
 
         JLabel lblTelComercial = new JLabel("Tel. Comercial");
         lblTelComercial.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mPhoneWork = new JTextField();
         mPhoneWork.setFont(new Font("Arial", Font.PLAIN, 14));
+        mPhoneWork.setText(mMember.mPhoneWork);
 
         JLabel lblEmail = new JLabel("E-mail");
         lblEmail.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mEmail = new JTextField();
         mEmail.setFont(new Font("Arial", Font.PLAIN, 14));
+        mEmail.setText(mMember.mEmail);
 
         JLabel lblEndereo = new JLabel("Endere\u00E7o");
         lblEndereo.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mAddress = new JTextField();
         mAddress.setFont(new Font("Arial", Font.PLAIN, 14));
+        mAddress.setText(mMember.mAddress);
 
         JLabel lblComplemento = new JLabel("Complemento");
         lblComplemento.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mAddressMore = new JTextField();
         mAddressMore.setFont(new Font("Arial", Font.PLAIN, 14));
+        mAddressMore.setText(mMember.mAddressMore);
 
         JLabel lblBairro = new JLabel("Bairro");
         lblBairro.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mDistrict = new JTextField();
         mDistrict.setFont(new Font("Arial", Font.PLAIN, 14));
+        mDistrict.setText(mMember.mDistrict);
 
         JLabel lblCidade = new JLabel("Cidade");
         lblCidade.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mCity = new JTextField();
         mCity.setFont(new Font("Arial", Font.PLAIN, 14));
+        mCity.setText(mMember.mCity);
 
         JLabel lblCep = new JLabel("CEP");
         lblCep.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mZIP = new JTextField();
         mZIP.setFont(new Font("Arial", Font.PLAIN, 14));
+        mZIP.setText(mMember.mZIP);
 
         JPanel panel = new JPanel();
         panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -194,7 +209,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mLeaderList = new JComboBox<Member>();
         mLeaderList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                Member leader = (Member)mLeaderList.getSelectedItem();
+                Member leader = (Member) mLeaderList.getSelectedItem();
                 mGeneration.setText("-");
                 for (Generation generation : Application.getInstance().getGenerationList()) {
                     if (generation.mId == leader.mGenerationId) {
@@ -211,6 +226,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
 
         mGeneration = new JLabel("-");
         mGeneration.setFont(new Font("Arial", Font.BOLD, 14));
+        mGeneration.setText(mMember.mGenerationName == null ? "-" : mMember.mGenerationName);
 
         JLabel lblMembro = new JLabel("Membro");
         lblMembro.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -219,12 +235,14 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mIsMember.addItem("NÃO");
         mIsMember.addItem("SIM");
         mIsMember.setFont(new Font("Arial", Font.PLAIN, 14));
+        mIsMember.setSelectedIndex(mMember.mStartDate.getTime() == 0 ? 0 : 1);
 
         JLabel lblDataDeEntrada = new JLabel("Data de entrada");
         lblDataDeEntrada.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mStartDate = new JTextField();
         mStartDate.setFont(new Font("Arial", Font.PLAIN, 14));
+        mStartDate.setText(mMember.mStartDate.getTime() == 0 ? "" : sDateFormatter.format(mMember.mStartDate));
 
         JLabel lblModoDeEntrada = new JLabel("Modo de entrada");
         lblModoDeEntrada.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -234,6 +252,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mStartType.addItem("BATISMO");
         mStartType.addItem("ACLAMAÇÃO");
         mStartType.setFont(new Font("Arial", Font.PLAIN, 14));
+        mStartType.setSelectedIndex(mMember.mStartType);
 
         JLabel lblLder_1 = new JLabel("\u00C9 L\u00EDder?");
         lblLder_1.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -242,16 +261,18 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mIsLeader.addItem("NÃO");
         mIsLeader.addItem("SIM");
         mIsLeader.setFont(new Font("Arial", Font.PLAIN, 14));
+        mIsLeader.setSelectedIndex(mMember.mIsLeader ? 1 : 0);
 
-        mButtonSave = new JButton("Criar");
-        mButtonSave.setIcon(new ImageIcon(ViewMemberEdit.class.getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
+        mButtonSave = new JButton("Salvar");
+        mButtonSave.setIcon(new ImageIcon(ViewMemberEdit.class
+                .getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
         mButtonSave.setFont(new Font("Arial", Font.PLAIN, 14));
         mButtonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 Member member = checkData();
                 if (member != null) {
                     disableFields();
-                    new MemberCreate(member, ViewMemberEdit.this).run();
+                    new MemberUpdate(member, ViewMemberEdit.this).run();
                 }
             }
         });
@@ -267,12 +288,14 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                     .addContainerGap()
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                         .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1139, Short.MAX_VALUE)
+                            .addContainerGap())
+                        .addGroup(groupLayout.createSequentialGroup()
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                                         .addComponent(lblGerao)
-                                        .addComponent(mName, GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE))
+                                        .addComponent(mName, GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE))
                                     .addPreferredGap(ComponentPlacement.RELATED)
                                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
                                         .addComponent(mBirthday, 0, 0, Short.MAX_VALUE)
@@ -300,7 +323,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                                     .addPreferredGap(ComponentPlacement.RELATED)
                                     .addComponent(lblTelComercial, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
+                                    .addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE))
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(mRG, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(ComponentPlacement.RELATED)
@@ -312,10 +335,10 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                                     .addPreferredGap(ComponentPlacement.RELATED)
                                     .addComponent(mPhoneWork, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(mEmail, GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)))
+                                    .addComponent(mEmail, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)))
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                            .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(mButtonSave, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -323,22 +346,22 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblEndereo, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(lblComplemento, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                            .addComponent(lblComplemento, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(mAddress, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(mAddressMore, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                            .addComponent(mAddressMore, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                            .addPreferredGap(ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                             .addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(mDistrict, GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                            .addComponent(mDistrict, GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(mCity, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
@@ -346,16 +369,16 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(panel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                                .addComponent(panel, GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(mLeaderList, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)
                                     .addGap(6)
-                                    .addComponent(mGeneration, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)))
+                                    .addComponent(mGeneration, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)))
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblLder, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(lblGerao_1, GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+                            .addComponent(lblGerao_1, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblMembro, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
@@ -476,31 +499,41 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                 mLeaderList.addItem(item);
             }
         }
+
+        mLeaderList.setSelectedIndex(0);
+        for (int i = 0; i < mLeaderList.getItemCount(); i++) {
+            Member item = mLeaderList.getItemAt(i);
+            if (item.mId == mMember.mLeaderId) {
+                mLeaderList.setSelectedIndex(i);
+                break;
+            }
+        }
     }
 
     @Override
     public void onCommandFinished(RequestResult result) {
-        switch(result.getCode()) {
+        switch (result.getCode()) {
         case WITHOUT_CONNECTION:
-            JOptionPane.showMessageDialog(this,"Sem conexão com a internet.\nNão foi possível completar a ação.");
+            JOptionPane.showMessageDialog(this, "Sem conexão com a internet.\nNão foi possível completar a ação.");
             enableFields();
             break;
         case SERVER_ERROR:
-            JOptionPane.showMessageDialog(this,"Erro no servidor.\nTente mais tarde.");
+            JOptionPane.showMessageDialog(this, "Erro no servidor.\nTente mais tarde.");
             enableFields();
             break;
         case UNKNOWN:
-            JOptionPane.showMessageDialog(this,"Erro desconhecido.\nFeche o aplicativo e tente novamente.");
+            JOptionPane.showMessageDialog(this, "Erro desconhecido.\nFeche o aplicativo e tente novamente.");
             enableFields();
             break;
         case OK:
             switch (result.getCommand()) {
             case MEMBER_GET_LIST:
-                JOptionPane.showMessageDialog(this,"Membro criado com sucesso.");
+                JOptionPane.showMessageDialog(this, "Dados do membro alterado com sucesso.");
                 enableFields();
+                mHome.showSelectMember();
                 break;
 
-            case MEMBER_CREATE:
+            case MEMBER_UPDATE:
                 clearFields();
                 new MemberGetList(this).start();
                 break;
@@ -568,7 +601,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
     private void clearFields() {
         mName.setText("");
         mGender.setSelectedIndex(0);
-        mBirthday.setText("");;
+        mBirthday.setText("");
         mMaritialStatus.setSelectedIndex(0);
         mBloodType.setSelectedIndex(0);
         mRG.setText("");
@@ -577,7 +610,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mPhoneHome.setText("");
         mPhoneWork.setText("");
         mEmail.setText("");
-        mAddress.setText("");;
+        mAddress.setText("");
         mAddressMore.setText("");
         mDistrict.setText("");
         mCity.setText("");
@@ -592,42 +625,43 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
 
     private Member checkData() {
         Member member = new Member();
+        member.mId = mMember.mId;
 
         String text = mName.getText().trim().toUpperCase();
         if (text.length() == 0) {
-            JOptionPane.showMessageDialog(this,"O nome deve ser preenchido.");
+            JOptionPane.showMessageDialog(this, "O nome deve ser preenchido.");
             return null;
         }
         member.mName = text;
 
         text = mBirthday.getText().trim().toUpperCase();
         if (text.length() == 0) {
-            JOptionPane.showMessageDialog(this,"A data de nascimento deve ser preenchida.");
+            JOptionPane.showMessageDialog(this, "A data de nascimento deve ser preenchida.");
             return null;
         }
         if (text.length() != 10) {
-            JOptionPane.showMessageDialog(this,"A data de nascimento deve estar no formato DD/MM/YYYY");
+            JOptionPane.showMessageDialog(this, "A data de nascimento deve estar no formato DD/MM/YYYY");
             return null;
         }
         try {
             member.mBirthday = sDateFormatter.parse(text);
         } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this,"A data de nascimento deve estar no formato DD/MM/YYYY");
+            JOptionPane.showMessageDialog(this, "A data de nascimento deve estar no formato DD/MM/YYYY");
             return null;
         }
         if (member.mBirthday.getTime() > Calendar.getInstance().getTimeInMillis()) {
-            JOptionPane.showMessageDialog(this,"A data de nascimento não pode ser depois de hoje.");
+            JOptionPane.showMessageDialog(this, "A data de nascimento não pode ser depois de hoje.");
             return null;
         }
 
         if (mGender.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this,"O sexo deve ser preenchido.");
+            JOptionPane.showMessageDialog(this, "O sexo deve ser preenchido.");
             return null;
         }
         member.mGender = mGender.getSelectedIndex();
 
         if (mMaritialStatus.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this,"O estado civil deve ser preenchido.");
+            JOptionPane.showMessageDialog(this, "O estado civil deve ser preenchido.");
             return null;
         }
         member.mMaritialStatus = mMaritialStatus.getSelectedIndex();
@@ -647,14 +681,16 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
             } else {
                 for (ValidationMessage item : msgList) {
                     if ("CPFError : INVALID FORMAT".equals(item.getMessage())) {
-                        JOptionPane.showMessageDialog(this,"O formato do CPF deve ser XXX.XXX.XXX-XX.\nOs zeros devem ser colocados ex. 0004.270.720-00.");
+                        JOptionPane
+                                .showMessageDialog(this,
+                                        "O formato do CPF deve ser XXX.XXX.XXX-XX.\nOs zeros devem ser colocados ex. 0004.270.720-00.");
                         return null;
                     } else if ("CPFError : INVALID CHECK DIGITS".equals(item.getMessage())) {
-                        JOptionPane.showMessageDialog(this,"Digito de verificação do CPF está errado.");
+                        JOptionPane.showMessageDialog(this, "Digito de verificação do CPF está errado.");
                         return null;
                     }
                 }
-                JOptionPane.showMessageDialog(this,"O número do CPF está errado.");
+                JOptionPane.showMessageDialog(this, "O número do CPF está errado.");
                 return null;
             }
         }
@@ -711,29 +747,29 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         if (mIsMember.getSelectedIndex() == 1) {
             String startDate = mStartDate.getText().trim().toUpperCase();
             if (startDate.length() == 0) {
-                JOptionPane.showMessageDialog(this,"A data quando virou membro deve ser preenchida.");
+                JOptionPane.showMessageDialog(this, "A data quando virou membro deve ser preenchida.");
                 return null;
             }
             if (startDate.length() != 10) {
-                JOptionPane.showMessageDialog(this,"A data quando virou membro deve estar no formato DD/MM/YYYY");
+                JOptionPane.showMessageDialog(this, "A data quando virou membro deve estar no formato DD/MM/YYYY");
                 return null;
             }
             try {
                 member.mStartDate = sDateFormatter.parse(startDate);
             } catch (ParseException e) {
-                JOptionPane.showMessageDialog(this,"A data quando virou membro deve estar no formato DD/MM/YYYY");
+                JOptionPane.showMessageDialog(this, "A data quando virou membro deve estar no formato DD/MM/YYYY");
                 return null;
             }
             if (member.mStartDate.getTime() > Calendar.getInstance().getTimeInMillis()) {
-                JOptionPane.showMessageDialog(this,"A data quando virou membro não pode ser depois de hoje.");
+                JOptionPane.showMessageDialog(this, "A data quando virou membro não pode ser depois de hoje.");
                 return null;
             }
 
             if (mStartType.getSelectedIndex() == 0) {
-                JOptionPane.showMessageDialog(this,"O modo de entrada deve ser definido.");
+                JOptionPane.showMessageDialog(this, "O modo de entrada deve ser definido.");
                 return null;
             }
-            
+            member.mStartType = mStartType.getSelectedIndex();
         }
 
         member.mIsLeader = mIsLeader.getSelectedIndex() == 1;

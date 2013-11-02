@@ -1,15 +1,14 @@
 package com.nicoinc.system.ibms.command;
 
-import java.util.Calendar;
-
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
 import com.nicoinc.system.ibms.model.Member;
 
-public class MemberCreate extends Command {
-    public MemberCreate(Member member, CommandListener listener) {
-        super(COMMAND.MEMBER_CREATE, "member_create.php");
+public class MemberUpdate extends Command {
+    public MemberUpdate(Member member, CommandListener listener) {
+        super(COMMAND.MEMBER_UPDATE, "member_update.php");
         addListener(listener);
 
+        mHttpRequest.addParam("ID", String.valueOf(member.mId));
         mHttpRequest.addParam("NAME", member.mName);
         mHttpRequest.addParam("BIRTHDAY", sDateFormatter.format(member.mBirthday));
         mHttpRequest.addParam("GENDER", String.valueOf(member.mGender));
@@ -28,13 +27,19 @@ public class MemberCreate extends Command {
         mHttpRequest.addParam("CITY", member.mCity);
         mHttpRequest.addParam("ZIP", member.mZIP);
 
-        mHttpRequest.addParam("CREATE_DATE", sDateFormatter.format(Calendar.getInstance().getTime()));
         if (member.mStartDate.getTime() == 0) {
             mHttpRequest.addParam("START_DATE", "0000-00-00");
         } else {
             mHttpRequest.addParam("START_DATE", sDateFormatter.format(member.mStartDate));
         }
         mHttpRequest.addParam("START_TYPE", String.valueOf(member.mStartType));
+
+        if (member.mEndDate.getTime() == 0) {
+            mHttpRequest.addParam("END_DATE", "0000-00-00");
+        } else {
+            mHttpRequest.addParam("END_DATE", sDateFormatter.format(member.mStartDate));
+        }
+
         mHttpRequest.addParam("LEADER_ID", String.valueOf(member.mLeaderId));
         mHttpRequest.addParam("GENERATION_ID", String.valueOf(member.mGenerationId));
         mHttpRequest.addParam("IS_LEADER", String.valueOf(member.mIsLeader ? "1" : "0"));

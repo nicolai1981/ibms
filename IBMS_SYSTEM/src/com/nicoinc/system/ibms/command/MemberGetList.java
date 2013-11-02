@@ -70,6 +70,11 @@ public class MemberGetList extends Command {
                 }
                 member.mGenerationId = item.get("FK_GENERATION").getAsLong();
 
+                if (!item.has("FK_LEADER")) {
+                    continue;
+                }
+                member.mLeaderId = item.get("FK_LEADER").getAsLong();
+
                 memberList.add(member);
                 if (member.mIsLeader && (member.mEndDate.getTime() == 0)) {
                     leaderList.add(member);

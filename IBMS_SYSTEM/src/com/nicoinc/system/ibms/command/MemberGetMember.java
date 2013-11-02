@@ -5,25 +5,21 @@ import java.text.ParseException;
 import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.RequestResult.CODE;
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
-import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
 
 public class MemberGetMember extends Command {
-    private HttpRequest mHttpRequest;
-
     public MemberGetMember(long id, CommandListener listener) {
-        super(COMMAND.MEMBER_GET_MEMBER);
+        super(COMMAND.MEMBER_GET_MEMBER, "member_getMember.php");
         addListener(listener);
 
-        mHttpRequest = new HttpRequest(WEB_URL + "member_getMember.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(id));
     }
 
     @Override
     public void doRun() {
-        mHttpRequest.start();
+        super.doRun();
 
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);

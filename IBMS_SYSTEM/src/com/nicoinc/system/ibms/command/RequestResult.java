@@ -14,6 +14,7 @@ public class RequestResult {
 
         // Member
         MEMBER_CREATE,
+        MEMBER_UPDATE,
         MEMBER_GET_LIST,
         MEMBER_GET_MEMBER,
 
