@@ -47,6 +47,11 @@ public class MemberGetList extends Command {
                 }
                 member.mName = item.get("NAME").getAsString();
 
+                if (!item.has("GENDER")) {
+                    continue;
+                }
+                member.mGender = item.get("GENDER").getAsInt();
+
                 if (!item.has("END_DATE")) {
                     continue;
                 }

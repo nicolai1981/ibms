@@ -1028,6 +1028,14 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         }
 
         Member leader = (Member) mLeaderList.getSelectedItem();
+        if (leader.mGender != member.mGender) {
+            if (member.mGender == 1) {
+                JOptionPane.showMessageDialog(this, "O líder do membro deve ser um homem.");
+            } else {
+                JOptionPane.showMessageDialog(this, "A líder do membro deve ser uma mulher.");
+            }
+            return null;
+        }
         member.mLeaderId = leader.mId;
         member.mGenerationId = leader.mGenerationId;
 

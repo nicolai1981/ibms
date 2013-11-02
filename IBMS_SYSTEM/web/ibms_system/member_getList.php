@@ -16,6 +16,7 @@ $resultArray = mysql_fetch_array($resultSelect);
 while ($resultArray) {
 	$user_id = $resultArray["_ID"];
 	$user_name = $resultArray["NOME"];
+	$user_gender = $resultArray["SEXO"];
 	$user_end_date = $resultArray["DATA_FINAL"];
 	$user_is_leader = $resultArray["IS_LIDER"];
 	$user_gen_id = $resultArray["FK_GERACAO"];
@@ -24,6 +25,7 @@ while ($resultArray) {
 		."{"
 		."\"ID\":".$user_id.","
 		."\"NAME\":"."\"".$user_name."\","
+		."\"GENDER\":".$user_gender.","
 		."\"END_DATE\":"."\"".$user_end_date."\","
 		."\"IS_LEADER\":".$user_is_leader.","
 		."\"FK_LEADER\":".$user_leader_id.","
