@@ -60,6 +60,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
     private JTextField mStartDate;
     private JComboBox<String> mStartType;
     private JComboBox<String> mIsLeader;
+    private JComboBox<String> mLevel;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
     private Member mMember;
@@ -263,6 +264,30 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mIsLeader.setFont(new Font("Arial", Font.PLAIN, 14));
         mIsLeader.setSelectedIndex(mMember.mIsLeader ? 1 : 0);
 
+        JLabel lblGraduao = new JLabel("Gradua\u00E7\u00E3o");
+        lblGraduao.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        mLevel = new JComboBox<String>();
+        mLevel.addItem("NENHUM");
+        mLevel.addItem("DISCÍPULO");
+        mLevel.addItem("PASTOR");
+        mLevel.addItem("BISPO");
+        mLevel.addItem("APÓSTOLO");
+        mLevel.addItem("12 DE 1ª GERAÇÃO - LEVANTADO");
+        mLevel.addItem("12 DE 1ª GERAÇÃO - LEGITIMADO");
+        mLevel.addItem("12 DE 1ª GERAÇÃO - CONSAGRADO");
+        mLevel.addItem("12 DE 2ª GERAÇÃO - LEVANTADO");
+        mLevel.addItem("12 DE 2ª GERAÇÃO - LEGITIMADO");
+        mLevel.addItem("12 DE 2ª GERAÇÃO - CONSAGRADO");
+        mLevel.addItem("12 DE 3ª GERAÇÃO - LEVANTADO");
+        mLevel.addItem("12 DE 3ª GERAÇÃO - LEGITIMADO");
+        mLevel.addItem("12 DE 3ª GERAÇÃO - CONSAGRADO");
+        mLevel.addItem("12 DE 4ª GERAÇÃO - LEVANTADO");
+        mLevel.addItem("12 DE 4ª GERAÇÃO - LEGITIMADO");
+        mLevel.addItem("12 DE 4ª GERAÇÃO - CONSAGRADO");
+        mLevel.setFont(new Font("Arial", Font.PLAIN, 14));
+        mLevel.setSelectedIndex(mMember.mLevel);
+
         mButtonSave = new JButton("Salvar");
         mButtonSave.setIcon(new ImageIcon(ViewMemberEdit.class
                 .getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
@@ -295,7 +320,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                                         .addComponent(lblGerao)
-                                        .addComponent(mName, GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE))
+                                        .addComponent(mName, GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
                                     .addPreferredGap(ComponentPlacement.RELATED)
                                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
                                         .addComponent(mBirthday, 0, 0, Short.MAX_VALUE)
@@ -323,7 +348,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                                     .addPreferredGap(ComponentPlacement.RELATED)
                                     .addComponent(lblTelComercial, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE))
+                                    .addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE))
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(mRG, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(ComponentPlacement.RELATED)
@@ -335,33 +360,33 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                                     .addPreferredGap(ComponentPlacement.RELATED)
                                     .addComponent(mPhoneWork, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(ComponentPlacement.RELATED)
-                                    .addComponent(mEmail, GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)))
+                                    .addComponent(mEmail, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)))
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
+                            .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1139, Short.MAX_VALUE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(mButtonSave, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mButtonSave, GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addGap(1029))
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblEndereo, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(lblComplemento, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                            .addComponent(lblComplemento, GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(mAddress, GroupLayout.PREFERRED_SIZE, 700, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(mAddressMore, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                            .addComponent(mAddressMore, GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                            .addPreferredGap(ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                             .addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(mDistrict, GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                            .addComponent(mDistrict, GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                             .addPreferredGap(ComponentPlacement.RELATED)
                             .addComponent(mCity, GroupLayout.PREFERRED_SIZE, 450, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
@@ -369,16 +394,16 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(panel, GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
+                                .addComponent(panel, GroupLayout.DEFAULT_SIZE, 1139, Short.MAX_VALUE)
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(mLeaderList, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)
                                     .addGap(6)
-                                    .addComponent(mGeneration, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)))
+                                    .addComponent(mGeneration, GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)))
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblLder, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.RELATED)
-                            .addComponent(lblGerao_1, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                            .addComponent(lblGerao_1, GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                             .addContainerGap())
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblMembro, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
@@ -393,13 +418,19 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                             .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.UNRELATED)
                             .addComponent(mStartType, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(717, Short.MAX_VALUE))
+                            .addContainerGap(746, Short.MAX_VALUE))
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(lblLder_1, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(1040, Short.MAX_VALUE))
+                            .addContainerGap(1069, Short.MAX_VALUE))
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(mIsLeader, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap(1040, Short.MAX_VALUE))))
+                            .addContainerGap(1069, Short.MAX_VALUE))
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(lblGraduao, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(949, Short.MAX_VALUE))
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(mLevel, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())))
         );
         groupLayout.setVerticalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)
@@ -482,7 +513,11 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                     .addComponent(lblLder_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(mIsLeader, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                    .addComponent(lblGraduao, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(mLevel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                     .addComponent(mButtonSave)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -568,6 +603,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mStartType.setEnabled(true);
         mIsLeader.setEnabled(true);
         mButtonSave.setEnabled(true);
+        mLevel.setEnabled(true);
         mProgressBar.setVisible(false);
     }
 
@@ -595,6 +631,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mStartType.setEnabled(false);
         mIsLeader.setEnabled(false);
         mButtonSave.setEnabled(false);
+        mLevel.setEnabled(false);
         mProgressBar.setVisible(true);
     }
 
@@ -621,6 +658,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         mStartDate.setText("");
         mStartType.setSelectedIndex(0);
         mIsLeader.setSelectedIndex(0);
+        mLevel.setSelectedIndex(0);
     }
 
     private Member checkData() {
@@ -741,7 +779,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         }
 
         Member leader = (Member) mLeaderList.getSelectedItem();
-        if (leader.mGender != member.mGender) {
+        if ((leader.mId != 0) && (leader.mGender != member.mGender)) {
             if (member.mGender == 1) {
                 JOptionPane.showMessageDialog(this, "O líder do membro deve ser um homem.");
             } else {
@@ -778,7 +816,18 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
                 return null;
             }
             member.mStartType = mStartType.getSelectedIndex();
+
+            if (mLevel.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(this, "A graduação do membro deve ser definida.");
+                return null;
+            }
+        } else {
+            if (mLevel.getSelectedIndex() != 0) {
+                JOptionPane.showMessageDialog(this, "A graduação só pode ser definida se a pessoa já for membro.");
+                return null;
+            }
         }
+        member.mLevel = mLevel.getSelectedIndex();
 
         member.mIsLeader = mIsLeader.getSelectedIndex() == 1;
 

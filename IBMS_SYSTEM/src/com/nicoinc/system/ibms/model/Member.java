@@ -34,6 +34,8 @@ public class Member {
     public boolean mIsLeader = false;
     public Date mEndDate = new Date(0);
 
+    public int mLevel = 0;
+
     @Override
     public String toString() {
         return mName;

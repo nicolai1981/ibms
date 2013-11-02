@@ -31,6 +31,7 @@ $in_start_type = ($_POST['START_TYPE']);
 $in_end_date = ($_POST['END_DATE']);
 $in_is_leader = ($_POST['IS_LEADER']);
 $in_leader_id = ($_POST['LEADER_ID']);
+$in_level = ($_POST['FK_LEVEL']);
 
 $sqlQuery = "SELECT * FROM MEMBRO WHERE _ID=".$in_leader_id;
 $result = mysql_query($sqlQuery);
@@ -71,8 +72,8 @@ if (!$result) {
 	exit;
 }
 
-// Get old data from user
-$sqlQuery = "SELECT * FROM MEMBRO_LIDER WHERE FK_MEMBRO=".$in_id;
+// Get old leader data from user
+$sqlQuery = "SELECT * FROM MEMBRO_LIDER WHERE FK_MEMBRO=".$in_id." AND DATA_FINAL='0000-00-00'";
 $result = mysql_query($sqlQuery);
 $resultArray = mysql_fetch_array($result);
 if (!$resultArray) {
@@ -80,10 +81,11 @@ if (!$resultArray) {
 	exit;
 }
 $in_old_leader_id = $resultArray["FK_LIDER"];
+$reg_id = $resultArray["_ID"];
 if ($in_leader_id != $in_old_leader_id) {
 	$sqlQuery = "UPDATE MEMBRO_LIDER SET "
 					."DATA_FINAL='".date('Y-m-d', time())."'"
-				." WHERE FK_MEMBRO=".$in_id;
+				." WHERE _ID=".$reg_id;
 	$result = mysql_query($sqlQuery);
 	if (!$result) {
 		echo "{\"CODE\":4}";
@@ -103,6 +105,46 @@ if ($in_leader_id != $in_old_leader_id) {
 	$result = mysql_query($sqlQuery);
 	if (!$result) {
 		echo "{\"CODE\":5}";
+		exit;
+	}
+}
+
+// Get old level data from user
+$sqlQuery = "SELECT * FROM MEMBRO_GRADUACAO WHERE FK_MEMBRO=".$in_id." AND DATA_FINAL='0000-00-00'";
+$result = mysql_query($sqlQuery);
+$resultArray = mysql_fetch_array($result);
+if (!$resultArray) {
+	echo "{\"CODE\":6}";
+	exit;
+}
+$in_old_leader_id = $resultArray["FK_LIDER"];
+$in_old_level = $resultArray["FK_GRADUACAO"];
+$reg_id = $resultArray["_ID"];
+if (($in_leader_id != $in_old_leader_id) || ($in_level != $in_old_level)) {
+	$sqlQuery = "UPDATE MEMBRO_GRADUACAO SET "
+					."DATA_FINAL='".date('Y-m-d', time())."'"
+				." WHERE _ID=".$reg_id;
+	$result = mysql_query($sqlQuery);
+	if (!$result) {
+		echo "{\"CODE\":7}";
+		exit;
+	}
+
+	$sqlQuery = "INSERT INTO MEMBRO_GRADUACAO ("
+					."FK_MEMBRO,"
+					."FK_LIDER,"
+					."FK_GRADUACAO,"
+					."DATA_INICIAL,"
+					."DATA_FINAL"
+				.") VALUES ("
+					.$in_id.","
+					.$in_leader_id.","
+					.$in_level.",'"
+					.date('Y-m-d', time())."',"
+					."'0000-00-00')";
+	$result = mysql_query($sqlQuery);
+	if (!$result) {
+		echo "{\"CODE\":8}";
 		exit;
 	}
 }

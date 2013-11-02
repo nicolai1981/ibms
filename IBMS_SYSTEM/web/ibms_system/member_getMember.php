@@ -50,6 +50,15 @@ if (!$resultSelect) {
 $resultArray = mysql_fetch_array($resultSelect);
 $leader_id = $resultArray['FK_LIDER'];
 
+$sqlQuery = "SELECT * FROM MEMBRO_GRADUACAO WHERE FK_MEMBRO=".$in_id." AND DATA_FINAL='0000-00-00'";
+$resultSelect = mysql_query($sqlQuery);
+if (!$resultSelect) {
+	echo "{\"ERROR_CODE\":5}";
+	exit;
+}
+$resultArray = mysql_fetch_array($resultSelect);
+$level = $resultArray['FK_GRADUACAO'];
+
 $result = "{"
 	."\"CODE\":0,"
 	."\"ID\":\"".$in_id."\","
@@ -75,6 +84,7 @@ $result = "{"
 	."\"END_DATE\":\"".$end_date."\","
 	."\"IS_LEADER\":\"".$is_leader."\","
 	."\"FK_GENERATION\":\"".$generation_id."\","
+	."\"FK_LEVEL\":\"".$level."\","
 	."\"LEADER_ID\":\"".$leader_id."\""
 	."}";
 echo $result;

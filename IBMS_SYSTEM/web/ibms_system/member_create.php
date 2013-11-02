@@ -29,6 +29,7 @@ $in_start_date = ($_POST['START_DATE']);
 $in_start_type = ($_POST['START_TYPE']);
 $in_is_leader = ($_POST['IS_LEADER']);
 $in_leader_id = ($_POST['LEADER_ID']);
+$in_level = ($_POST['FK_LEVEL']);
 
 $sqlQuery = "SELECT * FROM MEMBRO WHERE _ID=".$in_leader_id;
 $result = mysql_query($sqlQuery);
@@ -105,6 +106,13 @@ $sqlQuery = "INSERT INTO MEMBRO_LIDER (FK_MEMBRO, FK_LIDER, DATA_INICIAL, DATA_F
 $result = mysql_query($sqlQuery);
 if (!$result) {
 	echo "{\"CODE\":4}";
+	exit;
+}
+
+$sqlQuery = "INSERT INTO MEMBRO_GRADUACAO (FK_MEMBRO, FK_LIDER, FK_GRADUACAO, DATA_INICIAL, DATA_FINAL) VALUES (".$user_id.",".$in_leader_id.",".$in_level.",'".$in_create_date."','0000-00-00')";
+$result = mysql_query($sqlQuery);
+if (!$result) {
+	echo "{\"CODE\":5}";
 	exit;
 }
 echo "{\"CODE\":0}";

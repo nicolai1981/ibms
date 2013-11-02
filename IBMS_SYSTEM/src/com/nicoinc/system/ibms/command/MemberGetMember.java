@@ -192,6 +192,11 @@ public class MemberGetMember extends Command {
                 }
             }
 
+            if (!root.has("FK_LEVEL")) {
+                return;
+            }
+            member.mLevel = root.get("FK_LEVEL").getAsInt();
+
             mResult.setData("MEMBER", member);
             mResult.setCode(CODE.OK);
         }
