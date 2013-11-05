@@ -36,7 +36,6 @@ public class MemberCreate extends Command {
         }
         mHttpRequest.addParam("START_TYPE", String.valueOf(member.mStartType));
         mHttpRequest.addParam("LEADER_ID", String.valueOf(member.mLeaderId));
-        mHttpRequest.addParam("GENERATION_ID", String.valueOf(member.mGenerationId));
         mHttpRequest.addParam("IS_LEADER", member.mIsLeader ? "1" : "0");
         mHttpRequest.addParam("FK_LEVEL", String.valueOf(member.mLevel));
     }

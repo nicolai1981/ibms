@@ -25,14 +25,13 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import com.nicoinc.system.ibms.command.CommandListener;
-import com.nicoinc.system.ibms.command.MemberGetList;
-import com.nicoinc.system.ibms.command.MemberGetMember;
-import com.nicoinc.system.ibms.command.MemberUpdate;
+import com.nicoinc.system.ibms.command.GenerationGetList;
+import com.nicoinc.system.ibms.command.GenerationUpdate;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
-import com.nicoinc.system.ibms.model.Member;
+import com.nicoinc.system.ibms.model.Generation;
 
-public class ViewMemberSelect extends JPanel implements CommandListener {
+public class ViewGenerationSelect extends JPanel implements CommandListener {
     private static final long serialVersionUID = -8213291145000189731L;
     private JButton mButtonEdit;
     private JButton mButtonEnable;
@@ -40,12 +39,11 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
     private JProgressBar mProgressBar;
     private JTable mMemberList;
     private FrameHome mHome;
-    private boolean mUpdateData = false;
 
-    public ViewMemberSelect(FrameHome home) {
+    public ViewGenerationSelect(FrameHome home) {
         mHome = home;
 
-        JLabel lblNewLabel = new JLabel("SELECIONE O MEMBRO");
+        JLabel lblNewLabel = new JLabel("SELECIONE A GERAÇÃO");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
@@ -60,9 +58,10 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    Member member = Application.getInstance().getMemberAllList().get(mMemberList.getSelectedRow());
-                    mButtonEdit.setEnabled(member.mEndDate.getTime() == 0);
-                    mButtonEnable.setText((member.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
+                    Generation generation = Application.getInstance().getGenerationAllList()
+                            .get(mMemberList.getSelectedRow());
+                    mButtonEdit.setEnabled(generation.mEndDate.getTime() == 0);
+                    mButtonEnable.setText((generation.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
                 }
             }
         });
@@ -76,8 +75,9 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 if (mMemberList.getSelectedRow() != -1) {
                     disableFields();
-                    Member member = Application.getInstance().getMemberAllList().get(mMemberList.getSelectedRow());
-                    new MemberGetMember(member.mId, ViewMemberSelect.this).start();
+                    Generation generation = Application.getInstance().getGenerationAllList()
+                            .get(mMemberList.getSelectedRow());
+                    mHome.showEditGeneration(generation);
                 }
             }
         });
@@ -92,9 +92,14 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 if (mMemberList.getSelectedRow() != -1) {
                     disableFields();
-                    mUpdateData = true;
-                    Member member = Application.getInstance().getMemberAllList().get(mMemberList.getSelectedRow());
-                    new MemberGetMember(member.mId, ViewMemberSelect.this).start();
+                    Generation generation = Application.getInstance().getGenerationAllList()
+                            .get(mMemberList.getSelectedRow());
+                    if (generation.mEndDate.getTime() == 0) {
+                        generation.mEndDate = Calendar.getInstance().getTime();
+                    } else {
+                        generation.mEndDate = new Date(0);
+                    }
+                    new GenerationUpdate(generation, ViewGenerationSelect.this).start();
                 }
             }
         });
@@ -181,38 +186,19 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case MEMBER_GET_LIST:
-                JOptionPane.showMessageDialog(this, "Dados do membro alterados com sucesso.");
+            case GENERATION_GET_LIST:
+                JOptionPane.showMessageDialog(this, "Dados da geração alterados com sucesso.");
                 mMemberList.invalidate();
                 enableFields();
                 if (mMemberList.getSelectedRow() != -1) {
-                    Member member = Application.getInstance().getMemberAllList().get(mMemberList.getSelectedRow());
-                    mButtonEdit.setEnabled(member.mEndDate.getTime() == 0);
-                    mButtonEnable.setText((member.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
+                    Generation generation = Application.getInstance().getGenerationAllList()
+                            .get(mMemberList.getSelectedRow());
+                    mButtonEdit.setEnabled(generation.mEndDate.getTime() == 0);
+                    mButtonEnable.setText((generation.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
                 }
                 break;
-            case MEMBER_UPDATE:
-                new MemberGetList(this).start();
-                break;
-            case MEMBER_GET_MEMBER:
-                Member member = (Member) result.getData("MEMBER");
-                if (mUpdateData) {
-                    mUpdateData = false;
-                    if (member.mEndDate.getTime() == 0) {
-                        member.mEndDate = Calendar.getInstance().getTime();
-                    } else {
-                        member.mEndDate = new Date(0);
-                    }
-                    new MemberUpdate(member, ViewMemberSelect.this).start();
-                } else {
-                    if (member != null) {
-                        mHome.showEditMember(member);
-                    } else {
-                        JOptionPane.showMessageDialog(this,
-                                "Não foi possível receber os dados do membro.\nFeche o aplicativo e tente novamente.");
-                    }
-                    enableFields();
-                }
+            case GENERATION_UPDATE:
+                new GenerationGetList(this).start();
                 break;
 
             default:
@@ -239,7 +225,7 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
 
     private static class MemberTableModel extends AbstractTableModel {
         private static final long serialVersionUID = 2139100891339821696L;
-        private static final String[] COLUMN_NAMES = { "NOME", "LÍDER", "GERAÇÃO", "ESTADO" };
+        private static final String[] COLUMN_NAMES = { "NOME", "LÍDER", "ESTADO" };
 
         @Override
         public int getColumnCount() {
@@ -248,7 +234,7 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
 
         @Override
         public int getRowCount() {
-            return Application.getInstance().getMemberAllList().size();
+            return Application.getInstance().getGenerationAllList().size();
         }
 
         @Override
@@ -258,19 +244,17 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
 
         @Override
         public Object getValueAt(int row, int column) {
-            if (row > Application.getInstance().getMemberAllList().size()) {
+            if (row > Application.getInstance().getGenerationAllList().size()) {
                 return null;
             }
-            Member member = Application.getInstance().getMemberAllList().get(row);
+            Generation generation = Application.getInstance().getGenerationAllList().get(row);
             switch (column) {
             case 0:
-                return member.mName;
+                return generation.mName;
             case 1:
-                return member.mLeaderName;
+                return generation.mLeaderName;
             case 2:
-                return member.mGenerationName;
-            case 3:
-                return member.mEndDate.getTime() == 0 ? "ATIVO" : "DESLIGADO";
+                return generation.mEndDate.getTime() == 0 ? "ATIVO" : "DESATIVADO";
             }
             return null;
         }

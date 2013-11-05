@@ -32,7 +32,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
     private JTextField mName;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
-    private JComboBox mLeader;
+    private JComboBox<Member> mLeader;
 
     public ViewGenerationNew() {
         JLabel lblNewLabel = new JLabel("CRIAR GERA\u00C7\u00C3O");
@@ -49,7 +49,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
         JLabel lblLder = new JLabel("L\u00EDder");
         lblLder.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mLeader = new JComboBox();
+        mLeader = new JComboBox<Member>();
         mLeader.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mButtonSave = new JButton("Criar");
@@ -110,9 +110,9 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
         Member invalid = new Member();
         invalid.mName = "NENHUM";
         mLeader.addItem(invalid);
-        for (Member item : Application.getInstance().getLeaderList()) {
+        for (Member item : Application.getInstance().getLeaderActivatedList()) {
             boolean found = false;
-            for (Generation generation : Application.getInstance().getGenerationList()) {
+            for (Generation generation : Application.getInstance().getGenerationActivatedList()) {
                 if (generation.mLeaderId == item.mId) {
                     found = true;
                     break;
@@ -132,7 +132,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
             enableFields();
             break;
         case SERVER_ERROR:
-            JOptionPane.showMessageDialog(this,"Erro no servidor.\nTente mais tarde.");
+            JOptionPane.showMessageDialog(this, "Erro no servidor. Código: " + result.getData("ERROR_CODE") + "\nTente mais tarde.");
             enableFields();
             break;
         case UNKNOWN:
@@ -154,9 +154,9 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
                 invalid.mName = "NENHUM";
                 mLeader.addItem(invalid);
 
-                for (Member item : Application.getInstance().getLeaderList()) {
+                for (Member item : Application.getInstance().getLeaderActivatedList()) {
                     boolean found = false;
-                    for (Generation generation : Application.getInstance().getGenerationList()) {
+                    for (Generation generation : Application.getInstance().getGenerationActivatedList()) {
                         if (generation.mLeaderId == item.mId) {
                             found = true;
                             break;
@@ -202,7 +202,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
             return null;
         }
 
-        for (Generation item : Application.getInstance().getGenerationList()) {
+        for (Generation item : Application.getInstance().getGenerationAllList()) {
             if (name.equals(item.mName)) {
                 JOptionPane.showMessageDialog(this,"O nome da geração já existe.");
                 return null;
@@ -215,7 +215,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
             return null;
         }
 
-        for (Generation item : Application.getInstance().getGenerationList()) {
+        for (Generation item : Application.getInstance().getGenerationActivatedList()) {
             if ((leader.mId != 0) && (leader.mId == item.mLeaderId)) {
                 JOptionPane.showMessageDialog(this,"O líder já é líder de uma geração.");
                 return null;

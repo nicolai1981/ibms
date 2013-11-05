@@ -42,6 +42,14 @@ if ($resultArray) {
 	$in_gen_id = 0;
 }
 
+
+$sqlQuery = "SELECT * FROM LIDER_GERACAO WHERE FK_LIDER=".$in_id." AND DATA_FINAL='0000-00-00'";
+$result = mysql_query($sqlQuery);
+$resultArray = mysql_fetch_array($result);
+if ($resultArray) {
+	$in_gen_id = $resultArray["FK_GERACAO"];
+}
+
 $sqlQuery = "UPDATE MEMBRO SET "
 				."NOME='".$in_name."',"
 				."ANIVERSARIO='".$in_birthday."',"

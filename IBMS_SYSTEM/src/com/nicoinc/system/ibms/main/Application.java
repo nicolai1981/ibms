@@ -10,9 +10,12 @@ import com.nicoinc.system.ibms.model.Member;
 
 public class Application {
     private static Application sInstance = null;
-    private List<Member> mLeaderList;
-    private List<Member> mMemberList;
-    private List<Generation> mGenerationList;
+    private List<Member> mMemberAllList;
+    private List<Member> mMemberActivatedList;
+    private List<Member> mLeaderAllList;
+    private List<Member> mLeaderActivatedList;
+    private List<Generation> mGenerationAllList;
+    private List<Generation> mGenerationActivatedList;
     private List<CourseType> mCourseTypeList;
     private List<Course> mCourseList;
     private String mToken="NONE";
@@ -25,33 +28,54 @@ public class Application {
     }
 
     private Application() {
-        mLeaderList = new ArrayList<Member>();
-        mMemberList = new ArrayList<Member>();
-        mGenerationList = new ArrayList<Generation>();
+        mLeaderAllList = new ArrayList<Member>();
+        mLeaderActivatedList = new ArrayList<Member>();
+        mMemberAllList = new ArrayList<Member>();
+        mMemberActivatedList = new ArrayList<Member>();
+        mGenerationAllList = new ArrayList<Generation>();
+        mGenerationActivatedList = new ArrayList<Generation>();
         mCourseTypeList = new ArrayList<CourseType>();
         mCourseList = new ArrayList<Course>();
     }
 
-    public void setLeaderList(List<Member> list) {
-        mLeaderList.clear();
-        mLeaderList.addAll(list);
+    public void setMemberAllList(List<Member> list) {
+        mMemberAllList.clear();
+        mMemberAllList.addAll(list);
     }
 
-    public List<Member> getLeaderList() {
-        return mLeaderList;
+    public List<Member> getMemberAllList() {
+        return mMemberAllList;
     }
 
-    public void setMemberList(List<Member> list) {
-        mMemberList.clear();
-        mMemberList.addAll(list);
+    public void setMemberActivatedList(List<Member> list) {
+        mMemberActivatedList.clear();
+        mMemberActivatedList.addAll(list);
     }
 
-    public List<Member> getMemberList() {
-        return mMemberList;
+    public List<Member> getMemberActivatedList() {
+        return mMemberActivatedList;
+    }
+
+    public void setLeaderAllList(List<Member> list) {
+        mLeaderAllList.clear();
+        mLeaderAllList.addAll(list);
+    }
+
+    public List<Member> getLeaderAllList() {
+        return mLeaderAllList;
+    }
+
+    public void setLeaderActivatedList(List<Member> list) {
+        mLeaderActivatedList.clear();
+        mLeaderActivatedList.addAll(list);
+    }
+
+    public List<Member> getLeaderActivatedList() {
+        return mLeaderActivatedList;
     }
 
     public Member getLeader(long id) {
-        for (Member item : mLeaderList) {
+        for (Member item : mLeaderAllList) {
             if (item.mId == id) {
                 return item;
             }
@@ -59,13 +83,22 @@ public class Application {
         return null;
     }
 
-    public void setGenerationList(List<Generation> list) {
-        mGenerationList.clear();
-        mGenerationList.addAll(list);
+    public void setGenerationAllList(List<Generation> list) {
+        mGenerationAllList.clear();
+        mGenerationAllList.addAll(list);
     }
 
-    public List<Generation> getGenerationList() {
-        return mGenerationList;
+    public List<Generation> getGenerationAllList() {
+        return mGenerationAllList;
+    }
+
+    public void setGenerationActivatedList(List<Generation> list) {
+        mGenerationActivatedList.clear();
+        mGenerationActivatedList.addAll(list);
+    }
+
+    public List<Generation> getGenerationActivatedList() {
+        return mGenerationActivatedList;
     }
 
     public void setCourseTypeList(List<CourseType> list) {

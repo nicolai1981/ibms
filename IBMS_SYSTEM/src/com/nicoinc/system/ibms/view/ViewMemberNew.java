@@ -191,10 +191,12 @@ public class ViewMemberNew extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 Member leader = (Member) mLeaderList.getSelectedItem();
                 mGeneration.setText("-");
-                for (Generation generation : Application.getInstance().getGenerationList()) {
-                    if (generation.mId == leader.mGenerationId) {
-                        mGeneration.setText(generation.mName);
-                        break;
+                if (leader != null) {
+                    for (Generation generation : Application.getInstance().getGenerationActivatedList()) {
+                        if (generation.mId == leader.mGenerationId) {
+                            mGeneration.setText(generation.mName);
+                            break;
+                        }
                     }
                 }
             }
@@ -500,7 +502,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         Member member = new Member();
         member.mName = "NENHUM";
         mLeaderList.addItem(member);
-        for (Member item : Application.getInstance().getLeaderList()) {
+        for (Member item : Application.getInstance().getLeaderActivatedList()) {
             if (item.mEndDate.getTime() == 0) {
                 mLeaderList.addItem(item);
             }
@@ -515,7 +517,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
             enableFields();
             break;
         case SERVER_ERROR:
-            JOptionPane.showMessageDialog(this, "Erro no servidor.\nTente mais tarde.");
+            JOptionPane.showMessageDialog(this, "Erro no servidor. Código: " + result.getData("ERROR_CODE") + "\nTente mais tarde.");
             enableFields();
             break;
         case UNKNOWN:
@@ -525,18 +527,17 @@ public class ViewMemberNew extends JPanel implements CommandListener {
         case OK:
             switch (result.getCommand()) {
             case MEMBER_GET_LIST:
-                JOptionPane.showMessageDialog(this, "Membro criado com sucesso.");
-
                 // Update leader list
                 mLeaderList.removeAllItems();
                 Member member = new Member();
                 member.mName = "NENHUM";
                 mLeaderList.addItem(member);
-                for (Member item : Application.getInstance().getLeaderList()) {
+                for (Member item : Application.getInstance().getLeaderActivatedList()) {
                     if (item.mEndDate.getTime() == 0) {
                         mLeaderList.addItem(item);
                     }
                 }
+                JOptionPane.showMessageDialog(this, "Membro criado com sucesso.");
                 enableFields();
                 break;
 

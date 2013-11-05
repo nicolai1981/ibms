@@ -10,6 +10,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
 
 public class FrameHome {
@@ -266,7 +267,7 @@ public class FrameHome {
         JMenu mnGeraes = new JMenu("Gera\u00E7\u00E3o");
         menuBar.add(mnGeraes);
 
-        JMenuItem mntmCriarGerao = new JMenuItem("Criar Gera\u00E7\u00E3o");
+        JMenuItem mntmCriarGerao = new JMenuItem("Criar");
         mntmCriarGerao.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
@@ -279,35 +280,21 @@ public class FrameHome {
         });
         mnGeraes.add(mntmCriarGerao);
 
-        JMenuItem mntmEditarGerao = new JMenuItem("Editar Gera\u00E7\u00E3o");
+        JMenuItem mntmEditarGerao = new JMenuItem("Editar");
         mntmEditarGerao.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
                     mFrame.getContentPane().remove(mCurrentJPanel);
                 }
-                mCurrentJPanel = new ViewGenerationEdit();
+                mCurrentJPanel = new ViewGenerationSelect(FrameHome.this);
                 mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
                 mFrame.validate();
             }
         });
         mnGeraes.add(mntmEditarGerao);
 
-        JMenuItem mntmDesativarGerao = new JMenuItem(
-                "Ativar/Desativar Gera\u00E7\u00E3o");
-        mntmDesativarGerao.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewGenerationDeactivation();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnGeraes.add(mntmDesativarGerao);
-
         JMenuItem mntmVisualizarGerao = new JMenuItem(
-                "Visualizar Gera\u00E7\u00E3o");
+                "Visualizar");
         mntmVisualizarGerao.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
@@ -358,6 +345,24 @@ public class FrameHome {
             mFrame.getContentPane().remove(mCurrentJPanel);
         }
         mCurrentJPanel = new ViewMemberSelect(FrameHome.this);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showEditGeneration(Generation generation) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewGenerationEdit(FrameHome.this, generation);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showSelectGeneration() {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewGenerationSelect(FrameHome.this);
         mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
         mFrame.validate();
     }

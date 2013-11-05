@@ -2,6 +2,7 @@ package com.nicoinc.system.ibms.command;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -9,6 +10,7 @@ import com.nicoinc.system.ibms.command.RequestResult.CODE;
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
+import com.nicoinc.system.ibms.model.Member;
 
 public class GenerationGetList extends Command {
 
@@ -28,9 +30,11 @@ public class GenerationGetList extends Command {
                 return;
             }
 
-            ArrayList<Generation> generationList = new ArrayList<Generation>();
+            ArrayList<Generation> generationAllList = new ArrayList<Generation>();
+            ArrayList<Generation> generationActivatedList = new ArrayList<Generation>();
+
             JsonArray jsonList = root.get("GENERATION_LIST").getAsJsonArray();
-            for (int i=0; i < jsonList.size(); i++) {
+            for (int i = 0; i < jsonList.size(); i++) {
                 JsonObject item = jsonList.get(i).getAsJsonObject();
                 Generation generation = new Generation();
 
@@ -72,10 +76,37 @@ public class GenerationGetList extends Command {
                     continue;
                 }
 
-                generationList.add(generation);
+                generationAllList.add(generation);
+                if (generation.mEndDate.getTime() == 0) {
+                    generationActivatedList.add(generation);
+                }
             }
 
-            Application.getInstance().setGenerationList(generationList);
+            Application.getInstance().setGenerationAllList(generationAllList);
+            Application.getInstance().setGenerationActivatedList(generationActivatedList);
+
+            // Set leader for generation
+            List<Member> leaderList = Application.getInstance().getLeaderAllList();
+            for (Generation generation : generationAllList) {
+                for (Member leader : leaderList) {
+                    if (generation.mLeaderId == leader.mId) {
+                        generation.mLeaderName = leader.mName;
+                        break;
+                    }
+                }
+            }
+
+            // Set generation for all members
+            List<Member> memberList = Application.getInstance().getMemberAllList();
+            for (Member member : memberList) {
+                for (Generation generation : generationAllList) {
+                    if (member.mGenerationId == generation.mId) {
+                        member.mGenerationName = generation.mName;
+                        break;
+                    }
+                }
+            }
+
             mResult.setCode(CODE.OK);
         }
     }

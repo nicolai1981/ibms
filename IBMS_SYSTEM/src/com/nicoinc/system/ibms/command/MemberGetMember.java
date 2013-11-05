@@ -173,7 +173,7 @@ public class MemberGetMember extends Command {
             }
             member.mGenerationId = root.get("FK_GENERATION").getAsLong();
             member.mGenerationName = "-";
-            for (Generation generation : Application.getInstance().getGenerationList()) {
+            for (Generation generation : Application.getInstance().getGenerationAllList()) {
                 if (member.mGenerationId == generation.mId) {
                     member.mGenerationName = generation.mName;
                     break;
@@ -185,7 +185,7 @@ public class MemberGetMember extends Command {
             }
             member.mLeaderId = root.get("LEADER_ID").getAsLong();
             member.mLeaderName = "-";
-            for (Member leader : Application.getInstance().getMemberList()) {
+            for (Member leader : Application.getInstance().getMemberAllList()) {
                 if (member.mLeaderId == leader.mId) {
                     member.mLeaderName = leader.mName;
                     break;

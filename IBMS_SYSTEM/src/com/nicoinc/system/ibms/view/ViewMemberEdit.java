@@ -212,10 +212,22 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 Member leader = (Member) mLeaderList.getSelectedItem();
                 mGeneration.setText("-");
-                for (Generation generation : Application.getInstance().getGenerationList()) {
-                    if (generation.mId == leader.mGenerationId) {
+
+                // Check if is generation leader
+                for (Generation generation : Application.getInstance().getGenerationAllList()) {
+                    if (generation.mLeaderId == mMember.mId) {
                         mGeneration.setText(generation.mName);
                         break;
+                    }
+                }
+
+                if ("-".equals(mGeneration.getText())) {
+                    // Set the leader generation
+                    for (Generation generation : Application.getInstance().getGenerationAllList()) {
+                        if (generation.mId == leader.mGenerationId) {
+                            mGeneration.setText(generation.mName);
+                            break;
+                        }
                     }
                 }
             }
@@ -529,8 +541,8 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
         Member memberNone = new Member();
         memberNone.mName = "NENHUM";
         mLeaderList.addItem(memberNone);
-        for (Member item : Application.getInstance().getLeaderList()) {
-            if ((mMember.mId != item.mId) && (item.mEndDate.getTime() == 0)) {
+        for (Member item : Application.getInstance().getLeaderAllList()) {
+            if (mMember.mId != item.mId) {
                 mLeaderList.addItem(item);
             }
         }
@@ -553,7 +565,7 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
             enableFields();
             break;
         case SERVER_ERROR:
-            JOptionPane.showMessageDialog(this, "Erro no servidor.\nTente mais tarde.");
+            JOptionPane.showMessageDialog(this, "Erro no servidor. Código: " + result.getData("ERROR_CODE") + "\nTente mais tarde.");
             enableFields();
             break;
         case UNKNOWN:
@@ -831,6 +843,13 @@ public class ViewMemberEdit extends JPanel implements CommandListener {
 
         member.mIsLeader = mIsLeader.getSelectedIndex() == 1;
 
+        if (((Member)mLeaderList.getSelectedItem()).mEndDate.getTime() != 0) {
+            int result = JOptionPane.showConfirmDialog(this, "O líder selecionado é um líder desativado, confirma essa informação?");
+            if (result != 0) {
+                return null;
+            }
+        }
+            
         return member;
     }
 }

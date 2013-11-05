@@ -30,8 +30,10 @@ public class MemberGetList extends Command {
                 return;
             }
 
-            ArrayList<Member> memberList = new ArrayList<Member>();
-            ArrayList<Member> leaderList = new ArrayList<Member>();
+            ArrayList<Member> memberAllList = new ArrayList<Member>();
+            ArrayList<Member> memberActivatedList = new ArrayList<Member>();
+            ArrayList<Member> leaderAllList = new ArrayList<Member>();
+            ArrayList<Member> leaderActivatedList = new ArrayList<Member>();
             JsonArray jsonList = root.get("MEMBER_LIST").getAsJsonArray();
             for (int i = 0; i < jsonList.size(); i++) {
                 JsonObject item = jsonList.get(i).getAsJsonObject();
@@ -80,32 +82,55 @@ public class MemberGetList extends Command {
                 }
                 member.mLeaderId = item.get("FK_LEADER").getAsLong();
 
-                memberList.add(member);
-                if (member.mIsLeader && (member.mEndDate.getTime() == 0)) {
-                    leaderList.add(member);
+                memberAllList.add(member);
+                if (member.mEndDate.getTime() == 0) {
+                    memberActivatedList.add(member);
+                }
+
+                if (member.mIsLeader) {
+                    leaderAllList.add(member);
+                    if (member.mEndDate.getTime() == 0) {
+                        leaderActivatedList.add(member);
+                    }
                 }
             }
 
-            Application.getInstance().setMemberList(memberList);
-            Application.getInstance().setLeaderList(leaderList);
+            Application.getInstance().setMemberAllList(memberAllList);
+            Application.getInstance().setMemberActivatedList(memberActivatedList);
+
+            Application.getInstance().setLeaderAllList(leaderAllList);
+            Application.getInstance().setLeaderActivatedList(leaderActivatedList);
+
+            // Set leader for all generation
+            List<Generation> generationList = Application.getInstance().getGenerationAllList();
+            for (Generation generation : generationList) {
+                if (generation.mId == 0) {
+                    continue;
+                }
+
+                for (Member leader : leaderAllList) {
+                    if (generation.mLeaderId == leader.mId) {
+                        generation.mLeaderName = leader.mName;
+                        break;
+                    }
+                }
+            }
 
             // Set leader and generation information
-            List<Generation> generation = Application.getInstance().getGenerationList();
-            List<Member> leader = Application.getInstance().getLeaderList();
-
-            for (Member member : Application.getInstance().getMemberList()) {
+            for (Member member : memberAllList) {
                 if (member.mLeaderId != 0) {
-                    for (Member l : leader) {
-                        if (member.mLeaderId == l.mId) {
-                            member.mLeaderName = l.mName;
+                    for (Member leader : leaderAllList) {
+                        if (member.mLeaderId == leader.mId) {
+                            member.mLeaderName = leader.mName;
                             break;
                         }
                     }
                 }
+
                 if (member.mGenerationId != 0) {
-                    for (Generation g : generation) {
-                        if (member.mGenerationId == g.mId) {
-                            member.mGenerationName = g.mName;
+                    for (Generation generation : generationList) {
+                        if (member.mGenerationId == generation.mId) {
+                            member.mGenerationName = generation.mName;
                             break;
                         }
                     }
