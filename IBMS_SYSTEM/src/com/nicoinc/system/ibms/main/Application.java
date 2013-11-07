@@ -83,6 +83,16 @@ public class Application {
         return null;
     }
 
+    public List<Member> getGenerationMemberList(long id) {
+        List<Member> list = new ArrayList<Member>();
+        for (Member member : mMemberAllList) {
+            if (member.mGenerationId == id) {
+                list.add(member);
+            }
+        }
+        return list;
+    }
+
     public void setGenerationAllList(List<Generation> list) {
         mGenerationAllList.clear();
         mGenerationAllList.addAll(list);
