@@ -28,7 +28,8 @@ public class CourseTypeGetList extends Command {
                 return;
             }
 
-            ArrayList<CourseType> courseTypeList = new ArrayList<CourseType>();
+            ArrayList<CourseType> courseTypeAllList = new ArrayList<CourseType>();
+            ArrayList<CourseType> courseTypeActivatedList = new ArrayList<CourseType>();
             JsonArray jsonList = root.get("COURSE_TYPE_LIST").getAsJsonArray();
             for (int i=0; i < jsonList.size(); i++) {
                 JsonObject item = jsonList.get(i).getAsJsonObject();
@@ -67,10 +68,14 @@ public class CourseTypeGetList extends Command {
                     continue;
                 }
 
-                courseTypeList.add(courseType);
+                courseTypeAllList.add(courseType);
+                if (courseType.mEndDate.getTime() == 0) {
+                    courseTypeActivatedList.add(courseType);
+                }
             }
 
-            Application.getInstance().setCourseTypeList(courseTypeList);
+            Application.getInstance().setCourseTypeAllList(courseTypeAllList);
+            Application.getInstance().setCourseTypeActivatedList(courseTypeActivatedList);
             mResult.setCode(CODE.OK);
         }
     }

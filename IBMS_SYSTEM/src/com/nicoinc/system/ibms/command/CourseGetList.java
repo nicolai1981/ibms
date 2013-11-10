@@ -2,6 +2,7 @@ package com.nicoinc.system.ibms.command;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -29,7 +30,8 @@ public class CourseGetList extends Command {
                 return;
             }
 
-            ArrayList<Course> courseList = new ArrayList<Course>();
+            ArrayList<Course> courseAllList = new ArrayList<Course>();
+            ArrayList<Course> courseActivatedList = new ArrayList<Course>();
             JsonArray jsonList = root.get("COURSE_LIST").getAsJsonArray();
             for (int i=0; i < jsonList.size(); i++) {
                 JsonObject item = jsonList.get(i).getAsJsonObject();
@@ -68,21 +70,45 @@ public class CourseGetList extends Command {
                     continue;
                 }
 
-                for (CourseType courseType : Application.getInstance().getCourseTypeList()) {
+                if (!item.has("DEACTIVATE_DATE")) {
+                    continue;
+                }
+                try {
+                    String deactivateDate = item.get("DEACTIVATE_DATE").getAsString();
+                    if (!deactivateDate.equals("0000-00-00")) {
+                        course.mDeactivateDate = sDateFormatter.parse(deactivateDate);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    continue;
+                }
+
+                for (CourseType courseType : Application.getInstance().getCourseTypeAllList()) {
                     if (courseType.mId == course.mCourseTypeId) {
                         course.mCourseTypeName = courseType.mName;
                         break;
                     }
                 }
-                courseList.add(course);
+                courseAllList.add(course);
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DATE, 1);
+                if ((course.mDeactivateDate.getTime() == 0) && (calendar.getTimeInMillis() < course.mEndDate.getTime())) {
+                    courseActivatedList.add(course);
+                }
 
                 if (!item.has("TOTAL_LESSONS")) {
                     continue;
                 }
                 course.mTotalLessons = item.get("TOTAL_LESSONS").getAsInt();
+
+                if (!item.has("VERSION")) {
+                    continue;
+                }
+                course.mVersion = item.get("VERSION").getAsInt();
             }
 
-            Application.getInstance().setCourseList(courseList);
+            Application.getInstance().setCourseAllList(courseAllList);
+            Application.getInstance().setCourseActivatedList(courseActivatedList);
             mResult.setCode(CODE.OK);
         }
     }

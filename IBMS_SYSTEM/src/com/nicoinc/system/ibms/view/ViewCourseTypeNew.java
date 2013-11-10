@@ -23,7 +23,6 @@ import com.nicoinc.system.ibms.command.CourseTypeGetList;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.CourseType;
-import com.nicoinc.system.ibms.model.Generation;
 
 public class ViewCourseTypeNew extends JPanel implements CommandListener {
     private static final long serialVersionUID = 5607527208663662381L;
@@ -144,7 +143,7 @@ public class ViewCourseTypeNew extends JPanel implements CommandListener {
             return null;
         }
 
-        for (Generation item : Application.getInstance().getGenerationList()) {
+        for (CourseType item : Application.getInstance().getCourseTypeAllList()) {
             if (name.equals(item.mName)) {
                 JOptionPane.showMessageDialog(this,"O nome do tipo de curso já existe.");
                 return null;

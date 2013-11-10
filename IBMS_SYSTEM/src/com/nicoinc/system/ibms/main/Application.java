@@ -16,8 +16,10 @@ public class Application {
     private List<Member> mLeaderActivatedList;
     private List<Generation> mGenerationAllList;
     private List<Generation> mGenerationActivatedList;
-    private List<CourseType> mCourseTypeList;
-    private List<Course> mCourseList;
+    private List<CourseType> mCourseTypeAllList;
+    private List<CourseType> mCourseTypeActivatedList;
+    private List<Course> mCourseAllList;
+    private List<Course> mCourseActivatedList;
     private String mToken="NONE";
 
     public static Application getInstance() {
@@ -34,8 +36,10 @@ public class Application {
         mMemberActivatedList = new ArrayList<Member>();
         mGenerationAllList = new ArrayList<Generation>();
         mGenerationActivatedList = new ArrayList<Generation>();
-        mCourseTypeList = new ArrayList<CourseType>();
-        mCourseList = new ArrayList<Course>();
+        mCourseTypeAllList = new ArrayList<CourseType>();
+        mCourseTypeActivatedList = new ArrayList<CourseType>();
+        mCourseAllList = new ArrayList<Course>();
+        mCourseActivatedList = new ArrayList<Course>();
     }
 
     public void setMemberAllList(List<Member> list) {
@@ -111,22 +115,40 @@ public class Application {
         return mGenerationActivatedList;
     }
 
-    public void setCourseTypeList(List<CourseType> list) {
-        mCourseTypeList.clear();
-        mCourseTypeList.addAll(list);
+    public void setCourseTypeAllList(List<CourseType> list) {
+        mCourseTypeAllList.clear();
+        mCourseTypeAllList.addAll(list);
     }
 
-    public List<CourseType> getCourseTypeList() {
-        return mCourseTypeList;
+    public List<CourseType> getCourseTypeAllList() {
+        return mCourseTypeAllList;
     }
 
-    public void setCourseList(List<Course> list) {
-        mCourseList.clear();
-        mCourseList.addAll(list);
+    public void setCourseTypeActivatedList(List<CourseType> list) {
+        mCourseTypeActivatedList.clear();
+        mCourseTypeActivatedList.addAll(list);
     }
 
-    public List<Course> getCourseList() {
-        return mCourseList;
+    public List<CourseType> getCourseTypeActivatedList() {
+        return mCourseTypeActivatedList;
+    }
+
+    public void setCourseAllList(List<Course> list) {
+        mCourseAllList.clear();
+        mCourseAllList.addAll(list);
+    }
+
+    public List<Course> getCourseAllList() {
+        return mCourseAllList;
+    }
+
+    public void setCourseActivatedList(List<Course> list) {
+        mCourseActivatedList.clear();
+        mCourseActivatedList.addAll(list);
+    }
+
+    public List<Course> getCourseActivatedList() {
+        return mCourseActivatedList;
     }
 
     public void setToken(String token) {

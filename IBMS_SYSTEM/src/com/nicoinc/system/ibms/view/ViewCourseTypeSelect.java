@@ -25,13 +25,13 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import com.nicoinc.system.ibms.command.CommandListener;
-import com.nicoinc.system.ibms.command.GenerationGetList;
-import com.nicoinc.system.ibms.command.GenerationUpdate;
+import com.nicoinc.system.ibms.command.CourseTypeGetList;
+import com.nicoinc.system.ibms.command.CourseTypeUpdate;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
-import com.nicoinc.system.ibms.model.Generation;
+import com.nicoinc.system.ibms.model.CourseType;
 
-public class ViewGenerationSelect extends JPanel implements CommandListener {
+public class ViewCourseTypeSelect extends JPanel implements CommandListener {
     private static final long serialVersionUID = -8213291145000189731L;
     private JButton mButtonEdit;
     private JButton mButtonEnable;
@@ -39,10 +39,10 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
     private JTable mList;
     private FrameHome mHome;
 
-    public ViewGenerationSelect(FrameHome home) {
+    public ViewCourseTypeSelect(FrameHome home) {
         mHome = home;
 
-        JLabel lblNewLabel = new JLabel("SELECIONE A GERAÇÃO");
+        JLabel lblNewLabel = new JLabel("SELECIONE O TIPO DE CURSO");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
@@ -57,10 +57,10 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    Generation generation = Application.getInstance().getGenerationAllList()
+                    CourseType courseType = Application.getInstance().getCourseTypeAllList()
                             .get(mList.getSelectedRow());
-                    mButtonEdit.setEnabled(generation.mEndDate.getTime() == 0);
-                    mButtonEnable.setText((generation.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
+                    mButtonEdit.setEnabled(courseType.mEndDate.getTime() == 0);
+                    mButtonEnable.setText((courseType.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
                 }
             }
         });
@@ -74,9 +74,9 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 if (mList.getSelectedRow() != -1) {
                     disableFields();
-                    Generation generation = Application.getInstance().getGenerationAllList()
+                    CourseType courseType = Application.getInstance().getCourseTypeAllList()
                             .get(mList.getSelectedRow());
-                    mHome.showEditGeneration(generation);
+                    mHome.showEditCourseType(courseType);
                 }
             }
         });
@@ -91,14 +91,14 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 if (mList.getSelectedRow() != -1) {
                     disableFields();
-                    Generation generation = Application.getInstance().getGenerationAllList()
+                    CourseType courseType = Application.getInstance().getCourseTypeAllList()
                             .get(mList.getSelectedRow());
-                    if (generation.mEndDate.getTime() == 0) {
-                        generation.mEndDate = Calendar.getInstance().getTime();
+                    if (courseType.mEndDate.getTime() == 0) {
+                        courseType.mEndDate = Calendar.getInstance().getTime();
                     } else {
-                        generation.mEndDate = new Date(0);
+                        courseType.mEndDate = new Date(0);
                     }
-                    new GenerationUpdate(generation, ViewGenerationSelect.this).start();
+                    new CourseTypeUpdate(courseType, ViewCourseTypeSelect.this).start();
                 }
             }
         });
@@ -174,19 +174,19 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GENERATION_GET_LIST:
-                JOptionPane.showMessageDialog(this, "Dados da geração alterados com sucesso.");
+            case COURSE_TYPE_GET_LIST:
+                JOptionPane.showMessageDialog(this, "Dados do tipo de curso alterados com sucesso.");
                 mList.invalidate();
                 enableFields();
                 if (mList.getSelectedRow() != -1) {
-                    Generation generation = Application.getInstance().getGenerationAllList()
+                    CourseType courseType = Application.getInstance().getCourseTypeAllList()
                             .get(mList.getSelectedRow());
-                    mButtonEdit.setEnabled(generation.mEndDate.getTime() == 0);
-                    mButtonEnable.setText((generation.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
+                    mButtonEdit.setEnabled(courseType.mEndDate.getTime() == 0);
+                    mButtonEnable.setText((courseType.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
                 }
                 break;
-            case GENERATION_UPDATE:
-                new GenerationGetList(this).start();
+            case COURSE_TYPE_UPDATE:
+                new CourseTypeGetList(this).start();
                 break;
 
             default:
@@ -211,7 +211,7 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
 
     private static class TableModel extends AbstractTableModel {
         private static final long serialVersionUID = 2139100891339821696L;
-        private static final String[] COLUMN_NAMES = { "NOME", "LÍDER", "ESTADO" };
+        private static final String[] COLUMN_NAMES = { "NOME", "ESTADO" };
 
         @Override
         public int getColumnCount() {
@@ -220,7 +220,7 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
 
         @Override
         public int getRowCount() {
-            return Application.getInstance().getGenerationAllList().size();
+            return Application.getInstance().getCourseTypeAllList().size();
         }
 
         @Override
@@ -230,17 +230,15 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
 
         @Override
         public Object getValueAt(int row, int column) {
-            if (row > Application.getInstance().getGenerationAllList().size()) {
+            if (row > Application.getInstance().getCourseTypeAllList().size()) {
                 return null;
             }
-            Generation generation = Application.getInstance().getGenerationAllList().get(row);
+            CourseType courseType = Application.getInstance().getCourseTypeAllList().get(row);
             switch (column) {
             case 0:
-                return generation.mName;
+                return courseType.mName;
             case 1:
-                return generation.mLeaderName;
-            case 2:
-                return generation.mEndDate.getTime() == 0 ? "ATIVO" : "DESATIVADO";
+                return courseType.mEndDate.getTime() == 0 ? "ATIVO" : "DESATIVADO";
             }
             return null;
         }

@@ -14,7 +14,9 @@ public class Course {
     public String mCourseTypeName = null;
     public Date mStartDate = new Date(0);
     public Date mEndDate = new Date(0);
+    public Date mDeactivateDate = new Date(0);
     public int mTotalLessons = 0;
+    public int mVersion = 0;
     public int mStringFormat = DATE_INFORMATION;
 
     @Override

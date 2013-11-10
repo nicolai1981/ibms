@@ -3,6 +3,7 @@ package com.nicoinc.system.ibms.view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,13 +26,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
 import com.nicoinc.system.ibms.command.CommandListener;
-import com.nicoinc.system.ibms.command.GenerationGetList;
-import com.nicoinc.system.ibms.command.GenerationUpdate;
+import com.nicoinc.system.ibms.command.CourseGetList;
+import com.nicoinc.system.ibms.command.CourseUpdate;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
-import com.nicoinc.system.ibms.model.Generation;
+import com.nicoinc.system.ibms.model.Course;
 
-public class ViewGenerationSelect extends JPanel implements CommandListener {
+public class ViewCourseSelect extends JPanel implements CommandListener {
+    private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static final long serialVersionUID = -8213291145000189731L;
     private JButton mButtonEdit;
     private JButton mButtonEnable;
@@ -39,10 +41,10 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
     private JTable mList;
     private FrameHome mHome;
 
-    public ViewGenerationSelect(FrameHome home) {
+    public ViewCourseSelect(FrameHome home) {
         mHome = home;
 
-        JLabel lblNewLabel = new JLabel("SELECIONE A GERAÇÃO");
+        JLabel lblNewLabel = new JLabel("SELECIONE O CURSO");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
@@ -57,10 +59,10 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    Generation generation = Application.getInstance().getGenerationAllList()
+                    Course course = Application.getInstance().getCourseAllList()
                             .get(mList.getSelectedRow());
-                    mButtonEdit.setEnabled(generation.mEndDate.getTime() == 0);
-                    mButtonEnable.setText((generation.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
+                    mButtonEdit.setEnabled(course.mDeactivateDate.getTime() == 0);
+                    mButtonEnable.setText((course.mDeactivateDate.getTime() == 0) ? "Desativar" : "Ativar");
                 }
             }
         });
@@ -74,9 +76,9 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 if (mList.getSelectedRow() != -1) {
                     disableFields();
-                    Generation generation = Application.getInstance().getGenerationAllList()
+                    Course course = Application.getInstance().getCourseAllList()
                             .get(mList.getSelectedRow());
-                    mHome.showEditGeneration(generation);
+                    mHome.showEditCourse(course);
                 }
             }
         });
@@ -91,14 +93,14 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 if (mList.getSelectedRow() != -1) {
                     disableFields();
-                    Generation generation = Application.getInstance().getGenerationAllList()
+                    Course course = Application.getInstance().getCourseAllList()
                             .get(mList.getSelectedRow());
-                    if (generation.mEndDate.getTime() == 0) {
-                        generation.mEndDate = Calendar.getInstance().getTime();
+                    if (course.mDeactivateDate.getTime() == 0) {
+                        course.mDeactivateDate = Calendar.getInstance().getTime();
                     } else {
-                        generation.mEndDate = new Date(0);
+                        course.mDeactivateDate = new Date(0);
                     }
-                    new GenerationUpdate(generation, ViewGenerationSelect.this).start();
+                    new CourseUpdate(course, ViewCourseSelect.this).start();
                 }
             }
         });
@@ -174,19 +176,19 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
             break;
         case OK:
             switch (result.getCommand()) {
-            case GENERATION_GET_LIST:
-                JOptionPane.showMessageDialog(this, "Dados da geração alterados com sucesso.");
+            case COURSE_GET_LIST:
+                JOptionPane.showMessageDialog(this, "Dados do curso alterados com sucesso.");
                 mList.invalidate();
                 enableFields();
                 if (mList.getSelectedRow() != -1) {
-                    Generation generation = Application.getInstance().getGenerationAllList()
+                    Course course = Application.getInstance().getCourseAllList()
                             .get(mList.getSelectedRow());
-                    mButtonEdit.setEnabled(generation.mEndDate.getTime() == 0);
-                    mButtonEnable.setText((generation.mEndDate.getTime() == 0) ? "Desativar" : "Ativar");
+                    mButtonEdit.setEnabled(course.mDeactivateDate.getTime() == 0);
+                    mButtonEnable.setText((course.mDeactivateDate.getTime() == 0) ? "Desativar" : "Ativar");
                 }
                 break;
-            case GENERATION_UPDATE:
-                new GenerationGetList(this).start();
+            case COURSE_UPDATE:
+                new CourseGetList(this).start();
                 break;
 
             default:
@@ -211,7 +213,7 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
 
     private static class TableModel extends AbstractTableModel {
         private static final long serialVersionUID = 2139100891339821696L;
-        private static final String[] COLUMN_NAMES = { "NOME", "LÍDER", "ESTADO" };
+        private static final String[] COLUMN_NAMES = { "NOME",  "EDIÇÃO", "DATA INICIAL", "DATA FINAL","ESTADO" };
 
         @Override
         public int getColumnCount() {
@@ -220,7 +222,7 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
 
         @Override
         public int getRowCount() {
-            return Application.getInstance().getGenerationAllList().size();
+            return Application.getInstance().getCourseAllList().size();
         }
 
         @Override
@@ -230,17 +232,31 @@ public class ViewGenerationSelect extends JPanel implements CommandListener {
 
         @Override
         public Object getValueAt(int row, int column) {
-            if (row > Application.getInstance().getGenerationAllList().size()) {
+            if (row > Application.getInstance().getCourseAllList().size()) {
                 return null;
             }
-            Generation generation = Application.getInstance().getGenerationAllList().get(row);
+            Course course = Application.getInstance().getCourseAllList().get(row);
             switch (column) {
             case 0:
-                return generation.mName;
+                return course.mCourseTypeName;
             case 1:
-                return generation.mLeaderName;
+                return course.mVersion;
             case 2:
-                return generation.mEndDate.getTime() == 0 ? "ATIVO" : "DESATIVADO";
+                return sDateFormatter.format(course.mStartDate);
+            case 3:
+                return sDateFormatter.format(course.mEndDate);
+            case 4:
+                if (course.mDeactivateDate.getTime() == 0) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DATE, 1);
+                    if (calendar.getTimeInMillis() < course.mEndDate.getTime()) {
+                        return "ABERTO";
+                    } else {
+                        return "TERMINADO";
+                    }
+                } else {
+                    return "DESATIVADO";
+                }
             }
             return null;
         }

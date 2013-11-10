@@ -25,7 +25,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseGetSubscribeList;
 import com.nicoinc.system.ibms.command.CourseTypeGetCourseList;
@@ -38,12 +37,12 @@ import com.nicoinc.system.ibms.model.CourseType;
 public class ViewCourseTypeView extends JPanel implements CommandListener {
     private static final long serialVersionUID = -8908763683014288749L;
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-    private JComboBox mCourseTypeList;
+    private JComboBox<CourseType> mCourseTypeList;
     private JLabel mStartDate;
     private JLabel mStatus;
     private JLabel mEndDate;
     private JLabel mCourse;
-    private JList mHistoryList;
+    private JList<Course> mHistoryList;
     private JLabel mTotalCourse;
     private JLabel mTotalTeachers;
     private JLabel mTotalStudents;
@@ -51,17 +50,17 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
     private JLabel mTotalIncomplete;
     private JLabel mTotalEnd;
     private JProgressBar mProgressBar;
-    private DefaultListModel mHistoryListModel; 
-    private DefaultListModel mTeacherListModel; 
-    private DefaultListModel mStudentCompleteListModel; 
-    private DefaultListModel mStudentIncompleteListModel; 
-    private DefaultListModel mStudentEndListModel; 
+    private DefaultListModel<Course> mHistoryListModel; 
+    private DefaultListModel<CourseSubscribe> mTeacherListModel; 
+    private DefaultListModel<CourseSubscribe> mStudentCompleteListModel; 
+    private DefaultListModel<CourseSubscribe> mStudentIncompleteListModel; 
+    private DefaultListModel<CourseSubscribe> mStudentEndListModel; 
 
     public ViewCourseTypeView() {
         JLabel lblGerao = new JLabel("Tipo do curso");
         lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mCourseTypeList = new JComboBox();
+        mCourseTypeList = new JComboBox<CourseType>();
         mCourseTypeList.setFont(new Font("Arial", Font.PLAIN, 14));
         mCourseTypeList.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -120,8 +119,8 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         scrollPane_leader.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane_leader.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        mHistoryListModel = new DefaultListModel(); 
-        mHistoryList = new JList(mHistoryListModel);
+        mHistoryListModel = new DefaultListModel<Course>(); 
+        mHistoryList = new JList<Course>(mHistoryListModel);
         mHistoryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mHistoryList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
@@ -158,8 +157,8 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         scrollPane_teachers.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane_teachers.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        mTeacherListModel = new DefaultListModel(); 
-        JList teacherList = new JList(mTeacherListModel);
+        mTeacherListModel = new DefaultListModel<CourseSubscribe>(); 
+        JList<CourseSubscribe> teacherList = new JList<CourseSubscribe>(mTeacherListModel);
         teacherList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         teacherList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPane_teachers.setViewportView(teacherList);
@@ -180,8 +179,8 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         mTotalComplete = new JLabel("0");
         mTotalComplete.setFont(new Font("Arial", Font.BOLD, 14));
 
-        mStudentCompleteListModel = new DefaultListModel(); 
-        JList studentCompleteList = new JList(mStudentCompleteListModel);
+        mStudentCompleteListModel = new DefaultListModel<CourseSubscribe>(); 
+        JList<CourseSubscribe> studentCompleteList = new JList<CourseSubscribe>(mStudentCompleteListModel);
         studentCompleteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         studentCompleteList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPane_student_complete.setViewportView(studentCompleteList);
@@ -196,8 +195,8 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        mStudentIncompleteListModel = new DefaultListModel(); 
-        JList mStudentIncompleteList = new JList(mStudentIncompleteListModel);
+        mStudentIncompleteListModel = new DefaultListModel<CourseSubscribe>(); 
+        JList<CourseSubscribe> mStudentIncompleteList = new JList<CourseSubscribe>(mStudentIncompleteListModel);
         mStudentIncompleteList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mStudentIncompleteList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPane.setViewportView(mStudentIncompleteList);
@@ -212,8 +211,8 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         scrollPane_student_incomplete.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane_student_incomplete.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        mStudentEndListModel = new DefaultListModel(); 
-        JList studentEndList = new JList(mStudentEndListModel);
+        mStudentEndListModel = new DefaultListModel<CourseSubscribe>(); 
+        JList<CourseSubscribe> studentEndList = new JList<CourseSubscribe>(mStudentEndListModel);
         studentEndList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         studentEndList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPane_student_incomplete.setViewportView(studentEndList);
@@ -365,7 +364,7 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
         setLayout(groupLayout);
 
         // Fill course type list
-        for (CourseType item : Application.getInstance().getCourseTypeList()) {
+        for (CourseType item : Application.getInstance().getCourseTypeAllList()) {
             mCourseTypeList.addItem(item);
         }
     }
@@ -386,7 +385,6 @@ public class ViewCourseTypeView extends JPanel implements CommandListener {
             enableFields();
             break;
         case OK:
-            JsonObject root = result.getJSON();
             switch (result.getCommand()) {
             case COURSE_TYPE_COURSE_LIST:
                 List<Course> list = (List<Course>) result.getData(CourseTypeGetCourseList.HISTORY_LIST);

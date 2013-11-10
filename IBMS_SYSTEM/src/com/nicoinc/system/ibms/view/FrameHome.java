@@ -10,6 +10,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import com.nicoinc.system.ibms.model.Course;
+import com.nicoinc.system.ibms.model.CourseType;
 import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
 
@@ -160,7 +162,7 @@ public class FrameHome {
                 if (mCurrentJPanel != null) {
                     mFrame.getContentPane().remove(mCurrentJPanel);
                 }
-                mCurrentJPanel = new ViewCourseEdit();
+                mCurrentJPanel = new ViewCourseSelect(FrameHome.this);
                 mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
                 mFrame.validate();
             }
@@ -228,25 +230,12 @@ public class FrameHome {
                 if (mCurrentJPanel != null) {
                     mFrame.getContentPane().remove(mCurrentJPanel);
                 }
-                mCurrentJPanel = new ViewCourseTypeEdit();
+                mCurrentJPanel = new ViewCourseTypeSelect(FrameHome.this);
                 mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
                 mFrame.validate();
             }
         });
         mnTipoDeCurso.add(mntmEditarTipoDe_1);
-
-        JMenuItem mntmExcluirTipoDe_1 = new JMenuItem("Ativar/Desativar");
-        mntmExcluirTipoDe_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewCourseTypeDeactivation();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnTipoDeCurso.add(mntmExcluirTipoDe_1);
 
         JMenuItem mntmVisualizar_1 = new JMenuItem("Visualizar");
         mntmVisualizar_1.addActionListener(new ActionListener() {
@@ -363,6 +352,42 @@ public class FrameHome {
             mFrame.getContentPane().remove(mCurrentJPanel);
         }
         mCurrentJPanel = new ViewGenerationSelect(FrameHome.this);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showEditCourseType(CourseType courseType) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseTypeEdit(FrameHome.this, courseType);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showSelectCourseType() {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseTypeSelect(FrameHome.this);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showEditCourse(Course course) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseEdit(FrameHome.this, course);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showSelectCourse() {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseSelect(FrameHome.this);
         mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
         mFrame.validate();
     }

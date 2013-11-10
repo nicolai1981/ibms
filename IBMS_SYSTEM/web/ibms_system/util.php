@@ -15,61 +15,6 @@ function checkToken($token) {
 	return true;
 }
 
-function getCourseTypeList() {
-	$result = "\"COURSE_TYPE_LIST\":[";
-
-	$sqlQuery = "SELECT TIPO_CURSO.* FROM TIPO_CURSO ORDER BY NOME";
-	$resultSelect = mysql_query($sqlQuery);
-	$resultArray = mysql_fetch_array($resultSelect);
-	while ($resultArray) {
-		$user_id = $resultArray["_ID"];
-		$user_name = $resultArray["NOME"];
-		$user_start_date = $resultArray["DATA_INICIAL"];
-		$user_end_date = $resultArray["DATA_FINAL"];
-		$result = $result
-			."{"
-			."\"ID\":".$user_id.","
-			."\"NAME\":"."\"".$user_name."\","
-			."\"START_DATE\":"."\"".$user_start_date."\","
-			."\"END_DATE\":"."\"".$user_end_date."\""
-			."}";
-
-		$resultArray = mysql_fetch_array($resultSelect);
-		if ($resultArray) {
-			$result = $result.",";
-		}
-	}
-	return $result."]";
-}
-
-function getCourseList() {
-	$result = "\"COURSE_LIST\":[";
-
-	$sqlQuery = "SELECT c.* FROM TIPO_CURSO t_c, CURSO c WHERE t_c._ID=c.FK_TIPO_CURSO ORDER BY c.DATA_INICIAL DESC, t_c.NOME";
-	$resultSelect = mysql_query($sqlQuery);
-	$resultArray = mysql_fetch_array($resultSelect);
-	while ($resultArray) {
-		$id = $resultArray["_ID"];
-		$start_date = $resultArray["DATA_INICIAL"];
-		$end_date = $resultArray["DATA_FINAL"];
-		$total_lessons = $resultArray["TOTAL_AULAS"];
-		$course_type_id = $resultArray["FK_TIPO_CURSO"];
-		$result = $result
-			."{"
-			."\"ID\":".$id.","
-			."\"COURSE_TYPE_ID\":".$course_type_id.","
-			."\"START_DATE\":"."\"".$start_date."\","
-			."\"END_DATE\":"."\"".$end_date."\","
-			."\"TOTAL_LESSONS\":".$total_lessons
-			."}";
-
-		$resultArray = mysql_fetch_array($resultSelect);
-		if ($resultArray) {
-			$result = $result.",";
-		}
-	}
-	return $result."]";
-}
 
 
 

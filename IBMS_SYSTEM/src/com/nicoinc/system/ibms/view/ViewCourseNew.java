@@ -32,7 +32,7 @@ public class ViewCourseNew extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static final long serialVersionUID = -8213291145000189731L;
 
-    private JComboBox mCourseTypeList;
+    private JComboBox<CourseType> mCourseTypeList;
     private JTextField mStartDate;
     private JTextField mEndDate;
     private JTextField mTotalLessons;
@@ -47,7 +47,7 @@ public class ViewCourseNew extends JPanel implements CommandListener {
         JLabel lblGerao = new JLabel("Tipo do curso");
         lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mCourseTypeList = new JComboBox();
+        mCourseTypeList = new JComboBox<CourseType>();
         mCourseTypeList.setFont(new Font("Arial", Font.PLAIN, 14));
 
         JLabel lblNewLabel_1 = new JLabel("Data inicial");
@@ -72,7 +72,8 @@ public class ViewCourseNew extends JPanel implements CommandListener {
         mTotalLessons.setColumns(10);
 
         mButtonSave = new JButton("Criar");
-        mButtonSave.setIcon(new ImageIcon(ViewCourseNew.class.getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
+        mButtonSave.setIcon(new ImageIcon(ViewCourseNew.class
+                .getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
         mButtonSave.setFont(new Font("Arial", Font.PLAIN, 14));
         mButtonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -89,85 +90,121 @@ public class ViewCourseNew extends JPanel implements CommandListener {
         mProgressBar.setVisible(false);
 
         GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(
-            groupLayout.createParallelGroup(Alignment.TRAILING)
-                .addGroup(groupLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                        .addGroup(groupLayout.createSequentialGroup()
-                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                                .addComponent(lblGerao, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(mCourseTypeList, 0, 476, Short.MAX_VALUE))
-                            .addGap(18)
-                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                                .addComponent(mStartDate)
-                                .addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(18)
-                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                                .addComponent(lblDataFinal, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(mEndDate, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
-                            .addPreferredGap(ComponentPlacement.UNRELATED)
-                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(mButtonSave))
-                    .addContainerGap())
-        );
-        groupLayout.setVerticalGroup(
-            groupLayout.createParallelGroup(Alignment.LEADING)
-                .addGroup(groupLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(lblNewLabel)
-                    .addGap(18)
-                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblNewLabel_1)
-                        .addComponent(lblGerao, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblDataFinal, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(mCourseTypeList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mEndDate, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-                    .addGap(18)
-                    .addComponent(mButtonSave)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(472, Short.MAX_VALUE))
-        );
+        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
+                groupLayout
+                        .createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.LEADING)
+                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                                        .addGroup(
+                                                groupLayout
+                                                        .createSequentialGroup()
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createParallelGroup(Alignment.LEADING, false)
+                                                                        .addComponent(lblGerao,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                        .addComponent(mCourseTypeList, 0, 476,
+                                                                                Short.MAX_VALUE))
+                                                        .addGap(18)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createParallelGroup(Alignment.LEADING, false)
+                                                                        .addComponent(mStartDate)
+                                                                        .addComponent(lblNewLabel_1,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE))
+                                                        .addGap(18)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createParallelGroup(Alignment.LEADING, false)
+                                                                        .addComponent(lblDataFinal,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                        .addComponent(mEndDate,
+                                                                                GroupLayout.DEFAULT_SIZE, 127,
+                                                                                Short.MAX_VALUE))
+                                                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createParallelGroup(Alignment.LEADING)
+                                                                        .addComponent(mTotalLessons,
+                                                                                GroupLayout.PREFERRED_SIZE, 127,
+                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(lblTotalDeAulas,
+                                                                                GroupLayout.PREFERRED_SIZE, 127,
+                                                                                GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(mButtonSave)).addContainerGap()));
+        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+                groupLayout
+                        .createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblNewLabel)
+                        .addGap(18)
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(lblNewLabel_1)
+                                        .addComponent(lblGerao, GroupLayout.PREFERRED_SIZE, 17,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblDataFinal, GroupLayout.PREFERRED_SIZE, 17,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 17,
+                                                GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.BASELINE)
+                                        .addComponent(mCourseTypeList, GroupLayout.PREFERRED_SIZE,
+                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mEndDate, GroupLayout.PREFERRED_SIZE, 23,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, 23,
+                                                GroupLayout.PREFERRED_SIZE))
+                        .addGap(18)
+                        .addComponent(mButtonSave)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE).addContainerGap(472, Short.MAX_VALUE)));
         setLayout(groupLayout);
 
         // Fill course type list
-        for (CourseType item : Application.getInstance().getCourseTypeList()) {
+        for (CourseType item : Application.getInstance().getCourseTypeActivatedList()) {
             if (item.mEndDate.getTime() == 0) {
                 mCourseTypeList.addItem(item);
             }
         }
-        
+
     }
 
     @Override
     public void onCommandFinished(RequestResult result) {
-        switch(result.getCode()) {
+        switch (result.getCode()) {
         case WITHOUT_CONNECTION:
-            JOptionPane.showMessageDialog(this,"Sem conexão com a internet.\nNão foi possível completar a ação.");
+            JOptionPane.showMessageDialog(this, "Sem conexão com a internet.\nNão foi possível completar a ação.");
             enableFields();
             break;
         case SERVER_ERROR:
-            JOptionPane.showMessageDialog(this,"Erro no servidor.\nTente mais tarde.");
+            JOptionPane.showMessageDialog(this, "Erro no servidor.\nTente mais tarde.");
             enableFields();
             break;
         case UNKNOWN:
-            JOptionPane.showMessageDialog(this,"Erro desconhecido.\nFeche o aplicativo e tente novamente.");
+            JOptionPane.showMessageDialog(this, "Erro desconhecido.\nFeche o aplicativo e tente novamente.");
             enableFields();
             break;
         case OK:
             switch (result.getCommand()) {
             case COURSE_GET_LIST:
-                JOptionPane.showMessageDialog(this,"Curso criado com sucesso.");
+                JOptionPane.showMessageDialog(this, "Curso criado com sucesso.");
                 enableFields();
                 break;
             case COURSE_CREATE:
@@ -202,57 +239,57 @@ public class ViewCourseNew extends JPanel implements CommandListener {
 
     private Course checkData() {
         Course course = new Course();
-        course.mCourseTypeId = ((CourseType)mCourseTypeList.getSelectedItem()).mId;
+        course.mCourseTypeId = ((CourseType) mCourseTypeList.getSelectedItem()).mId;
 
         String startDate = mStartDate.getText().trim().toUpperCase();
         if (startDate.length() == 0) {
-            JOptionPane.showMessageDialog(this,"A data inicial deve ser preenchida.");
+            JOptionPane.showMessageDialog(this, "A data inicial deve ser preenchida.");
             return null;
         }
         if (startDate.length() != 10) {
-            JOptionPane.showMessageDialog(this,"A data inicial deve estar no formato DD/MM/YYYY");
+            JOptionPane.showMessageDialog(this, "A data inicial deve estar no formato DD/MM/YYYY");
             return null;
         }
         try {
             course.mStartDate = sDateFormatter.parse(startDate);
         } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this,"A data inicial deve estar no formato DD/MM/YYYY");
+            JOptionPane.showMessageDialog(this, "A data inicial deve estar no formato DD/MM/YYYY");
             return null;
         }
         if (course.mStartDate.getTime() < Calendar.getInstance().getTimeInMillis()) {
-            JOptionPane.showMessageDialog(this,"A data inicial não pode ser antes da data de hoje.");
+            JOptionPane.showMessageDialog(this, "A data inicial não pode ser antes da data de hoje.");
             return null;
         }
 
         String endDate = mEndDate.getText().trim().toUpperCase();
         if (endDate.length() == 0) {
-            JOptionPane.showMessageDialog(this,"A data final deve ser preenchida.");
+            JOptionPane.showMessageDialog(this, "A data final deve ser preenchida.");
             return null;
         }
         if (endDate.length() != 10) {
-            JOptionPane.showMessageDialog(this,"A data inicial deve estar no formato DD/MM/YYYY");
+            JOptionPane.showMessageDialog(this, "A data inicial deve estar no formato DD/MM/YYYY");
             return null;
         }
         try {
             course.mEndDate = sDateFormatter.parse(endDate);
         } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this,"A data final deve estar no formato DD/MM/YYYY");
+            JOptionPane.showMessageDialog(this, "A data final deve estar no formato DD/MM/YYYY");
             return null;
         }
 
         if (course.mStartDate.getTime() > course.mEndDate.getTime()) {
-            JOptionPane.showMessageDialog(this,"A data final deve ser antes da data inicial.");
+            JOptionPane.showMessageDialog(this, "A data final deve ser antes da data inicial.");
             return null;
         }
 
-        for (Course item : Application.getInstance().getCourseList()) {
+        for (Course item : Application.getInstance().getCourseActivatedList()) {
             if ((course.mCourseTypeId == item.mCourseTypeId)
-                && ((course.mStartDate.getTime() < item.mEndDate.getTime())
-                    || (course.mEndDate.getTime() < item.mEndDate.getTime()))) {
-                JOptionPane.showMessageDialog(this, "O período do curso deve estar depois do final de todos os cursos do mesmo tipo."
-                        + "\nData do outro curso: "
-                        + sDateFormatter.format(item.mStartDate) + " - "
-                        + sDateFormatter.format(item.mEndDate));
+                    && ((course.mStartDate.getTime() < item.mEndDate.getTime()) || (course.mEndDate.getTime() < item.mEndDate
+                            .getTime()))) {
+                JOptionPane.showMessageDialog(this,
+                        "O período do curso deve estar depois do final de todos os cursos do mesmo tipo."
+                                + "\nData do outro curso: " + sDateFormatter.format(item.mStartDate) + " - "
+                                + sDateFormatter.format(item.mEndDate));
                 return null;
             }
 
@@ -260,17 +297,17 @@ public class ViewCourseNew extends JPanel implements CommandListener {
 
         String totalLessons = mTotalLessons.getText().trim().toUpperCase();
         if (totalLessons.length() == 0) {
-            JOptionPane.showMessageDialog(this,"O total de aulas deve ser preenchido.");
+            JOptionPane.showMessageDialog(this, "O total de aulas deve ser preenchido.");
             return null;
         }
         try {
             course.mTotalLessons = Integer.parseInt(totalLessons);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,"O total de aulas deve ser um número");
+            JOptionPane.showMessageDialog(this, "O total de aulas deve ser um número");
             return null;
         }
         if (course.mTotalLessons == 0) {
-            JOptionPane.showMessageDialog(this,"O total de aulas não pode ser 0.");
+            JOptionPane.showMessageDialog(this, "O total de aulas não pode ser 0.");
             return null;
         }
 
