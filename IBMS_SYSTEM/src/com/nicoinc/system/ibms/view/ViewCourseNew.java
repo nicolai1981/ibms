@@ -210,6 +210,7 @@ public class ViewCourseNew extends JPanel implements CommandListener {
             case COURSE_CREATE:
                 mStartDate.setText("");
                 mEndDate.setText("");
+                mTotalLessons.setText("");
                 mCourseTypeList.setSelectedIndex(-1);
                 new CourseGetList(this).start();
                 break;
@@ -280,19 +281,6 @@ public class ViewCourseNew extends JPanel implements CommandListener {
         if (course.mStartDate.getTime() > course.mEndDate.getTime()) {
             JOptionPane.showMessageDialog(this, "A data final deve ser antes da data inicial.");
             return null;
-        }
-
-        for (Course item : Application.getInstance().getCourseActivatedList()) {
-            if ((course.mCourseTypeId == item.mCourseTypeId)
-                    && ((course.mStartDate.getTime() < item.mEndDate.getTime()) || (course.mEndDate.getTime() < item.mEndDate
-                            .getTime()))) {
-                JOptionPane.showMessageDialog(this,
-                        "O período do curso deve estar depois do final de todos os cursos do mesmo tipo."
-                                + "\nData do outro curso: " + sDateFormatter.format(item.mStartDate) + " - "
-                                + sDateFormatter.format(item.mEndDate));
-                return null;
-            }
-
         }
 
         String totalLessons = mTotalLessons.getText().trim().toUpperCase();

@@ -1,17 +1,13 @@
 package com.nicoinc.system.ibms.command;
 
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
-import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
 
 public class CourseUpdateSubscribe extends Command {
-    private HttpRequest mHttpRequest;
-
     public CourseUpdateSubscribe(CourseSubscribe subscribe, CommandListener listener) {
-        super(COMMAND.COURSE_UPDATE_SUBSCRIBE);
+        super(COMMAND.COURSE_UPDATE_SUBSCRIBE, "course_updateSubscribe.php");
         addListener(listener);
 
-        mHttpRequest = new HttpRequest(WEB_URL + "course_updateSubscribe.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(subscribe.mId));
         mHttpRequest.addParam("COURSE_ID", String.valueOf(subscribe.mCourseId));
         mHttpRequest.addParam("MEMBER_ID", String.valueOf(subscribe.mMemberId));
@@ -20,10 +16,5 @@ public class CourseUpdateSubscribe extends Command {
         mHttpRequest.addParam("IS_TEACHER", subscribe.mIsTeacher ? "1" : "0");
         mHttpRequest.addParam("COMPLETED", subscribe.mCompleted ? "1" : "0");
         mHttpRequest.addParam("TOTAL_LESSONS", String.valueOf(subscribe.mTotalLessons));
-    }
-
-    @Override
-    public void doRun() {
-        mHttpRequest.start();
     }
 }

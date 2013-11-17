@@ -7,24 +7,21 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.RequestResult.CODE;
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
-import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
 
 public class CourseGetSubscribeList extends Command {
     public static final String SUBSCRIBE_LIST = "SUBSCRIBE_LIST";
-    private HttpRequest mHttpRequest;
 
     public CourseGetSubscribeList(Course course, CommandListener listener) {
-        super(COMMAND.COURSE_GET_SUBSCRIBE_LIST);
+        super(COMMAND.COURSE_GET_SUBSCRIBE_LIST, "course_getSubscribeList.php");
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "course_getSubscribeList.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(course.mId));
     }
 
     @Override
     public void doRun() {
-        mHttpRequest.start();
+        super.doRun();
 
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);

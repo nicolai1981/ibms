@@ -40,6 +40,9 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
     private JProgressBar mProgressBar;
     private JTable mList;
     private FrameHome mHome;
+    private JButton mButtonTeacher;
+    private JButton mButtonSubscribe;
+    private JButton mButtonStudent;
 
     public ViewCourseSelect(FrameHome home) {
         mHome = home;
@@ -59,8 +62,7 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
-                    Course course = Application.getInstance().getCourseAllList()
-                            .get(mList.getSelectedRow());
+                    Course course = Application.getInstance().getCourseAllList().get(mList.getSelectedRow());
                     mButtonEdit.setEnabled(course.mDeactivateDate.getTime() == 0);
                     mButtonEnable.setText((course.mDeactivateDate.getTime() == 0) ? "Desativar" : "Ativar");
                 }
@@ -76,8 +78,7 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 if (mList.getSelectedRow() != -1) {
                     disableFields();
-                    Course course = Application.getInstance().getCourseAllList()
-                            .get(mList.getSelectedRow());
+                    Course course = Application.getInstance().getCourseAllList().get(mList.getSelectedRow());
                     mHome.showEditCourse(course);
                 }
             }
@@ -93,8 +94,7 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
             public void actionPerformed(ActionEvent arg0) {
                 if (mList.getSelectedRow() != -1) {
                     disableFields();
-                    Course course = Application.getInstance().getCourseAllList()
-                            .get(mList.getSelectedRow());
+                    Course course = Application.getInstance().getCourseAllList().get(mList.getSelectedRow());
                     if (course.mDeactivateDate.getTime() == 0) {
                         course.mDeactivateDate = Calendar.getInstance().getTime();
                     } else {
@@ -104,6 +104,46 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
                 }
             }
         });
+
+        mButtonTeacher = new JButton("Professores");
+        mButtonTeacher.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                if (mList.getSelectedRow() != -1) {
+                    disableFields();
+                    Course course = Application.getInstance().getCourseAllList().get(mList.getSelectedRow());
+                    mHome.showTeacherCourse(course);
+                }
+            }
+        });
+        mButtonTeacher.setIcon(new ImageIcon(ViewCourseSelect.class
+                .getResource("/com/nicoinc/system/ibms/resources/button_teacher.png")));
+        mButtonTeacher.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        mButtonSubscribe = new JButton("Inscri\u00E7\u00E3o");
+        mButtonSubscribe.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if (mList.getSelectedRow() != -1) {
+                    disableFields();
+                    Course course = Application.getInstance().getCourseAllList().get(mList.getSelectedRow());
+                    mHome.showSubscribeCourse(course);
+                }
+            }
+        });
+        mButtonSubscribe.setIcon(new ImageIcon(ViewCourseSelect.class
+                .getResource("/com/nicoinc/system/ibms/resources/button_subscribe.png")));
+        mButtonSubscribe.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        mButtonStudent = new JButton("Alunos");
+        mButtonStudent.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if (mList.getSelectedRow() != -1) {
+                    disableFields();
+                    Course course = Application.getInstance().getCourseAllList().get(mList.getSelectedRow());
+                    mHome.showStudentCourse(course);
+                }
+            }
+        });
+        mButtonStudent.setFont(new Font("Arial", Font.PLAIN, 14));
 
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
@@ -116,16 +156,24 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
                                         .addGroup(
                                                 groupLayout
                                                         .createSequentialGroup()
-                                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1116,
+                                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1120,
                                                                 Short.MAX_VALUE).addContainerGap())
                                         .addGroup(
                                                 groupLayout
                                                         .createSequentialGroup()
-                                                        .addComponent(mButtonEdit, GroupLayout.DEFAULT_SIZE,
-                                                                GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(mButtonEdit, GroupLayout.DEFAULT_SIZE, 101,
+                                                                Short.MAX_VALUE)
                                                         .addGap(79)
                                                         .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 97,
-                                                                GroupLayout.PREFERRED_SIZE).addGap(853))
+                                                                GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(76)
+                                                        .addComponent(mButtonTeacher)
+                                                        .addGap(55)
+                                                        .addComponent(mButtonSubscribe, GroupLayout.PREFERRED_SIZE,
+                                                                137, GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(82)
+                                                        .addComponent(mButtonStudent, GroupLayout.PREFERRED_SIZE, 137,
+                                                                GroupLayout.PREFERRED_SIZE).addGap(229))
                                         .addGroup(
                                                 groupLayout
                                                         .createSequentialGroup()
@@ -133,10 +181,10 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
                                                                 groupLayout
                                                                         .createParallelGroup(Alignment.TRAILING)
                                                                         .addComponent(scrollPane, Alignment.LEADING,
-                                                                                GroupLayout.DEFAULT_SIZE, 1116,
+                                                                                GroupLayout.DEFAULT_SIZE, 1120,
                                                                                 Short.MAX_VALUE)
                                                                         .addComponent(lblNewLabel,
-                                                                                GroupLayout.DEFAULT_SIZE, 1116,
+                                                                                GroupLayout.DEFAULT_SIZE, 1120,
                                                                                 Short.MAX_VALUE)).addContainerGap()))));
         groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
                 groupLayout
@@ -144,13 +192,22 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
                         .addContainerGap()
                         .addComponent(lblNewLabel)
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
                         .addPreferredGap(ComponentPlacement.UNRELATED)
                         .addGroup(
                                 groupLayout
-                                        .createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(mButtonEdit)
-                                        .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 33,
+                                        .createParallelGroup(Alignment.LEADING)
+                                        .addGroup(
+                                                groupLayout
+                                                        .createParallelGroup(Alignment.BASELINE)
+                                                        .addComponent(mButtonEdit)
+                                                        .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 33,
+                                                                GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(mButtonTeacher, GroupLayout.PREFERRED_SIZE, 33,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mButtonSubscribe, GroupLayout.PREFERRED_SIZE, 33,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mButtonStudent, GroupLayout.PREFERRED_SIZE, 33,
                                                 GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(ComponentPlacement.RELATED)
                         .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
@@ -181,8 +238,7 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
                 mList.invalidate();
                 enableFields();
                 if (mList.getSelectedRow() != -1) {
-                    Course course = Application.getInstance().getCourseAllList()
-                            .get(mList.getSelectedRow());
+                    Course course = Application.getInstance().getCourseAllList().get(mList.getSelectedRow());
                     mButtonEdit.setEnabled(course.mDeactivateDate.getTime() == 0);
                     mButtonEnable.setText((course.mDeactivateDate.getTime() == 0) ? "Desativar" : "Ativar");
                 }
@@ -213,7 +269,7 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
 
     private static class TableModel extends AbstractTableModel {
         private static final long serialVersionUID = 2139100891339821696L;
-        private static final String[] COLUMN_NAMES = { "NOME",  "EDIÇÃO", "DATA INICIAL", "DATA FINAL","ESTADO" };
+        private static final String[] COLUMN_NAMES = { "NOME", "EDIÇÃO", "DATA INICIAL", "DATA FINAL", "ESTADO" };
 
         @Override
         public int getColumnCount() {

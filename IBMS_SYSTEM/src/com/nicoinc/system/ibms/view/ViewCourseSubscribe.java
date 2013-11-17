@@ -1,11 +1,9 @@
 package com.nicoinc.system.ibms.view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -22,117 +20,52 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.LineBorder;
 
 import com.nicoinc.system.ibms.command.CommandListener;
-import com.nicoinc.system.ibms.command.CourseGetSubscribeList;
 import com.nicoinc.system.ibms.command.CourseCreateSubscribe;
+import com.nicoinc.system.ibms.command.CourseGetSubscribeList;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
-import com.nicoinc.system.ibms.model.CourseType;
 import com.nicoinc.system.ibms.model.Member;
 
 public class ViewCourseSubscribe extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static final long serialVersionUID = -8213291145000189731L;
 
-    private JComboBox mCourseList;
+    private Course mCourse;
     private JLabel mCourseType;
     private JLabel mStartDate;
     private JLabel mEndDate;
     private JLabel mTotalLessons;
-    private DefaultListModel mStudentListModel; 
-    private JList mStudentList;
-    private JComboBox mMemberList;
+    private DefaultListModel<CourseSubscribe> mStudentListModel;
+    private JList<CourseSubscribe> mStudentList;
+    private JComboBox<Member> mMemberList;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
     private boolean mSubscribeAction = false;
 
-    public ViewCourseSubscribe() {
-
-        JLabel lblCursoASer = new JLabel("Curso");
-        lblCursoASer.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        mCourseList = new JComboBox();
-        mCourseList.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                mStudentListModel.removeAllElements();
-
-                Course currentCourse = (Course) mCourseList.getSelectedItem();
-                if (currentCourse != null) {
-                    mStartDate.setText(sDateFormatter.format(currentCourse.mStartDate));
-                    mEndDate.setText(sDateFormatter.format(currentCourse.mEndDate));
-                    mTotalLessons.setText(String.valueOf(currentCourse.mTotalLessons));
-                    for (CourseType item : Application.getInstance().getCourseTypeList()) {
-                        if (item.mId == currentCourse.mCourseTypeId) {
-                            mCourseType.setText(item.mName);
-                            break;
-                        }
-                    }
-
-                    disableFields();
-                    new CourseGetSubscribeList(currentCourse, ViewCourseSubscribe.this).run();
-                }
-            }
-        });
-        mCourseList.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        JPanel panel = new JPanel();
-        panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-
-        JLabel lblGerao = new JLabel("Tipo do curso");
-        lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        mCourseType = new JLabel("-");
-        mCourseType.setFont(new Font("Arial", Font.BOLD, 14));
-
-        JLabel lblNewLabel_1 = new JLabel("Data inicial");
-        lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        mStartDate = new JLabel("-");
-        mStartDate.setFont(new Font("Arial", Font.BOLD, 14));
-
-        JLabel lblDataFinal = new JLabel("Data final");
-        lblDataFinal.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        mEndDate = new JLabel("-");
-        mEndDate.setFont(new Font("Arial", Font.BOLD, 14));
-
-        JLabel lblTotalDeAulas = new JLabel("Total de Aulas");
-        lblTotalDeAulas.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        mTotalLessons = new JLabel("-");
-        mTotalLessons.setFont(new Font("Arial", Font.BOLD, 14));
-
-        JLabel lblAlunosInscritos = new JLabel("Alunos Inscritos");
-        lblAlunosInscritos.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        JScrollPane scrollPaneStudent = new JScrollPane();
-        scrollPaneStudent.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPaneStudent.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        mStudentListModel = new DefaultListModel();
-        mStudentList = new JList(mStudentListModel);
-        mStudentList.setFont(new Font("Arial", Font.BOLD, 14));
-        scrollPaneStudent.setViewportView(mStudentList);
+    public ViewCourseSubscribe(Course course) {
+        mCourse = course;
+        mStudentListModel = new DefaultListModel<CourseSubscribe>();
 
         JLabel lblLderes = new JLabel("Membro a ser inscrito");
         lblLderes.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mMemberList = new JComboBox();
+        mMemberList = new JComboBox<Member>();
         mMemberList.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mButtonSave = new JButton("Inscrever");
-        mButtonSave.setIcon(new ImageIcon(ViewCourseSubscribe.class.getResource("/com/nicoinc/system/ibms/resources/button_subscribe.png")));
+        mButtonSave.setIcon(new ImageIcon(ViewCourseSubscribe.class
+                .getResource("/com/nicoinc/system/ibms/resources/button_subscribe.png")));
         mButtonSave.setFont(new Font("Arial", Font.PLAIN, 14));
         mButtonSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                Course course = (Course) mCourseList.getSelectedItem();
                 Member member = (Member) mMemberList.getSelectedItem();
-                if ((course != null) && (member != null)) {
+                if ((mCourse != null) && (member != null)) {
                     CourseSubscribe subscribe = new CourseSubscribe();
-                    subscribe.mCourseId = course.mId;
+                    subscribe.mCourseId = mCourse.mId;
                     subscribe.mMemberId = member.mId;
 
                     disableFields();
@@ -145,116 +78,191 @@ public class ViewCourseSubscribe extends JPanel implements CommandListener {
         mProgressBar.setIndeterminate(true);
         mProgressBar.setVisible(false);
 
-        GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(
-            groupLayout.createParallelGroup(Alignment.LEADING)
-                .addGroup(groupLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblCursoASer, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                        .addComponent(mCourseList, 0, 1110, Short.MAX_VALUE)
-                        .addComponent(mMemberList, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblLderes)
-                        .addComponent(mButtonSave)
-                        .addComponent(mProgressBar, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE))
-                    .addContainerGap())
-        );
-        groupLayout.setVerticalGroup(
-            groupLayout.createParallelGroup(Alignment.LEADING)
-                .addGroup(groupLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(lblCursoASer, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(mCourseList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.UNRELATED)
-                    .addComponent(panel, GroupLayout.PREFERRED_SIZE, 396, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18)
-                    .addComponent(lblLderes, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(mMemberList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18)
-                    .addComponent(mButtonSave)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(39))
-        );
+        JLabel lblGerao = new JLabel("Tipo do curso");
+        lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        GroupLayout gl_panel = new GroupLayout(panel);
-        gl_panel.setHorizontalGroup(
-            gl_panel.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panel.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-                        .addComponent(scrollPaneStudent, GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
-                        .addGroup(gl_panel.createSequentialGroup()
-                            .addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-                                .addGroup(gl_panel.createSequentialGroup()
-                                    .addComponent(lblGerao, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18)
-                                    .addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(gl_panel.createSequentialGroup()
-                                    .addComponent(mCourseType, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18)
-                                    .addComponent(mStartDate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGap(18)
-                            .addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-                                .addComponent(lblDataFinal, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(mEndDate, GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
-                            .addGap(18)
-                            .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-                                .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(lblAlunosInscritos))
-                    .addContainerGap())
-        );
-        gl_panel.setVerticalGroup(
-            gl_panel.createParallelGroup(Alignment.LEADING)
-                .addGroup(gl_panel.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblGerao)
-                        .addComponent(lblNewLabel_1)
-                        .addComponent(lblDataFinal)
-                        .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(mCourseType, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mEndDate, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(lblAlunosInscritos, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(scrollPaneStudent, GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addContainerGap())
-        );
-        panel.setLayout(gl_panel);
+        JLabel lblNewLabel_1 = new JLabel("Data inicial");
+        lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JLabel lblDataFinal = new JLabel("Data final");
+        lblDataFinal.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JLabel lblTotalDeAulas = new JLabel("Total de Aulas");
+        lblTotalDeAulas.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        mCourseType = new JLabel(mCourse.mCourseTypeName);
+        mCourseType.setFont(new Font("Arial", Font.BOLD, 14));
+
+        mStartDate = new JLabel(sDateFormatter.format(mCourse.mStartDate));
+        mStartDate.setFont(new Font("Arial", Font.BOLD, 14));
+
+        mEndDate = new JLabel(sDateFormatter.format(mCourse.mEndDate));
+        mEndDate.setFont(new Font("Arial", Font.BOLD, 14));
+
+        mTotalLessons = new JLabel(String.valueOf(mCourse.mTotalLessons));
+        mTotalLessons.setFont(new Font("Arial", Font.BOLD, 14));
+
+        JLabel lblAlunosInscritos = new JLabel("Alunos Inscritos");
+        lblAlunosInscritos.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JScrollPane scrollPaneStudent = new JScrollPane();
+        scrollPaneStudent.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPaneStudent.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        mStudentList = new JList<CourseSubscribe>(mStudentListModel);
+        mStudentList.setFont(new Font("Arial", Font.BOLD, 14));
+        scrollPaneStudent.setViewportView(mStudentList);
+
+        GroupLayout groupLayout = new GroupLayout(this);
+        groupLayout
+                .setHorizontalGroup(groupLayout
+                        .createParallelGroup(Alignment.LEADING)
+                        .addGroup(
+                                groupLayout
+                                        .createSequentialGroup()
+                                        .addContainerGap()
+                                        .addGroup(
+                                                groupLayout
+                                                        .createParallelGroup(Alignment.LEADING)
+                                                        .addComponent(scrollPaneStudent, Alignment.TRAILING,
+                                                                GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.LEADING,
+                                                                                                false)
+                                                                                        .addGroup(
+                                                                                                groupLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                mCourseType,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                476,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addGap(18)
+                                                                                                        .addComponent(
+                                                                                                                mStartDate,
+                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE))
+                                                                                        .addGroup(
+                                                                                                groupLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                lblGerao,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                476,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addGap(18)
+                                                                                                        .addComponent(
+                                                                                                                lblNewLabel_1,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                116,
+                                                                                                                GroupLayout.PREFERRED_SIZE)))
+                                                                        .addGap(18)
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.LEADING)
+                                                                                        .addGroup(
+                                                                                                groupLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                lblDataFinal,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                116,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addGap(18)
+                                                                                                        .addComponent(
+                                                                                                                lblTotalDeAulas,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                116,
+                                                                                                                GroupLayout.PREFERRED_SIZE))
+                                                                                        .addGroup(
+                                                                                                groupLayout
+                                                                                                        .createSequentialGroup()
+                                                                                                        .addComponent(
+                                                                                                                mEndDate,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                116,
+                                                                                                                GroupLayout.PREFERRED_SIZE)
+                                                                                                        .addGap(18)
+                                                                                                        .addComponent(
+                                                                                                                mTotalLessons,
+                                                                                                                GroupLayout.PREFERRED_SIZE,
+                                                                                                                116,
+                                                                                                                GroupLayout.PREFERRED_SIZE))))
+                                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1120,
+                                                                Short.MAX_VALUE)
+                                                        .addGroup(
+                                                                groupLayout
+                                                                        .createSequentialGroup()
+                                                                        .addGroup(
+                                                                                groupLayout
+                                                                                        .createParallelGroup(
+                                                                                                Alignment.LEADING)
+                                                                                        .addComponent(lblLderes)
+                                                                                        .addComponent(mMemberList, 0,
+                                                                                                975, Short.MAX_VALUE))
+                                                                        .addGap(18).addComponent(mButtonSave))
+                                                        .addComponent(lblAlunosInscritos)).addContainerGap()));
+        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
+                groupLayout
+                        .createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(
+                                groupLayout
+                                        .createParallelGroup(Alignment.TRAILING)
+                                        .addGroup(
+                                                groupLayout
+                                                        .createSequentialGroup()
+                                                        .addGroup(
+                                                                groupLayout.createParallelGroup(Alignment.BASELINE)
+                                                                        .addComponent(lblGerao)
+                                                                        .addComponent(lblNewLabel_1)
+                                                                        .addComponent(lblDataFinal)
+                                                                        .addComponent(lblTotalDeAulas))
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                        .addGroup(
+                                                                groupLayout.createParallelGroup(Alignment.BASELINE)
+                                                                        .addComponent(mCourseType)
+                                                                        .addComponent(mStartDate)
+                                                                        .addComponent(mEndDate)
+                                                                        .addComponent(mTotalLessons))
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                        .addComponent(lblLderes, GroupLayout.PREFERRED_SIZE, 17,
+                                                                GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                        .addComponent(mMemberList, GroupLayout.PREFERRED_SIZE,
+                                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(mButtonSave))
+                        .addGap(18)
+                        .addComponent(lblAlunosInscritos)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(scrollPaneStudent, GroupLayout.PREFERRED_SIZE, 465, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE).addContainerGap()));
         setLayout(groupLayout);
 
-        // Fill course list
-        long currentTime = Calendar.getInstance().getTimeInMillis();
-        for (Course item : Application.getInstance().getCourseList()) {
-            if (item.mEndDate.getTime() > currentTime) {
-                item.mStringFormat = Course.COMPLETE_INFORMATION;
-                mCourseList.addItem(item);
-            }
-        }
+        new CourseGetSubscribeList(mCourse, this).run();
     }
 
     @Override
     public void onCommandFinished(RequestResult result) {
-        switch(result.getCode()) {
+        switch (result.getCode()) {
         case WITHOUT_CONNECTION:
-            JOptionPane.showMessageDialog(this,"Sem conexão com a internet.\nNão foi possível completar a ação.");
+            JOptionPane.showMessageDialog(this, "Sem conexão com a internet.\nNão foi possível completar a ação.");
             enableFields();
             break;
         case SERVER_ERROR:
-            JOptionPane.showMessageDialog(this,"Erro no servidor.\nTente mais tarde.");
+            JOptionPane.showMessageDialog(this, "Erro no servidor.\nTente mais tarde.");
             enableFields();
             break;
         case UNKNOWN:
-            JOptionPane.showMessageDialog(this,"Erro desconhecido.\nFeche o aplicativo e tente novamente.");
+            JOptionPane.showMessageDialog(this, "Erro desconhecido.\nFeche o aplicativo e tente novamente.");
             enableFields();
             break;
         case OK:
@@ -270,7 +278,7 @@ public class ViewCourseSubscribe extends JPanel implements CommandListener {
                     }
                 }
 
-                for (Member member : Application.getInstance().getMemberList()) {
+                for (Member member : Application.getInstance().getMemberActivatedList()) {
                     if (member.mEndDate.getTime() != 0) {
                         continue;
                     }
@@ -289,7 +297,7 @@ public class ViewCourseSubscribe extends JPanel implements CommandListener {
                 }
 
                 if (mSubscribeAction) {
-                    JOptionPane.showMessageDialog(this,"Aluno inscrito com sucesso.");
+                    JOptionPane.showMessageDialog(this, "Aluno inscrito com sucesso.");
                     mSubscribeAction = false;
                 }
                 enableFields();
@@ -297,7 +305,7 @@ public class ViewCourseSubscribe extends JPanel implements CommandListener {
 
             case COURSE_CREATE_SUBSCRIBE:
                 mSubscribeAction = true;
-                new CourseGetSubscribeList((Course)mCourseList.getSelectedItem(), ViewCourseSubscribe.this).run();
+                new CourseGetSubscribeList(mCourse, ViewCourseSubscribe.this).run();
                 break;
 
             default:
@@ -307,14 +315,12 @@ public class ViewCourseSubscribe extends JPanel implements CommandListener {
     }
 
     private void enableFields() {
-        mCourseList.setEnabled(true);
         mMemberList.setEnabled(true);
         mButtonSave.setEnabled(true);
         mProgressBar.setVisible(false);
     }
 
     private void disableFields() {
-        mCourseList.setEnabled(false);
         mMemberList.setEnabled(false);
         mButtonSave.setEnabled(false);
         mProgressBar.setVisible(true);

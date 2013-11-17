@@ -127,19 +127,6 @@ public class FrameHome {
         JMenu mnEpb = new JMenu("EPB");
         menuBar.add(mnEpb);
 
-        JMenuItem mntmInscrio_1 = new JMenuItem("Inscri\u00E7\u00E3o");
-        mntmInscrio_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewCourseSubscribe();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnEpb.add(mntmInscrio_1);
-
         JMenu mnCurso = new JMenu("Curso");
         mnEpb.add(mnCurso);
 
@@ -168,32 +155,6 @@ public class FrameHome {
             }
         });
         mnCurso.add(mntmEditarCurso);
-        
-        JMenuItem mntmProfessores = new JMenuItem("Professores");
-        mntmProfessores.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewCourseTeacher();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnCurso.add(mntmProfessores);
-
-        JMenuItem mntmAlunos = new JMenuItem("Alunos");
-        mntmAlunos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewCourseStudent();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnCurso.add(mntmAlunos);
 
         JMenuItem mntmVisualizarCurso = new JMenuItem("Visualizar");
         mntmVisualizarCurso.addActionListener(new ActionListener() {
@@ -379,6 +340,33 @@ public class FrameHome {
             mFrame.getContentPane().remove(mCurrentJPanel);
         }
         mCurrentJPanel = new ViewCourseEdit(FrameHome.this, course);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showTeacherCourse(Course course) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseTeacher(FrameHome.this, course);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showSubscribeCourse(Course course) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseSubscribe(course);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showStudentCourse(Course course) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseStudent(course);
         mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
         mFrame.validate();
     }
