@@ -2,8 +2,6 @@ package com.nicoinc.system.ibms.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -11,12 +9,10 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
@@ -28,66 +24,30 @@ import javax.swing.event.ListSelectionListener;
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseGetSubscribeList;
 import com.nicoinc.system.ibms.command.RequestResult;
-import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseSubscribe;
-import com.nicoinc.system.ibms.model.CourseType;
 
 public class ViewCourseView extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static final long serialVersionUID = -8213291145000189731L;
 
-    private JComboBox mCourseList;
+    private Course mCourse;
     private JLabel mCourseType;
     private JLabel mStartDate;
     private JLabel mEndDate;
     private JLabel mTotalLessons;
-    private JList mTeacherList;
-    private DefaultListModel mTeacherListModel; 
-    private JList mStudentList;
-    private DefaultListModel mStudentListModel; 
+    private JList<CourseSubscribe> mTeacherList;
+    private DefaultListModel<CourseSubscribe> mTeacherListModel; 
+    private JList<CourseSubscribe> mStudentList;
+    private DefaultListModel<CourseSubscribe> mStudentListModel; 
     private JLabel mStudentName;
     private JLabel mStudentStatus;
     private JLabel mStudentStartDate;
     private JLabel mStudentEndDate;
     private JLabel mStudentTotalLesson;
-    
-    private JProgressBar mProgressBar;
 
-    public ViewCourseView() {
-
-        JLabel lblCursoASer = new JLabel("Curso");
-        lblCursoASer.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        mCourseList = new JComboBox();
-        mCourseList.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                mStudentListModel.removeAllElements();
-                mTeacherListModel.removeAllElements();
-                mStudentName.setText("-");
-                mStudentStatus.setText("-");
-                mStudentStartDate.setText("-");
-                mStudentEndDate.setText("-");
-                mStudentTotalLesson.setText("-");
-
-                Course currentCourse = (Course) mCourseList.getSelectedItem();
-                if (currentCourse != null) {
-                    mStartDate.setText(sDateFormatter.format(currentCourse.mStartDate));
-                    mEndDate.setText(sDateFormatter.format(currentCourse.mEndDate));
-                    mTotalLessons.setText(String.valueOf(currentCourse.mTotalLessons));
-                    for (CourseType item : Application.getInstance().getCourseTypeList()) {
-                        if (item.mId == currentCourse.mCourseTypeId) {
-                            mCourseType.setText(item.mName);
-                            break;
-                        }
-                    }
-
-                    disableFields();
-                    new CourseGetSubscribeList(currentCourse, ViewCourseView.this).run();
-                }
-            }
-        });
-        mCourseList.setFont(new Font("Arial", Font.PLAIN, 14));
+    public ViewCourseView(Course course) {
+        mCourse = course;
 
         JPanel panel = new JPanel();
         panel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -95,25 +55,25 @@ public class ViewCourseView extends JPanel implements CommandListener {
         JLabel lblGerao = new JLabel("Tipo do curso");
         lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mCourseType = new JLabel("-");
+        mCourseType = new JLabel(mCourse.mCourseTypeName);
         mCourseType.setFont(new Font("Arial", Font.BOLD, 14));
 
         JLabel lblNewLabel_1 = new JLabel("Data inicial");
         lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mStartDate = new JLabel("-");
+        mStartDate = new JLabel(sDateFormatter.format(mCourse.mStartDate));
         mStartDate.setFont(new Font("Arial", Font.BOLD, 14));
 
         JLabel lblDataFinal = new JLabel("Data final");
         lblDataFinal.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mEndDate = new JLabel("-");
+        mEndDate = new JLabel(sDateFormatter.format(mCourse.mEndDate));
         mEndDate.setFont(new Font("Arial", Font.BOLD, 14));
 
         JLabel lblTotalDeAulas = new JLabel("Total de Aulas");
         lblTotalDeAulas.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mTotalLessons = new JLabel("-");
+        mTotalLessons = new JLabel(String.valueOf(mCourse.mTotalLessons));
         mTotalLessons.setFont(new Font("Arial", Font.BOLD, 14));
 
         JLabel lblProfessores = new JLabel("Professores");
@@ -123,8 +83,8 @@ public class ViewCourseView extends JPanel implements CommandListener {
         scrollPaneTeacher.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPaneTeacher.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        mTeacherListModel = new DefaultListModel(); 
-        mTeacherList = new JList(mTeacherListModel);
+        mTeacherListModel = new DefaultListModel<CourseSubscribe>(); 
+        mTeacherList = new JList<CourseSubscribe>(mTeacherListModel);
         mTeacherList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mTeacherList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPaneTeacher.setViewportView(mTeacherList);
@@ -136,8 +96,8 @@ public class ViewCourseView extends JPanel implements CommandListener {
         scrollPaneComplete.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPaneComplete.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        mStudentListModel = new DefaultListModel();
-        mStudentList = new JList(mStudentListModel);
+        mStudentListModel = new DefaultListModel<CourseSubscribe>();
+        mStudentList = new JList<CourseSubscribe>(mStudentListModel);
         mStudentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mStudentList.setFont(new Font("Arial", Font.BOLD, 14));
         mStudentList.addListSelectionListener(new ListSelectionListener() {
@@ -147,17 +107,19 @@ public class ViewCourseView extends JPanel implements CommandListener {
                     if (student != null) {
                         mStudentName.setText(student.mMemberName);
                         mStudentStartDate.setText(sDateFormatter.format(student.mStartDate));
+
                         if (student.mEndDate.getTime() == 0) {
                             mStudentEndDate.setText("-");
                         } else {
                             mStudentEndDate.setText(sDateFormatter.format(student.mEndDate));
                         }
+
                         mStudentTotalLesson.setText(String.valueOf(student.mTotalLessons));
                         if (student.mCompleted) {
                             mStudentStatus.setText("Formado");
                         } else if (student.mEndDate.getTime() > 0) {
                             mStudentStatus.setText("Desistente");
-                        } else if (Calendar.getInstance().getTimeInMillis() > ((Course)mCourseList.getSelectedItem()).mEndDate.getTime()) {
+                        } else if (Calendar.getInstance().getTimeInMillis() > mCourse.mEndDate.getTime()) {
                             mStudentStatus.setText("Incompleto");
                         } else {
                             mStudentStatus.setText("Cursando");
@@ -200,10 +162,6 @@ public class ViewCourseView extends JPanel implements CommandListener {
 
         mStudentTotalLesson = new JLabel("-");
         mStudentTotalLesson.setFont(new Font("Arial", Font.BOLD, 14));
-
-        mProgressBar = new JProgressBar();
-        mProgressBar.setIndeterminate(true);
-        mProgressBar.setVisible(false);
 
         GroupLayout gl_panel_1 = new GroupLayout(panel_1);
         gl_panel_1.setHorizontalGroup(
@@ -258,43 +216,34 @@ public class ViewCourseView extends JPanel implements CommandListener {
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(lblCursoASer, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                        .addComponent(mCourseList, Alignment.TRAILING, 0, 1110, Short.MAX_VALUE)
-                        .addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                        .addComponent(panel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
                         .addGroup(groupLayout.createSequentialGroup()
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                                 .addComponent(lblProfessores)
                                 .addComponent(scrollPaneTeacher, GroupLayout.PREFERRED_SIZE, 529, GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(ComponentPlacement.UNRELATED)
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(lblAlunospresena, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(scrollPaneComplete, GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)))
-                        .addComponent(panel_1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE))
+                                .addComponent(scrollPaneComplete, GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+                                .addComponent(lblAlunospresena, GroupLayout.PREFERRED_SIZE, 358, GroupLayout.PREFERRED_SIZE))))
                     .addContainerGap())
         );
         groupLayout.setVerticalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(lblCursoASer, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(mCourseList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.UNRELATED)
                     .addComponent(panel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                    .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblProfessores, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblAlunospresena, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(scrollPaneComplete)
-                        .addComponent(scrollPaneTeacher, GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
-                    .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(scrollPaneTeacher, GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                        .addComponent(scrollPaneComplete, GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
+                    .addPreferredGap(ComponentPlacement.UNRELATED)
                     .addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(17))
+                    .addContainerGap())
         );
 
         GroupLayout gl_panel = new GroupLayout(panel);
@@ -341,11 +290,7 @@ public class ViewCourseView extends JPanel implements CommandListener {
         panel.setLayout(gl_panel);
         setLayout(groupLayout);
 
-        // Fill course list
-        for (Course item : Application.getInstance().getCourseList()) {
-            item.mStringFormat = Course.COMPLETE_INFORMATION;
-            mCourseList.addItem(item);
-        }
+        new CourseGetSubscribeList(mCourse, this).run();
     }
 
     @Override
@@ -353,15 +298,12 @@ public class ViewCourseView extends JPanel implements CommandListener {
         switch(result.getCode()) {
         case WITHOUT_CONNECTION:
             JOptionPane.showMessageDialog(this,"Sem conexão com a internet.\nNão foi possível completar a ação.");
-            enableFields();
             break;
         case SERVER_ERROR:
             JOptionPane.showMessageDialog(this,"Erro no servidor.\nTente mais tarde.");
-            enableFields();
             break;
         case UNKNOWN:
             JOptionPane.showMessageDialog(this,"Erro desconhecido.\nFeche o aplicativo e tente novamente.");
-            enableFields();
             break;
         case OK:
             switch (result.getCommand()) {
@@ -374,23 +316,10 @@ public class ViewCourseView extends JPanel implements CommandListener {
                         mStudentListModel.addElement(subscription);
                     }
                 }
-                enableFields();
                 break;
             default:
                 break;
             }
         }
-    }
-
-    private void enableFields() {
-        mCourseList.setEnabled(true);
-        mStudentList.setEnabled(true);
-        mProgressBar.setVisible(false);
-    }
-
-    private void disableFields() {
-        mCourseList.setEnabled(false);
-        mStudentList.setEnabled(false);
-        mProgressBar.setVisible(true);
     }
 }

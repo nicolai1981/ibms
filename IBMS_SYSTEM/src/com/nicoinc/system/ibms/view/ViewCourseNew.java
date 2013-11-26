@@ -32,6 +32,7 @@ public class ViewCourseNew extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static final long serialVersionUID = -8213291145000189731L;
 
+    private FrameHome mHome;
     private JComboBox<CourseType> mCourseTypeList;
     private JTextField mStartDate;
     private JTextField mEndDate;
@@ -39,7 +40,9 @@ public class ViewCourseNew extends JPanel implements CommandListener {
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
 
-    public ViewCourseNew() {
+    public ViewCourseNew(FrameHome home) {
+        mHome = home;
+
         JLabel lblNewLabel = new JLabel("CRIAR CURSO");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -87,94 +90,57 @@ public class ViewCourseNew extends JPanel implements CommandListener {
 
         mProgressBar = new JProgressBar();
         mProgressBar.setIndeterminate(true);
-        mProgressBar.setVisible(false);
 
         GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.LEADING)
-                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                                        .addGroup(
-                                                groupLayout
-                                                        .createSequentialGroup()
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createParallelGroup(Alignment.LEADING, false)
-                                                                        .addComponent(lblGerao,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                        .addComponent(mCourseTypeList, 0, 476,
-                                                                                Short.MAX_VALUE))
-                                                        .addGap(18)
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createParallelGroup(Alignment.LEADING, false)
-                                                                        .addComponent(mStartDate)
-                                                                        .addComponent(lblNewLabel_1,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE))
-                                                        .addGap(18)
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createParallelGroup(Alignment.LEADING, false)
-                                                                        .addComponent(lblDataFinal,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                        .addComponent(mEndDate,
-                                                                                GroupLayout.DEFAULT_SIZE, 127,
-                                                                                Short.MAX_VALUE))
-                                                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createParallelGroup(Alignment.LEADING)
-                                                                        .addComponent(mTotalLessons,
-                                                                                GroupLayout.PREFERRED_SIZE, 127,
-                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(lblTotalDeAulas,
-                                                                                GroupLayout.PREFERRED_SIZE, 127,
-                                                                                GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(mButtonSave)).addContainerGap()));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblNewLabel)
-                        .addGap(18)
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(lblNewLabel_1)
-                                        .addComponent(lblGerao, GroupLayout.PREFERRED_SIZE, 17,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblDataFinal, GroupLayout.PREFERRED_SIZE, 17,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 17,
-                                                GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.BASELINE)
-                                        .addComponent(mCourseTypeList, GroupLayout.PREFERRED_SIZE,
-                                                GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mEndDate, GroupLayout.PREFERRED_SIZE, 23,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, 23,
-                                                GroupLayout.PREFERRED_SIZE))
-                        .addGap(18)
-                        .addComponent(mButtonSave)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                GroupLayout.PREFERRED_SIZE).addContainerGap(472, Short.MAX_VALUE)));
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(lblGerao, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(mCourseTypeList, 0, 476, Short.MAX_VALUE))
+                            .addGap(18)
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(mStartDate)
+                                .addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGap(18)
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(lblDataFinal, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(mEndDate, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
+                            .addPreferredGap(ComponentPlacement.UNRELATED)
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1120, Short.MAX_VALUE)
+                        .addComponent(mButtonSave))
+                    .addContainerGap())
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(lblNewLabel)
+                    .addGap(18)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(lblNewLabel_1)
+                        .addComponent(lblGerao, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDataFinal, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(mCourseTypeList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mEndDate, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
+                    .addComponent(mButtonSave)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+        );
         setLayout(groupLayout);
 
         // Fill course type list
@@ -184,6 +150,7 @@ public class ViewCourseNew extends JPanel implements CommandListener {
             }
         }
 
+        mProgressBar.setVisible(false);
     }
 
     @Override
@@ -206,6 +173,7 @@ public class ViewCourseNew extends JPanel implements CommandListener {
             case COURSE_GET_LIST:
                 JOptionPane.showMessageDialog(this, "Curso criado com sucesso.");
                 enableFields();
+                mHome.showSelectCourse();
                 break;
             case COURSE_CREATE:
                 mStartDate.setText("");

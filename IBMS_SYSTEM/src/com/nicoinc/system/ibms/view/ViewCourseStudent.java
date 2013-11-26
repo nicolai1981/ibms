@@ -512,7 +512,7 @@ public class ViewCourseStudent extends JPanel implements CommandListener {
         student.mEndDate = new Date(oldData.mEndDate.getTime());
         student.mIsTeacher = false;
 
-        student.mCompleted = (mStudentEnd.getSelectedIndex() == 1);
+        student.mCompleted = (mStudentCompleted.getSelectedIndex() == 1);
 
         if (mStudentEnd.getSelectedIndex() == 0) {
             student.mEndDate = new Date(0);

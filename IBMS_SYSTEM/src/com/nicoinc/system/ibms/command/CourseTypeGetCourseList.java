@@ -7,24 +7,21 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.nicoinc.system.ibms.command.RequestResult.CODE;
 import com.nicoinc.system.ibms.command.RequestResult.COMMAND;
-import com.nicoinc.system.ibms.http.HttpRequest;
 import com.nicoinc.system.ibms.model.Course;
 import com.nicoinc.system.ibms.model.CourseType;
 
 public class CourseTypeGetCourseList extends Command {
     public static final String HISTORY_LIST = "HISTORY_LIST";
-    private HttpRequest mHttpRequest;
 
     public CourseTypeGetCourseList(CourseType courseType, CommandListener listener) {
-        super(COMMAND.COURSE_TYPE_COURSE_LIST);
+        super(COMMAND.COURSE_TYPE_COURSE_LIST, "courseType_getCourseList.php");
         addListener(listener);
-        mHttpRequest = new HttpRequest(WEB_URL + "courseType_getCourseList.php", mResult);
         mHttpRequest.addParam("ID", String.valueOf(courseType.mId));
     }
 
     @Override
     public void doRun() {
-        mHttpRequest.start();
+        super.doRun();
 
         if (mResult.getCode() == CODE.OK) {
             mResult.setCode(CODE.SERVER_ERROR);

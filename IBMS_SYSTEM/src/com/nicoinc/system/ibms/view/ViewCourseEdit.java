@@ -64,7 +64,6 @@ public class ViewCourseEdit extends JPanel implements CommandListener {
 
         mProgressBar = new JProgressBar();
         mProgressBar.setIndeterminate(true);
-        mProgressBar.setVisible(false);
 
         JLabel lblGerao = new JLabel("Tipo do curso");
         lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -106,7 +105,6 @@ public class ViewCourseEdit extends JPanel implements CommandListener {
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
                         .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
                         .addGroup(groupLayout.createSequentialGroup()
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -130,6 +128,7 @@ public class ViewCourseEdit extends JPanel implements CommandListener {
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                                 .addComponent(mVersion, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblEdio, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
                         .addComponent(mButtonSave))
                     .addContainerGap())
         );
@@ -153,11 +152,11 @@ public class ViewCourseEdit extends JPanel implements CommandListener {
                             .addComponent(mEndDate, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addComponent(mTotalLessons, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addComponent(mVersion, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addGap(18)
+                    .addPreferredGap(ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
                     .addComponent(mButtonSave)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(472, Short.MAX_VALUE))
+                    .addContainerGap())
         );
         setLayout(groupLayout);
 
@@ -168,6 +167,8 @@ public class ViewCourseEdit extends JPanel implements CommandListener {
                 mCourseTypeList.setSelectedItem(item);
             }
         }
+
+        mProgressBar.setVisible(false);
     }
 
     @Override

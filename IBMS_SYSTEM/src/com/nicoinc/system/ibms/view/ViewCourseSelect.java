@@ -43,11 +43,12 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
     private JButton mButtonTeacher;
     private JButton mButtonSubscribe;
     private JButton mButtonStudent;
+    private JButton mButtonDetails;
 
     public ViewCourseSelect(FrameHome home) {
         mHome = home;
 
-        JLabel lblNewLabel = new JLabel("SELECIONE O CURSO");
+        JLabel lblNewLabel = new JLabel("GERENCIAMENTO DE CURSOS");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
@@ -71,8 +72,7 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
         scrollPane.setViewportView(mList);
 
         mButtonEdit = new JButton("Editar");
-        mButtonEdit.setIcon(new ImageIcon(ViewMemberSelect.class
-                .getResource("/com/nicoinc/system/ibms/resources/button_save.png")));
+        mButtonEdit.setIcon(new ImageIcon(ViewCourseSelect.class.getResource("/com/nicoinc/system/ibms/resources/button_edit.png")));
         mButtonEdit.setFont(new Font("Arial", Font.PLAIN, 14));
         mButtonEdit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -86,9 +86,9 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
 
         mProgressBar = new JProgressBar();
         mProgressBar.setIndeterminate(true);
-        mProgressBar.setVisible(false);
 
         mButtonEnable = new JButton("Ativar");
+        mButtonEnable.setIcon(new ImageIcon(ViewCourseSelect.class.getResource("/com/nicoinc/system/ibms/resources/button_deactived.png")));
         mButtonEnable.setFont(new Font("Arial", Font.PLAIN, 14));
         mButtonEnable.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -134,6 +134,7 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
         mButtonSubscribe.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mButtonStudent = new JButton("Alunos");
+        mButtonStudent.setIcon(new ImageIcon(ViewCourseSelect.class.getResource("/com/nicoinc/system/ibms/resources/button_student.png")));
         mButtonStudent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 if (mList.getSelectedRow() != -1) {
@@ -145,74 +146,92 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
         });
         mButtonStudent.setFont(new Font("Arial", Font.PLAIN, 14));
 
+        mButtonDetails = new JButton("Detalhes");
+        mButtonDetails.setIcon(new ImageIcon(ViewCourseSelect.class.getResource("/com/nicoinc/system/ibms/resources/button_details.png")));
+        mButtonDetails.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if (mList.getSelectedRow() != -1) {
+                    disableFields();
+                    Course course = Application.getInstance().getCourseAllList().get(mList.getSelectedRow());
+                    mHome.showDetailsCourse(course);
+                }
+            }
+        });
+        mButtonDetails.setFont(new Font("Arial", Font.PLAIN, 14));
+        
+        JButton mButtonNew = new JButton("Novo");
+        mButtonNew.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                mHome.showNewCourse();
+            }
+        });
+        mButtonNew.setIcon(new ImageIcon(ViewCourseSelect.class.getResource("/com/nicoinc/system/ibms/resources/button_new.png")));
+        mButtonNew.setFont(new Font("Arial", Font.PLAIN, 14));
+
         GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.TRAILING)
-                                        .addGroup(
-                                                groupLayout
-                                                        .createSequentialGroup()
-                                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1120,
-                                                                Short.MAX_VALUE).addContainerGap())
-                                        .addGroup(
-                                                groupLayout
-                                                        .createSequentialGroup()
-                                                        .addComponent(mButtonEdit, GroupLayout.DEFAULT_SIZE, 101,
-                                                                Short.MAX_VALUE)
-                                                        .addGap(79)
-                                                        .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 97,
-                                                                GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(76)
-                                                        .addComponent(mButtonTeacher)
-                                                        .addGap(55)
-                                                        .addComponent(mButtonSubscribe, GroupLayout.PREFERRED_SIZE,
-                                                                137, GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(82)
-                                                        .addComponent(mButtonStudent, GroupLayout.PREFERRED_SIZE, 137,
-                                                                GroupLayout.PREFERRED_SIZE).addGap(229))
-                                        .addGroup(
-                                                groupLayout
-                                                        .createSequentialGroup()
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createParallelGroup(Alignment.TRAILING)
-                                                                        .addComponent(scrollPane, Alignment.LEADING,
-                                                                                GroupLayout.DEFAULT_SIZE, 1120,
-                                                                                Short.MAX_VALUE)
-                                                                        .addComponent(lblNewLabel,
-                                                                                GroupLayout.DEFAULT_SIZE, 1120,
-                                                                                Short.MAX_VALUE)).addContainerGap()))));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblNewLabel)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.LEADING)
-                                        .addGroup(
-                                                groupLayout
-                                                        .createParallelGroup(Alignment.BASELINE)
-                                                        .addComponent(mButtonEdit)
-                                                        .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 33,
-                                                                GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(mButtonTeacher, GroupLayout.PREFERRED_SIZE, 33,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mButtonSubscribe, GroupLayout.PREFERRED_SIZE, 33,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mButtonStudent, GroupLayout.PREFERRED_SIZE, 33,
-                                                GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                GroupLayout.PREFERRED_SIZE).addContainerGap()));
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 966, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(mButtonNew, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(mButtonEdit, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(mButtonEnable, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(mButtonDetails, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(mButtonSubscribe, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(mButtonStudent, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addPreferredGap(ComponentPlacement.RELATED)
+                                    .addComponent(mButtonTeacher, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)))))
+                    .addContainerGap())
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(lblNewLabel)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(mButtonNew, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(mButtonEdit)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(mButtonDetails, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                            .addGap(36)
+                            .addComponent(mButtonSubscribe, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(mButtonStudent, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(mButtonTeacher, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+        );
         setLayout(groupLayout);
+
+        mProgressBar.setVisible(false);
     }
 
     @Override
@@ -256,6 +275,8 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
     private void enableFields() {
         mButtonEdit.setEnabled(true);
         mButtonEnable.setEnabled(true);
+        mButtonDetails.setEnabled(true);
+        mButtonStudent.setEnabled(true);
         mList.setEnabled(true);
         mProgressBar.setVisible(false);
     }
@@ -263,6 +284,8 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
     private void disableFields() {
         mButtonEdit.setEnabled(false);
         mButtonEnable.setEnabled(false);
+        mButtonDetails.setEnabled(false);
+        mButtonStudent.setEnabled(false);
         mList.setEnabled(false);
         mProgressBar.setVisible(true);
     }

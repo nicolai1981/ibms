@@ -71,7 +71,7 @@ public class FrameHome {
             }
         });
         mnMembros.add(mntmEditar);
-        
+
         JMenuItem mntmMudarSenha = new JMenuItem("Mudar senha");
         mntmMudarSenha.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -127,23 +127,7 @@ public class FrameHome {
         JMenu mnEpb = new JMenu("EPB");
         menuBar.add(mnEpb);
 
-        JMenu mnCurso = new JMenu("Curso");
-        mnEpb.add(mnCurso);
-
-        JMenuItem mntmNovoCurso = new JMenuItem("Novo");
-        mntmNovoCurso.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewCourseNew();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnCurso.add(mntmNovoCurso);
-
-        JMenuItem mntmEditarCurso = new JMenuItem("Editar");
+        JMenuItem mntmEditarCurso = new JMenuItem("Curso");
         mntmEditarCurso.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
@@ -154,20 +138,7 @@ public class FrameHome {
                 mFrame.validate();
             }
         });
-        mnCurso.add(mntmEditarCurso);
-
-        JMenuItem mntmVisualizarCurso = new JMenuItem("Visualizar");
-        mntmVisualizarCurso.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewCourseView();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnCurso.add(mntmVisualizarCurso);
+        mnEpb.add(mntmEditarCurso);
 
         JMenu mnTipoDeCurso = new JMenu("Tipo de Curso");
         mnEpb.add(mnTipoDeCurso);
@@ -185,7 +156,7 @@ public class FrameHome {
         });
         mnTipoDeCurso.add(mntmNovoTipoDe_1);
 
-        JMenuItem mntmEditarTipoDe_1 = new JMenuItem("Editar");
+        JMenuItem mntmEditarTipoDe_1 = new JMenuItem("Gerenciar");
         mntmEditarTipoDe_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
@@ -197,19 +168,6 @@ public class FrameHome {
             }
         });
         mnTipoDeCurso.add(mntmEditarTipoDe_1);
-
-        JMenuItem mntmVisualizar_1 = new JMenuItem("Visualizar");
-        mntmVisualizar_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewCourseTypeView();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnTipoDeCurso.add(mntmVisualizar_1);
 
         JMenu mnRelatrios_1 = new JMenu("Relat\u00F3rios");
         mnEpb.add(mnRelatrios_1);
@@ -230,7 +188,7 @@ public class FrameHome {
         });
         mnGeraes.add(mntmCriarGerao);
 
-        JMenuItem mntmEditarGerao = new JMenuItem("Editar");
+        JMenuItem mntmEditarGerao = new JMenuItem("Gerenciar");
         mntmEditarGerao.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
@@ -242,20 +200,6 @@ public class FrameHome {
             }
         });
         mnGeraes.add(mntmEditarGerao);
-
-        JMenuItem mntmVisualizarGerao = new JMenuItem(
-                "Visualizar");
-        mntmVisualizarGerao.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewGenerationView();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnGeraes.add(mntmVisualizarGerao);
 
         JMenu mnRelatrios_2 = new JMenu("Relat\u00F3rios");
         mnGeraes.add(mnRelatrios_2);
@@ -335,6 +279,15 @@ public class FrameHome {
         mFrame.validate();
     }
 
+    public void showNewCourse() {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseNew(FrameHome.this);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
     public void showEditCourse(Course course) {
         if (mCurrentJPanel != null) {
             mFrame.getContentPane().remove(mCurrentJPanel);
@@ -367,6 +320,24 @@ public class FrameHome {
             mFrame.getContentPane().remove(mCurrentJPanel);
         }
         mCurrentJPanel = new ViewCourseStudent(course);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showDetailsCourse(Course course) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseView(course);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showDetailsCourseType(CourseType courseType) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseTypeView(courseType);
         mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
         mFrame.validate();
     }
