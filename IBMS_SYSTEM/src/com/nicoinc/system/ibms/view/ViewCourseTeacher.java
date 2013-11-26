@@ -169,195 +169,86 @@ public class ViewCourseTeacher extends JPanel implements CommandListener {
         totalLessons.setFont(new Font("Arial", Font.BOLD, 14));
 
         GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout
-                .setHorizontalGroup(groupLayout
-                        .createParallelGroup(Alignment.LEADING)
-                        .addGroup(
-                                groupLayout
-                                        .createSequentialGroup()
-                                        .addContainerGap()
-                                        .addGroup(
-                                                groupLayout
-                                                        .createParallelGroup(Alignment.LEADING)
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createSequentialGroup()
-                                                                        .addComponent(lblNewLabel,
-                                                                                GroupLayout.DEFAULT_SIZE, 1120,
-                                                                                Short.MAX_VALUE).addContainerGap())
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createSequentialGroup()
-                                                                        .addComponent(scrollPaneLeaders,
-                                                                                GroupLayout.DEFAULT_SIZE, 502,
-                                                                                Short.MAX_VALUE)
-                                                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                                                        .addGroup(
-                                                                                groupLayout
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.LEADING)
-                                                                                        .addGroup(
-                                                                                                groupLayout
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addGap(2)
-                                                                                                        .addComponent(
-                                                                                                                mButtomClear,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                101,
-                                                                                                                GroupLayout.PREFERRED_SIZE))
-                                                                                        .addComponent(
-                                                                                                mButtonRemove,
-                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                101,
-                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                        .addComponent(
-                                                                                                mButtonAdd,
-                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                101,
-                                                                                                GroupLayout.PREFERRED_SIZE))
-                                                                        .addPreferredGap(ComponentPlacement.RELATED)
-                                                                        .addGroup(
-                                                                                groupLayout
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.LEADING)
-                                                                                        .addComponent(lblProfessores)
-                                                                                        .addComponent(
-                                                                                                scrollPaneTeacher,
-                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                502, Short.MAX_VALUE))
-                                                                        .addContainerGap())
-                                                        .addGroup(
-                                                                groupLayout.createSequentialGroup()
-                                                                        .addComponent(mButtonSave)
-                                                                        .addContainerGap(1029, Short.MAX_VALUE))
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createSequentialGroup()
-                                                                        .addComponent(mProgressBar,
-                                                                                GroupLayout.DEFAULT_SIZE, 1120,
-                                                                                Short.MAX_VALUE).addContainerGap())
-                                                        .addGroup(
-                                                                groupLayout
-                                                                        .createSequentialGroup()
-                                                                        .addGroup(
-                                                                                groupLayout
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.LEADING,
-                                                                                                false)
-                                                                                        .addGroup(
-                                                                                                groupLayout
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addComponent(
-                                                                                                                courseType,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                476,
-                                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addGap(18)
-                                                                                                        .addComponent(
-                                                                                                                startDate,
-                                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                                GroupLayout.DEFAULT_SIZE,
-                                                                                                                Short.MAX_VALUE))
-                                                                                        .addGroup(
-                                                                                                groupLayout
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addComponent(
-                                                                                                                lblGerao,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                476,
-                                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addGap(18)
-                                                                                                        .addComponent(
-                                                                                                                lblNewLabel_1,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                116,
-                                                                                                                GroupLayout.PREFERRED_SIZE)))
-                                                                        .addGap(18)
-                                                                        .addGroup(
-                                                                                groupLayout
-                                                                                        .createParallelGroup(
-                                                                                                Alignment.LEADING)
-                                                                                        .addGroup(
-                                                                                                groupLayout
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addComponent(
-                                                                                                                lblDataFinal,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                116,
-                                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addGap(18)
-                                                                                                        .addComponent(
-                                                                                                                lblTotalDeAulas,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                116,
-                                                                                                                GroupLayout.PREFERRED_SIZE))
-                                                                                        .addGroup(
-                                                                                                groupLayout
-                                                                                                        .createSequentialGroup()
-                                                                                                        .addComponent(
-                                                                                                                endDate,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                116,
-                                                                                                                GroupLayout.PREFERRED_SIZE)
-                                                                                                        .addGap(18)
-                                                                                                        .addComponent(
-                                                                                                                totalLessons,
-                                                                                                                GroupLayout.PREFERRED_SIZE,
-                                                                                                                116,
-                                                                                                                GroupLayout.PREFERRED_SIZE)))
-                                                                        .addContainerGap(252, Short.MAX_VALUE))
-                                                        .addGroup(
-                                                                groupLayout.createSequentialGroup()
-                                                                        .addComponent(lblLderes)
-                                                                        .addContainerGap(1083, Short.MAX_VALUE)))));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                .addGroup(
-                        groupLayout
-                                .createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblNewLabel)
-                                .addGap(18)
-                                .addGroup(
-                                        groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(lblGerao)
-                                                .addComponent(lblNewLabel_1).addComponent(lblDataFinal)
-                                                .addComponent(lblTotalDeAulas))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addGroup(
-                                        groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(courseType)
-                                                .addComponent(startDate).addComponent(endDate)
-                                                .addComponent(totalLessons))
-                                .addPreferredGap(ComponentPlacement.UNRELATED)
-                                .addGroup(
-                                        groupLayout
-                                                .createParallelGroup(Alignment.BASELINE)
-                                                .addComponent(lblLderes, GroupLayout.PREFERRED_SIZE, 17,
-                                                        GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(lblProfessores, GroupLayout.PREFERRED_SIZE, 17,
-                                                        GroupLayout.PREFERRED_SIZE))
-                                .addGroup(
-                                        groupLayout
-                                                .createParallelGroup(Alignment.LEADING)
-                                                .addGroup(
-                                                        groupLayout
-                                                                .createSequentialGroup()
-                                                                .addComponent(mButtonAdd, GroupLayout.PREFERRED_SIZE,
-                                                                        33, GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                                .addComponent(mButtonRemove,
-                                                                        GroupLayout.PREFERRED_SIZE, 33,
-                                                                        GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(ComponentPlacement.RELATED)
-                                                                .addComponent(mButtomClear, GroupLayout.PREFERRED_SIZE,
-                                                                        33, GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(scrollPaneLeaders, GroupLayout.DEFAULT_SIZE, 447,
-                                                        Short.MAX_VALUE)
-                                                .addComponent(scrollPaneTeacher, Alignment.TRAILING,
-                                                        GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(mButtonSave)
-                                .addPreferredGap(ComponentPlacement.RELATED)
-                                .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                        GroupLayout.PREFERRED_SIZE).addGap(15)));
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(scrollPaneLeaders, GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addGap(2)
+                                    .addComponent(mButtomClear, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(mButtonRemove, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mButtonAdd, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(lblProfessores)
+                                .addComponent(scrollPaneTeacher, GroupLayout.PREFERRED_SIZE, 493, GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addComponent(courseType, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18)
+                                    .addComponent(startDate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addComponent(lblGerao, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18)
+                                    .addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)))
+                            .addGap(18)
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addComponent(lblDataFinal, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18)
+                                    .addComponent(lblTotalDeAulas, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addComponent(endDate, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18)
+                                    .addComponent(totalLessons, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(lblLderes)
+                        .addComponent(mButtonSave))
+                    .addContainerGap())
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(lblNewLabel)
+                    .addGap(18)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(lblGerao)
+                        .addComponent(lblNewLabel_1)
+                        .addComponent(lblDataFinal)
+                        .addComponent(lblTotalDeAulas))
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(courseType)
+                        .addComponent(startDate)
+                        .addComponent(endDate)
+                        .addComponent(totalLessons))
+                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(lblLderes, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblProfessores, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(scrollPaneTeacher, GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addComponent(mButtonAdd, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(mButtonRemove, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addComponent(mButtomClear, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(scrollPaneLeaders, GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
+                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                    .addComponent(mButtonSave)
+                    .addGap(5)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+        );
         setLayout(groupLayout);
 
         disableFields();
