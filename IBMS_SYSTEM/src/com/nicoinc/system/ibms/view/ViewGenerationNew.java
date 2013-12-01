@@ -29,12 +29,14 @@ import com.nicoinc.system.ibms.model.Member;
 
 public class ViewGenerationNew extends JPanel implements CommandListener {
     private static final long serialVersionUID = 5607527208663662381L;
+    private FrameHome mHome;
     private JTextField mName;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
     private JComboBox<Member> mLeader;
 
-    public ViewGenerationNew() {
+    public ViewGenerationNew(FrameHome home) {
+        mHome = home;
         JLabel lblNewLabel = new JLabel("CRIAR GERA\u00C7\u00C3O");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -167,6 +169,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
                     }
                 }
                 enableFields();
+                mHome.showSelectGeneration();
                 break;
 
             case GENERATION_CREATE:

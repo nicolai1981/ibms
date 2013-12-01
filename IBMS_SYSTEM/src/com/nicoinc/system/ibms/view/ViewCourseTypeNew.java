@@ -26,11 +26,13 @@ import com.nicoinc.system.ibms.model.CourseType;
 
 public class ViewCourseTypeNew extends JPanel implements CommandListener {
     private static final long serialVersionUID = 5607527208663662381L;
+    private FrameHome mHome;
     private JTextField mName;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
 
-    public ViewCourseTypeNew() {
+    public ViewCourseTypeNew(FrameHome home) {
+        mHome = home;
         JLabel lblNewLabel = new JLabel("CRIAR TIPO DE CURSO");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -111,6 +113,7 @@ public class ViewCourseTypeNew extends JPanel implements CommandListener {
             case COURSE_TYPE_GET_LIST:
                 JOptionPane.showMessageDialog(this,"Tipo de curso criado com sucesso.");
                 enableFields();
+                mHome.showSelectCourseType();
                 break;
 
             case COURSE_TYPE_CREATE:

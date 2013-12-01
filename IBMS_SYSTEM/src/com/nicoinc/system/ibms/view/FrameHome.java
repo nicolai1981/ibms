@@ -46,20 +46,7 @@ public class FrameHome {
         JMenu mnMembros = new JMenu("Membro");
         menuBar.add(mnMembros);
 
-        JMenuItem mntmCadastrar = new JMenuItem("Novo");
-        mntmCadastrar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewMemberNew();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnMembros.add(mntmCadastrar);
-
-        JMenuItem mntmEditar = new JMenuItem("Editar");
+        JMenuItem mntmEditar = new JMenuItem("Gerenciar");
         mntmEditar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
@@ -140,23 +127,7 @@ public class FrameHome {
         });
         mnEpb.add(mntmEditarCurso);
 
-        JMenu mnTipoDeCurso = new JMenu("Tipo de Curso");
-        mnEpb.add(mnTipoDeCurso);
-
-        JMenuItem mntmNovoTipoDe_1 = new JMenuItem("Novo");
-        mntmNovoTipoDe_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewCourseTypeNew();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnTipoDeCurso.add(mntmNovoTipoDe_1);
-
-        JMenuItem mntmEditarTipoDe_1 = new JMenuItem("Gerenciar");
+        JMenuItem mntmEditarTipoDe_1 = new JMenuItem("Tipo de Curso");
         mntmEditarTipoDe_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mCurrentJPanel != null) {
@@ -167,26 +138,13 @@ public class FrameHome {
                 mFrame.validate();
             }
         });
-        mnTipoDeCurso.add(mntmEditarTipoDe_1);
+        mnEpb.add(mntmEditarTipoDe_1);
 
         JMenu mnRelatrios_1 = new JMenu("Relat\u00F3rios");
         mnEpb.add(mnRelatrios_1);
 
         JMenu mnGeraes = new JMenu("Gera\u00E7\u00E3o");
         menuBar.add(mnGeraes);
-
-        JMenuItem mntmCriarGerao = new JMenuItem("Criar");
-        mntmCriarGerao.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (mCurrentJPanel != null) {
-                    mFrame.getContentPane().remove(mCurrentJPanel);
-                }
-                mCurrentJPanel = new ViewGenerationNew();
-                mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
-                mFrame.validate();
-            }
-        });
-        mnGeraes.add(mntmCriarGerao);
 
         JMenuItem mntmEditarGerao = new JMenuItem("Gerenciar");
         mntmEditarGerao.addActionListener(new ActionListener() {
@@ -225,6 +183,15 @@ public class FrameHome {
         mFrame.setVisible(true);
     }
 
+    public void showNewMember() {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewMemberNew(FrameHome.this);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
     public void showEditMember(Member member) {
         if (mCurrentJPanel != null) {
             mFrame.getContentPane().remove(mCurrentJPanel);
@@ -261,11 +228,29 @@ public class FrameHome {
         mFrame.validate();
     }
 
+    public void showNewGeneration() {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewGenerationNew(FrameHome.this);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
     public void showEditCourseType(CourseType courseType) {
         if (mCurrentJPanel != null) {
             mFrame.getContentPane().remove(mCurrentJPanel);
         }
         mCurrentJPanel = new ViewCourseTypeEdit(FrameHome.this, courseType);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
+    public void showNewCourseType() {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewCourseTypeNew(FrameHome.this);
         mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
         mFrame.validate();
     }

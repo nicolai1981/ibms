@@ -41,6 +41,7 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
     private JTable mMemberList;
     private FrameHome mHome;
     private boolean mUpdateData = false;
+    private JButton mButtonNew;
 
     public ViewMemberSelect(FrameHome home) {
         mHome = home;
@@ -87,6 +88,8 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
         mProgressBar.setVisible(false);
 
         mButtonEnable = new JButton("Ativar");
+        mButtonEnable.setIcon(new ImageIcon(ViewMemberSelect.class
+                .getResource("/com/nicoinc/system/ibms/resources/button_deactived.png")));
         mButtonEnable.setFont(new Font("Arial", Font.PLAIN, 14));
         mButtonEnable.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -100,7 +103,19 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
         });
 
         mButtonView = new JButton("Detalhar");
+        mButtonView.setIcon(new ImageIcon(ViewMemberSelect.class
+                .getResource("/com/nicoinc/system/ibms/resources/button_details.png")));
         mButtonView.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        mButtonNew = new JButton("Novo");
+        mButtonNew.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mHome.showNewMember();
+            }
+        });
+        mButtonNew.setIcon(new ImageIcon(ViewMemberSelect.class
+                .getResource("/com/nicoinc/system/ibms/resources/button_new.png")));
+        mButtonNew.setFont(new Font("Arial", Font.PLAIN, 14));
 
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
@@ -111,52 +126,55 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
                                 groupLayout
                                         .createParallelGroup(Alignment.TRAILING)
                                         .addGroup(
+                                                Alignment.LEADING,
                                                 groupLayout
                                                         .createSequentialGroup()
-                                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110,
-                                                                Short.MAX_VALUE).addContainerGap())
-                                        .addGroup(
-                                                groupLayout
-                                                        .createSequentialGroup()
-                                                        .addComponent(mButtonEdit, GroupLayout.DEFAULT_SIZE,
-                                                                GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addGap(79)
-                                                        .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 97,
+                                                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 981,
                                                                 GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(68)
-                                                        .addComponent(mButtonView, GroupLayout.PREFERRED_SIZE, 97,
-                                                                GroupLayout.PREFERRED_SIZE).addGap(688))
-                                        .addGroup(
-                                                groupLayout
-                                                        .createSequentialGroup()
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
                                                         .addGroup(
                                                                 groupLayout
                                                                         .createParallelGroup(Alignment.TRAILING)
-                                                                        .addComponent(scrollPane, Alignment.LEADING,
-                                                                                GroupLayout.DEFAULT_SIZE, 1110,
+                                                                        .addComponent(mButtonNew,
+                                                                                GroupLayout.DEFAULT_SIZE, 263,
                                                                                 Short.MAX_VALUE)
-                                                                        .addComponent(lblNewLabel,
-                                                                                GroupLayout.DEFAULT_SIZE, 1110,
-                                                                                Short.MAX_VALUE)).addContainerGap()))));
+                                                                        .addComponent(mButtonEdit,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                        .addComponent(mButtonEnable, Alignment.LEADING,
+                                                                                GroupLayout.DEFAULT_SIZE, 263,
+                                                                                Short.MAX_VALUE)
+                                                                        .addComponent(mButtonView,
+                                                                                GroupLayout.DEFAULT_SIZE, 263,
+                                                                                Short.MAX_VALUE)))
+                                        .addComponent(mProgressBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1110,
+                                                Short.MAX_VALUE)
+                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE))
+                        .addContainerGap()));
         groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
                 groupLayout
                         .createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblNewLabel)
                         .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
                         .addGroup(
                                 groupLayout
                                         .createParallelGroup(Alignment.LEADING)
                                         .addGroup(
                                                 groupLayout
-                                                        .createParallelGroup(Alignment.BASELINE)
+                                                        .createSequentialGroup()
+                                                        .addComponent(mButtonNew, GroupLayout.PREFERRED_SIZE, 33,
+                                                                GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
                                                         .addComponent(mButtonEdit)
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
                                                         .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 33,
+                                                                GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(ComponentPlacement.RELATED)
+                                                        .addComponent(mButtonView, GroupLayout.PREFERRED_SIZE, 33,
                                                                 GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(mButtonView, GroupLayout.PREFERRED_SIZE, 33,
-                                                GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE))
                         .addPreferredGap(ComponentPlacement.RELATED)
                         .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
                                 GroupLayout.PREFERRED_SIZE).addContainerGap()));

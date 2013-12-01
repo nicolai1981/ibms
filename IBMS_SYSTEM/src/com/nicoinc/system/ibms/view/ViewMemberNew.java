@@ -38,6 +38,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
     private static final long serialVersionUID = -8213291145000189731L;
 
+    private FrameHome mHome;
     private JTextField mName;
     private JComboBox<String> mGender;
     private JTextField mBirthday;
@@ -64,7 +65,8 @@ public class ViewMemberNew extends JPanel implements CommandListener {
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
 
-    public ViewMemberNew() {
+    public ViewMemberNew(FrameHome home) {
+        mHome = home;
         JLabel lblNewLabel = new JLabel("CRIAR MEMBRO");
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -539,6 +541,7 @@ public class ViewMemberNew extends JPanel implements CommandListener {
                 }
                 JOptionPane.showMessageDialog(this, "Membro criado com sucesso.");
                 enableFields();
+                mHome.showSelectMember();
                 break;
 
             case MEMBER_CREATE:
