@@ -201,6 +201,15 @@ public class FrameHome {
         mFrame.validate();
     }
 
+    public void showDetailsMember(Member member) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewMemberDetails(member);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
     public void showSelectMember() {
         if (mCurrentJPanel != null) {
             mFrame.getContentPane().remove(mCurrentJPanel);

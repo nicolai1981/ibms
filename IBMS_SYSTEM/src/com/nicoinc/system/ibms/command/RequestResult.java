@@ -17,6 +17,7 @@ public class RequestResult {
         MEMBER_UPDATE,
         MEMBER_GET_LIST,
         MEMBER_GET_MEMBER,
+        MEMBER_GET_DETAILS,
 
         // Generation
         GENERATION_CREATE,

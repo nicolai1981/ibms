@@ -103,6 +103,14 @@ public class ViewMemberSelect extends JPanel implements CommandListener {
         });
 
         mButtonView = new JButton("Detalhar");
+        mButtonView.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                if (mMemberList.getSelectedRow() != -1) {
+                    Member member = Application.getInstance().getMemberAllList().get(mMemberList.getSelectedRow());
+                    mHome.showDetailsMember(member);
+                }
+            }
+        });
         mButtonView.setIcon(new ImageIcon(ViewMemberSelect.class
                 .getResource("/com/nicoinc/system/ibms/resources/button_details.png")));
         mButtonView.setFont(new Font("Arial", Font.PLAIN, 14));
