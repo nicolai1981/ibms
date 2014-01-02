@@ -80,32 +80,33 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
                         .createSequentialGroup()
                         .addContainerGap()
                         .addGroup(
-                                groupLayout.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                                        .addComponent(lblNewLabel_1)
-                                        .addComponent(mName, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                                        .addComponent(lblDataDaCriao).addComponent(mStartDate)
-                                        .addComponent(mButtonSave)).addContainerGap()));
+                                groupLayout
+                                        .createParallelGroup(Alignment.LEADING)
+                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                                        .addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 50,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mName, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                                        .addComponent(lblDataDaCriao, GroupLayout.PREFERRED_SIZE, 130,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 130,
+                                                GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 130,
+                                                GroupLayout.PREFERRED_SIZE)).addContainerGap()));
         groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
                 groupLayout
                         .createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(10)
                         .addComponent(lblNewLabel)
-                        .addGap(18)
+                        .addGap(15)
                         .addComponent(lblNewLabel_1)
-                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addGap(5)
                         .addComponent(mName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                GroupLayout.PREFERRED_SIZE)
-                        .addGap(18)
-                        .addComponent(lblDataDaCriao)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mStartDate)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mButtonSave)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                GroupLayout.PREFERRED_SIZE).addContainerGap(426, Short.MAX_VALUE)));
+                                GroupLayout.PREFERRED_SIZE).addGap(10).addComponent(lblDataDaCriao).addGap(5)
+                        .addComponent(mStartDate).addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addComponent(mButtonSave).addGap(5)
+                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+                        .addGap(10)));
         setLayout(groupLayout);
     }
 

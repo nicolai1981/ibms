@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -69,15 +68,14 @@ public class FrameLoginLoading extends JFrame implements CommandListener {
                                         .addGroup(
                                                 gl_contentPane
                                                         .createSequentialGroup()
-                                                        .addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 325,
-                                                                GroupLayout.PREFERRED_SIZE).addGap(130)))
-                        .addContainerGap()));
+                                                        .addGap(130)
+                                                        .addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 330,
+                                                                Short.MAX_VALUE).addGap(130))).addContainerGap()));
         gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(
-                gl_contentPane.createSequentialGroup().addContainerGap().addComponent(btnNewButton_1)
-                        .addPreferredGap(ComponentPlacement.UNRELATED).addComponent(mMessage)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(44, Short.MAX_VALUE)));
+                gl_contentPane.createSequentialGroup().addGap(10).addComponent(btnNewButton_1).addGap(15)
+                        .addComponent(mMessage).addGap(15)
+                        .addComponent(progressBar, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(10, Short.MAX_VALUE)));
         contentPane.setLayout(gl_contentPane);
 
         new GenerationGetList(this).start();
@@ -106,8 +104,9 @@ public class FrameLoginLoading extends JFrame implements CommandListener {
                         + result.getData("ERROR_CODE") + "\nFeche e tente novamente.");
                 break;
             case COURSE_GET_LIST:
-                JOptionPane.showMessageDialog(this, "Erro ao receber a lista de curso. Código de erro:"
-                        + result.getData("ERROR_CODE") + "\nFeche e tente novamente.");
+                JOptionPane.showMessageDialog(this,
+                        "Erro ao receber a lista de curso. Código de erro:" + result.getData("ERROR_CODE")
+                                + "\nFeche e tente novamente.");
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "Erro no servidor.\nTente mais tarde.");

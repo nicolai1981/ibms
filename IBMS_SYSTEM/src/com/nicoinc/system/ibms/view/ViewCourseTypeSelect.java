@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -133,37 +132,37 @@ public class ViewCourseTypeSelect extends JPanel implements CommandListener {
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE)
-                        .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 978, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED)
-                            .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-                                .addComponent(mButtonEdit, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                                .addComponent(mButtonNew, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                                .addComponent(mButtonEnable, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                                .addComponent(mButtonDetails, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
-                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1110, Short.MAX_VALUE))
+                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE)
+                        .addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+                            .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
+                            .addGap(5)
+                            .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+                                .addComponent(mButtonEdit, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mButtonNew, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mButtonDetails, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE))
                     .addContainerGap())
         );
         groupLayout.setVerticalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
-                    .addContainerGap()
+                    .addGap(10)
                     .addComponent(lblNewLabel)
-                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGap(15)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(mButtonNew, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addGap(5)
                             .addComponent(mButtonEdit)
-                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addGap(5)
                             .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(ComponentPlacement.RELATED)
+                            .addGap(5)
                             .addComponent(mButtonDetails, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
-                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE))
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
+                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
+                    .addGap(5)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+                    .addGap(10))
         );
         setLayout(groupLayout);
     }
