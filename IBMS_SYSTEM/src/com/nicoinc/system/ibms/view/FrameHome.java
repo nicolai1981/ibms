@@ -246,6 +246,15 @@ public class FrameHome {
         mFrame.validate();
     }
 
+    public void showDetailsGeneration(Generation generation) {
+        if (mCurrentJPanel != null) {
+            mFrame.getContentPane().remove(mCurrentJPanel);
+        }
+        mCurrentJPanel = new ViewGenerationView(generation);
+        mFrame.getContentPane().add(mCurrentJPanel, BorderLayout.NORTH);
+        mFrame.validate();
+    }
+
     public void showEditCourseType(CourseType courseType) {
         if (mCurrentJPanel != null) {
             mFrame.getContentPane().remove(mCurrentJPanel);

@@ -33,7 +33,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
     private JTextField mName;
     private JButton mButtonSave;
     private JProgressBar mProgressBar;
-    private JComboBox<Member> mLeader;
+    private JComboBox mLeader;
 
     public ViewGenerationNew(FrameHome home) {
         mHome = home;
@@ -51,7 +51,7 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
         JLabel lblLder = new JLabel("L\u00EDder");
         lblLder.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mLeader = new JComboBox<Member>();
+        mLeader = new JComboBox();
         mLeader.setFont(new Font("Arial", Font.PLAIN, 14));
 
         mButtonSave = new JButton("Criar");
@@ -78,33 +78,33 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(mProgressBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
-                        .addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
-                        .addComponent(lblNewLabel_1, Alignment.LEADING)
-                        .addComponent(mName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
-                        .addComponent(lblLder, Alignment.LEADING)
-                        .addComponent(mLeader, Alignment.LEADING, 0, 880, Short.MAX_VALUE)
-                        .addComponent(mButtonSave, Alignment.LEADING))
+                        .addComponent(mProgressBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addComponent(lblLder, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mLeader, Alignment.LEADING, 0, 430, Short.MAX_VALUE)
+                        .addComponent(mButtonSave, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
         groupLayout.setVerticalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
-                    .addContainerGap()
+                    .addGap(10)
                     .addComponent(lblNewLabel)
-                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                    .addGap(15)
                     .addComponent(lblNewLabel_1)
-                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGap(5)
                     .addComponent(mName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGap(10)
                     .addComponent(lblLder)
-                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGap(5)
                     .addComponent(mLeader, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(18)
+                    .addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                     .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
-                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(426, Short.MAX_VALUE))
+                    .addGap(5)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+                    .addGap(10))
         );
         setLayout(groupLayout);
 
