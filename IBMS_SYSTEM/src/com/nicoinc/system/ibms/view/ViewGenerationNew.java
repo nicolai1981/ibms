@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
 import com.nicoinc.system.ibms.command.CommandListener;
@@ -77,13 +76,13 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
             groupLayout.createParallelGroup(Alignment.TRAILING)
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-                        .addComponent(mProgressBar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                        .addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+                        .addComponent(mProgressBar, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mName, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addComponent(mName, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblLder, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mLeader, Alignment.LEADING, 0, 430, Short.MAX_VALUE)
+                        .addComponent(mLeader, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
                         .addComponent(mButtonSave, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap())
         );
@@ -100,11 +99,11 @@ public class ViewGenerationNew extends JPanel implements CommandListener {
                     .addComponent(lblLder)
                     .addGap(5)
                     .addComponent(mLeader, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                    .addGap(429)
                     .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
                     .addGap(5)
                     .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-                    .addGap(10))
+                    .addContainerGap(10, Short.MAX_VALUE))
         );
         setLayout(groupLayout);
 

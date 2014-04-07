@@ -1,9 +1,11 @@
 package com.nicoinc.system.ibms.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -14,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
@@ -40,6 +43,8 @@ public class ViewGenerationView extends JPanel {
     private DefaultListModel mLeaderListModel;
 
     public ViewGenerationView(Generation generation) {
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+
         JLabel lblGerao = new JLabel("Gera\u00E7\u00E3o");
         lblGerao.setFont(new Font("Arial", Font.PLAIN, 14));
 
@@ -48,6 +53,7 @@ public class ViewGenerationView extends JPanel {
 
         mLeader = new JLabel("-");
         mLeader.setFont(new Font("Arial", Font.BOLD, 14));
+        mLeader.setBorder(border);
 
         JLabel lblDataDeCriao = new JLabel("Data de Cria\u00E7\u00E3o");
         lblDataDeCriao.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -55,6 +61,7 @@ public class ViewGenerationView extends JPanel {
         mStartDate = new JLabel("DD/MM/AAAA");
         mStartDate.setHorizontalAlignment(SwingConstants.LEFT);
         mStartDate.setFont(new Font("Arial", Font.BOLD, 14));
+        mStartDate.setBorder(border);
 
         JLabel lblSituao = new JLabel("Situa\u00E7\u00E3o");
         lblSituao.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -62,13 +69,15 @@ public class ViewGenerationView extends JPanel {
         mStatus = new JLabel("-");
         mStatus.setHorizontalAlignment(SwingConstants.LEFT);
         mStatus.setFont(new Font("Arial", Font.BOLD, 14));
+        mStatus.setBorder(border);
 
         JLabel lblDataDeDesativao = new JLabel("Data de Desativa\u00E7\u00E3o");
         lblDataDeDesativao.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        mEndDate = new JLabel("DD/MM/AAAA");
+        mEndDate = new JLabel("-");
         mEndDate.setHorizontalAlignment(SwingConstants.LEFT);
         mEndDate.setFont(new Font("Arial", Font.BOLD, 14));
+        mEndDate.setBorder(border);
 
         JLabel lblTotal = new JLabel("Total de disc\u00EDpulos Ativos");
         lblTotal.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -76,6 +85,7 @@ public class ViewGenerationView extends JPanel {
         mGenerationCount = new JLabel("0");
         mGenerationCount.setHorizontalAlignment(SwingConstants.LEFT);
         mGenerationCount.setFont(new Font("Arial", Font.BOLD, 14));
+        mGenerationCount.setBorder(border);
 
         JLabel lblLderes = new JLabel("L\u00EDderes");
         lblLderes.setFont(new Font("Arial", Font.BOLD, 14));
@@ -155,9 +165,10 @@ public class ViewGenerationView extends JPanel {
         offList.setFont(new Font("Arial", Font.BOLD, 14));
         scrollPane_off.setViewportView(offList);
 
-        JLabel mName = new JLabel("DD/MM/AAAA");
+        JLabel mName = new JLabel(generation.mName);
         mName.setHorizontalAlignment(SwingConstants.LEFT);
         mName.setFont(new Font("Arial", Font.BOLD, 14));
+        mName.setBorder(border);
 
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
@@ -170,9 +181,9 @@ public class ViewGenerationView extends JPanel {
                                 .addComponent(mName, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblGerao, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
                             .addGap(10)
-                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                .addComponent(label, GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
-                                .addComponent(mLeader, GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                                .addComponent(label, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mLeader, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
                             .addGap(10))
                         .addGroup(groupLayout.createSequentialGroup()
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
@@ -190,47 +201,47 @@ public class ViewGenerationView extends JPanel {
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(lblTotal_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
-                                    .addComponent(mQtdMemberTotal, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mQtdMemberTotal, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
                                     .addComponent(lblMembros, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
-                                    .addComponent(mQtdMember, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mQtdMember, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
                                     .addComponent(lblNoMembros, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
-                                    .addComponent(mQtdMemberNot, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(mQtdMemberNot, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
                             .addGap(5)
-                            .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-                                .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                                .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(lblTotal_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
-                                    .addComponent(mQtdOffTotal, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mQtdOffTotal, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
                                     .addComponent(label_8, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
-                                    .addComponent(mQtdOffMember, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mQtdOffMember, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
                                     .addComponent(label_10, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
                                     .addGap(5)
-                                    .addComponent(mQtdOffMemberNot, GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                                    .addComponent(mQtdOffMemberNot, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
                                     .addPreferredGap(ComponentPlacement.RELATED))
-                                .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-                                    .addComponent(lblDesligados, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                                    .addGap(10))
-                                .addComponent(scrollPane_off, GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
+                                .addGroup(groupLayout.createSequentialGroup()
+                                    .addComponent(lblDesligados, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
+                                .addComponent(scrollPane_off, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE))
                             .addGap(10))
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-                                .addComponent(mStartDate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblDataDeCriao, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                            .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblDataDeCriao, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
                             .addGap(10)
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                                .addComponent(lblSituao, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                .addComponent(lblSituao, GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                                 .addComponent(mStatus, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
                             .addGap(10)
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
                                 .addComponent(mEndDate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblDataDeDesativao, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                                .addComponent(lblDataDeDesativao, GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
                             .addPreferredGap(ComponentPlacement.UNRELATED)
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                                 .addComponent(mGenerationCount, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
@@ -246,8 +257,8 @@ public class ViewGenerationView extends JPanel {
                         .addComponent(label, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
                     .addGap(5)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(mName, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mLeader))
+                        .addComponent(mName, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mLeader, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
                     .addGap(10)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblDataDeCriao, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
@@ -256,10 +267,10 @@ public class ViewGenerationView extends JPanel {
                         .addComponent(lblTotal, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
                     .addGap(5)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mStatus, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mEndDate, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mGenerationCount, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mStatus, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mEndDate, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mGenerationCount, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
                     .addGap(10)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblLderes, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
@@ -282,10 +293,10 @@ public class ViewGenerationView extends JPanel {
                         .addComponent(mQtdOffTotal, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblTotal_3, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
                     .addGap(5)
-                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(scrollPane_leader, GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
-                        .addComponent(scrollPane_member, GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
-                        .addComponent(scrollPane_off, GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE))
+                    .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE, false)
+                        .addComponent(scrollPane_leader, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scrollPane_member, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scrollPane_off, GroupLayout.PREFERRED_SIZE, 466, GroupLayout.PREFERRED_SIZE))
                     .addGap(10))
         );
         setLayout(groupLayout);

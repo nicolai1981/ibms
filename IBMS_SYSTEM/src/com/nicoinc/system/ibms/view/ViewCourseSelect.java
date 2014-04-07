@@ -30,6 +30,7 @@ import com.nicoinc.system.ibms.command.CourseUpdate;
 import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Course;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ViewCourseSelect extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -172,12 +173,12 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
             groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
-                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 934, Short.MAX_VALUE)
-                            .addGap(10)
+                            .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 965, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
                             .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
                                 .addComponent(mButtonNew, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
                                 .addComponent(mButtonEdit, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
@@ -194,11 +195,11 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
                     .addGap(10)
                     .addComponent(lblNewLabel)
                     .addGap(10)
-                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(mButtonNew, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mButtonNew, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
                             .addGap(5)
-                            .addComponent(mButtonEdit)
+                            .addComponent(mButtonEdit, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
                             .addGap(5)
                             .addComponent(mButtonEnable, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
                             .addGap(5)
@@ -209,9 +210,9 @@ public class ViewCourseSelect extends JPanel implements CommandListener {
                             .addComponent(mButtonStudent, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
                             .addGap(5)
                             .addComponent(mButtonTeacher, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
-                        .addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE))
-                    .addGap(10)
-                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 570, GroupLayout.PREFERRED_SIZE))
+                    .addGap(5)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
                     .addGap(10))
         );
         setLayout(groupLayout);

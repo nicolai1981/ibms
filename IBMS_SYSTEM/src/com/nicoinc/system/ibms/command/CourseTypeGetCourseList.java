@@ -41,6 +41,11 @@ public class CourseTypeGetCourseList extends Command {
                 }
                 course.mId = item.get("ID").getAsLong();
 
+                if (!item.has("VERSION")) {
+                    continue;
+                }
+                course.mVersion = item.get("VERSION").getAsInt();
+
                 if (!item.has("COURSE_TYPE_ID")) {
                     continue;
                 }

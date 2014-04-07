@@ -20,12 +20,14 @@ while ($resultArray) {
 	$id = $resultArray["_ID"];
 	$start_date = $resultArray["DATA_INICIAL"];
 	$end_date = $resultArray["DATA_FINAL"];
+	$version = $resultArray["VERSAO"];
 	$courseTypeId = $resultArray["FK_TIPO_CURSO"];
 	$result = $result
 			."{"
 			."\"ID\":".$id.","
 			."\"START_DATE\":"."\"".$start_date."\","
 			."\"END_DATE\":"."\"".$end_date."\","
+			."\"VERSION\":".$version.","
 			."\"COURSE_TYPE_ID\":".$courseTypeId
 			."}";
 

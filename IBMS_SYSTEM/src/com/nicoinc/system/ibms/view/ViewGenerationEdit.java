@@ -1,10 +1,12 @@
 package com.nicoinc.system.ibms.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -15,8 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.GenerationGetList;
@@ -25,6 +27,7 @@ import com.nicoinc.system.ibms.command.RequestResult;
 import com.nicoinc.system.ibms.main.Application;
 import com.nicoinc.system.ibms.model.Generation;
 import com.nicoinc.system.ibms.model.Member;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ViewGenerationEdit extends JPanel implements CommandListener {
     private static final SimpleDateFormat sDateFormatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -38,6 +41,8 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
     private Generation mGeneration;
 
     public ViewGenerationEdit(FrameHome home, Generation generation) {
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+
         mHome = home;
         mGeneration = generation;
 
@@ -82,6 +87,7 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
 
         mStartDate = new JLabel(sDateFormatter.format(mGeneration.mStartDate));
         mStartDate.setFont(new Font("Arial", Font.BOLD, 14));
+        mStartDate.setBorder(border);
 
         GroupLayout groupLayout = new GroupLayout(this);
         groupLayout.setHorizontalGroup(
@@ -89,39 +95,39 @@ public class ViewGenerationEdit extends JPanel implements CommandListener {
                 .addGroup(groupLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                        .addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                        .addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mName, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                        .addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mName, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblLder, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mLeaderList, 0, 430, Short.MAX_VALUE)
+                        .addComponent(mLeaderList, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblDataDaCriao, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE))
-                    .addContainerGap())
+                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         groupLayout.setVerticalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
                     .addGap(10)
                     .addComponent(lblNewLabel)
-                    .addGap(15)
+                    .addGap(10)
                     .addComponent(lblNewLabel_1)
-                    .addGap(5)
+                    .addGap(1)
                     .addComponent(mName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(10)
+                    .addGap(5)
                     .addComponent(lblLder)
-                    .addGap(5)
+                    .addGap(1)
                     .addComponent(mLeaderList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addGap(10)
-                    .addComponent(lblDataDaCriao)
                     .addGap(5)
-                    .addComponent(mStartDate)
-                    .addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                    .addComponent(lblDataDaCriao, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                    .addGap(1)
+                    .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                    .addGap(402)
                     .addComponent(mButtonSave)
                     .addGap(5)
                     .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-                    .addGap(10))
+                    .addContainerGap(10, Short.MAX_VALUE))
         );
         setLayout(groupLayout);
 

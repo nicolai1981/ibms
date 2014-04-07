@@ -74,46 +74,48 @@ public class ViewProfileChangePassword extends JPanel implements CommandListener
         mFieldCheckNewPwd.setColumns(10);
 
         GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.LEADING)
-                                        .addComponent(mFieldOldPwd, GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
-                                        .addComponent(lblNewLabel_1)
-                                        .addComponent(lblNovaSenha, GroupLayout.PREFERRED_SIZE, 76,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mFieldNewPwd, GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
-                                        .addComponent(mFieldCheckNewPwd, GroupLayout.DEFAULT_SIZE, 1020,
-                                                Short.MAX_VALUE).addComponent(mButtonSave)
-                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
-                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 1020, Short.MAX_VALUE)
-                                        .addComponent(lblConfirmeANova)).addContainerGap()));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblNewLabel)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addComponent(lblNewLabel_1)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mFieldOldPwd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addComponent(lblNovaSenha, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mFieldNewPwd, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addComponent(lblConfirmeANova, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(mFieldCheckNewPwd, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-                        .addGap(18)
-                        .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                GroupLayout.PREFERRED_SIZE).addContainerGap(359, Short.MAX_VALUE)));
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+                .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                        .addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNovaSenha, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mFieldCheckNewPwd, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblConfirmeANova, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mFieldOldPwd, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mFieldNewPwd, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap())
+                .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addGap(10)
+                    .addComponent(lblNewLabel)
+                    .addGap(10)
+                    .addComponent(lblNewLabel_1)
+                    .addGap(1)
+                    .addComponent(mFieldOldPwd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addGap(5)
+                    .addComponent(lblNovaSenha, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                    .addGap(5)
+                    .addComponent(mFieldNewPwd, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                    .addGap(5)
+                    .addComponent(lblConfirmeANova, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                    .addGap(1)
+                    .addComponent(mFieldCheckNewPwd, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                    .addGap(400)
+                    .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+                    .addGap(5)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(10, Short.MAX_VALUE))
+        );
         setLayout(groupLayout);
     }
 

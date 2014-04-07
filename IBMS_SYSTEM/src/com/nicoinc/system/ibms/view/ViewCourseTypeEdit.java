@@ -1,10 +1,12 @@
 package com.nicoinc.system.ibms.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -14,8 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import com.nicoinc.system.ibms.command.CommandListener;
 import com.nicoinc.system.ibms.command.CourseTypeGetList;
@@ -35,6 +37,8 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
     private CourseType mCourseType;
 
     public ViewCourseTypeEdit(FrameHome home, CourseType courseType) {
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+
         mHome = home;
         mCourseType = courseType;
 
@@ -72,41 +76,43 @@ public class ViewCourseTypeEdit extends JPanel implements CommandListener {
 
         mStartDate = new JLabel();
         mStartDate.setFont(new Font("Arial", Font.BOLD, 14));
+        mStartDate.setBorder(border);
         mStartDate.setText(sDateFormatter.format(mCourseType.mStartDate));
 
         GroupLayout groupLayout = new GroupLayout(this);
-        groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(
-                                groupLayout
-                                        .createParallelGroup(Alignment.LEADING)
-                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                                        .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                                        .addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 50,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mName, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                                        .addComponent(lblDataDaCriao, GroupLayout.PREFERRED_SIZE, 130,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 130,
-                                                GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 130,
-                                                GroupLayout.PREFERRED_SIZE)).addContainerGap()));
-        groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-                groupLayout
-                        .createSequentialGroup()
-                        .addGap(10)
-                        .addComponent(lblNewLabel)
-                        .addGap(15)
-                        .addComponent(lblNewLabel_1)
-                        .addGap(5)
-                        .addComponent(mName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                                GroupLayout.PREFERRED_SIZE).addGap(10).addComponent(lblDataDaCriao).addGap(5)
-                        .addComponent(mStartDate).addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                        .addComponent(mButtonSave).addGap(5)
-                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-                        .addGap(10)));
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                        .addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mName, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDataDaCriao, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mButtonSave, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+                .addGroup(groupLayout.createSequentialGroup()
+                    .addGap(10)
+                    .addComponent(lblNewLabel)
+                    .addGap(10)
+                    .addComponent(lblNewLabel_1)
+                    .addGap(1)
+                    .addComponent(mName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addGap(5)
+                    .addComponent(lblDataDaCriao)
+                    .addGap(1)
+                    .addComponent(mStartDate, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                    .addGap(448)
+                    .addComponent(mButtonSave)
+                    .addGap(5)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(10, Short.MAX_VALUE))
+        );
         setLayout(groupLayout);
     }
 

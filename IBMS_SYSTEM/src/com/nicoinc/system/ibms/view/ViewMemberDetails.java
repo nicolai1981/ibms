@@ -1,11 +1,13 @@
 package com.nicoinc.system.ibms.view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -17,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
 
 import com.nicoinc.system.ibms.command.CommandListener;
@@ -87,6 +90,8 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
     private JScrollPane scrollPane_4;
 
     public ViewMemberDetails(Member member) {
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -105,12 +110,14 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
 
         mName = new JLabel("-");
         mName.setFont(new Font("Arial", Font.BOLD, 14));
+        mName.setBorder(border);
 
         lblDataNasc = new JLabel("Data Nasc.");
         lblDataNasc.setFont(new Font("Arial", Font.BOLD, 14));
 
         mBirthday = new JLabel("-");
         mBirthday.setFont(new Font("Arial", Font.BOLD, 14));
+        mBirthday.setBorder(border);
 
         lblSexo = new JLabel("Sexo");
         lblSexo.setFont(new Font("Arial", Font.BOLD, 14));
@@ -129,18 +136,23 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
 
         mGender = new JLabel("-");
         mGender.setFont(new Font("Arial", Font.BOLD, 14));
+        mGender.setBorder(border);
 
         mBlood = new JLabel("-");
         mBlood.setFont(new Font("Arial", Font.BOLD, 14));
+        mBlood.setBorder(border);
 
         mMaritial = new JLabel("DESQUITADO");
         mMaritial.setFont(new Font("Arial", Font.BOLD, 14));
+        mMaritial.setBorder(border);
 
         mRG = new JLabel("000.000.000-0");
         mRG.setFont(new Font("Arial", Font.BOLD, 14));
+        mRG.setBorder(border);
 
         mCPF = new JLabel("000.000.000-00");
         mCPF.setFont(new Font("Arial", Font.BOLD, 14));
+        mCPF.setBorder(border);
         
         JLabel lblLider = new JLabel("L\u00EDder");
         lblLider.setFont(new Font("Arial", Font.BOLD, 14));
@@ -153,12 +165,15 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
         
         mLeader = new JLabel("-");
         mLeader.setFont(new Font("Arial", Font.BOLD, 14));
+        mLeader.setBorder(border);
         
         mGeneration = new JLabel("-");
         mGeneration.setFont(new Font("Arial", Font.BOLD, 14));
+        mGeneration.setBorder(border);
         
         mMobile = new JLabel("(19) 99999-9999");
         mMobile.setFont(new Font("Arial", Font.BOLD, 14));
+        mMobile.setBorder(border);
         
         lblTelResidencial = new JLabel("Tel Residencial");
         lblTelResidencial.setFont(new Font("Arial", Font.BOLD, 14));
@@ -171,12 +186,15 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
         
         mPhoneHome = new JLabel("(19) 99999-9999");
         mPhoneHome.setFont(new Font("Arial", Font.BOLD, 14));
+        mPhoneHome.setBorder(border);
         
         mPhoneWork = new JLabel("(19) 99999-9999");
         mPhoneWork.setFont(new Font("Arial", Font.BOLD, 14));
+        mPhoneWork.setBorder(border);
         
         mEmail = new JLabel("-");
         mEmail.setFont(new Font("Arial", Font.BOLD, 14));
+        mEmail.setBorder(border);
         
         lblEndereo = new JLabel("Endere\u00E7o");
         lblEndereo.setFont(new Font("Arial", Font.BOLD, 14));
@@ -195,18 +213,23 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
         
         mAddress = new JLabel("-");
         mAddress.setFont(new Font("Arial", Font.BOLD, 14));
+        mAddress.setBorder(border);
         
         mAddressExtra = new JLabel("-");
         mAddressExtra.setFont(new Font("Arial", Font.BOLD, 14));
+        mAddressExtra.setBorder(border);
         
         mDistrict = new JLabel("-");
         mDistrict.setFont(new Font("Arial", Font.BOLD, 14));
+        mDistrict.setBorder(border);
         
         mCity = new JLabel("-");
         mCity.setFont(new Font("Arial", Font.BOLD, 14));
+        mCity.setBorder(border);
         
         mCEP = new JLabel("-");
         mCEP.setFont(new Font("Arial", Font.BOLD, 14));
+        mCEP.setBorder(border);
         
         lblEntrada = new JLabel("Cadastro");
         lblEntrada.setFont(new Font("Arial", Font.BOLD, 14));
@@ -222,27 +245,33 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
         
         mStart = new JLabel("-");
         mStart.setFont(new Font("Arial", Font.BOLD, 14));
+        mStart.setBorder(border);
         
         mIsMember = new JLabel("-");
         mIsMember.setFont(new Font("Arial", Font.BOLD, 14));
+        mIsMember.setBorder(border);
         
         mMemberDate = new JLabel("-");
         mMemberDate.setFont(new Font("Arial", Font.BOLD, 14));
+        mMemberDate.setBorder(border);
         
         mMemberStartType = new JLabel("-");
         mMemberStartType.setFont(new Font("Arial", Font.BOLD, 14));
+        mMemberStartType.setBorder(border);
         
         lblDesativao = new JLabel("Gradua\u00E7\u00E3o");
         lblDesativao.setFont(new Font("Arial", Font.BOLD, 14));
         
         mGraduation = new JLabel("-");
         mGraduation.setFont(new Font("Arial", Font.BOLD, 14));
+        mGraduation.setBorder(border);
         
         lblDesativao_1 = new JLabel("Desativa\u00E7\u00E3o");
         lblDesativao_1.setFont(new Font("Arial", Font.BOLD, 14));
         
         mEnd = new JLabel("-");
         mEnd.setFont(new Font("Arial", Font.BOLD, 14));
+        mEnd.setBorder(border);
         
         JLabel lblHistricoLder = new JLabel("Hist\u00F3rico L\u00EDder");
         lblHistricoLder.setFont(new Font("Arial", Font.BOLD, 14));
@@ -285,7 +314,7 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                             .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                                        .addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
                                         .addComponent(mName, GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE))
                                     .addGap(5)
                                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
@@ -308,13 +337,14 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                                         .addGroup(groupLayout.createSequentialGroup()
                                             .addComponent(lblRg, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                                             .addGap(5)
-                                            .addComponent(lblCpf, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                            .addGap(10))
+                                            .addComponent(lblCpf, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE))
                                         .addGroup(groupLayout.createSequentialGroup()
                                             .addComponent(mRG, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                                             .addGap(5)
-                                            .addComponent(mCPF, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                            .addGap(10))))
+                                            .addComponent(mCPF, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)))
+                                    .addGap(10))
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
                                         .addComponent(mLeader, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -332,7 +362,8 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                                             .addGap(5)
                                             .addComponent(lblTelComercial, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                                             .addGap(5)
-                                            .addComponent(lblEmail, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
+                                            .addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
+                                            .addGap(0, 0, Short.MAX_VALUE))
                                         .addGroup(groupLayout.createSequentialGroup()
                                             .addComponent(mMobile, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                                             .addGap(5)
@@ -340,7 +371,8 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                                             .addGap(5)
                                             .addComponent(mPhoneWork, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                                             .addGap(5)
-                                            .addComponent(mEmail, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
+                                            .addComponent(mEmail, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
+                                            .addGap(0, 0, Short.MAX_VALUE)))
                                     .addGap(10))
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
@@ -355,7 +387,7 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                                             .addGap(5)
                                             .addComponent(mCity, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                             .addGap(5)
-                                            .addComponent(mCEP, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                            .addComponent(mCEP, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
                                         .addGroup(groupLayout.createSequentialGroup()
                                             .addComponent(lblComplemento, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
                                             .addGap(5)
@@ -363,8 +395,7 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                                             .addGap(5)
                                             .addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
                                             .addGap(5)
-                                            .addComponent(lblCep, GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                            .addGap(10))))
+                                            .addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
                                         .addGroup(groupLayout.createSequentialGroup()
@@ -391,20 +422,20 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                                         .addComponent(lblDesativao, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE))
                                     .addGap(5)
                                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                        .addComponent(mEnd, GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
-                                        .addComponent(lblDesativao_1, GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)))
+                                        .addComponent(mEnd, GroupLayout.PREFERRED_SIZE, 565, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblDesativao_1, GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)))
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(lblHistricoLder, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(10)
-                                    .addComponent(lblHistricoCurso, GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
+                                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                                    .addComponent(lblHistricoCurso, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(ComponentPlacement.UNRELATED)
-                                    .addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
+                                    .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
                                 .addGroup(groupLayout.createSequentialGroup()
                                     .addComponent(lblHistricoClula, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
-                                    .addGap(10)
-                                    .addComponent(lblHistricoEncontro, GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))))
+                                    .addPreferredGap(ComponentPlacement.UNRELATED)
+                                    .addComponent(lblHistricoEncontro, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))))
                         .addGroup(groupLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(lblHistricoMinistrio, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
@@ -412,16 +443,14 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                             .addContainerGap()
                             .addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(ComponentPlacement.UNRELATED)
-                            .addComponent(scrollPane_3, GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)))
+                            .addComponent(scrollPane_3, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(scrollPane_4, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(groupLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 1110, GroupLayout.PREFERRED_SIZE)))
                     .addContainerGap())
-                .addGroup(groupLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(mProgressBar, GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
-                    .addContainerGap())
-                .addGroup(groupLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(scrollPane_4, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(570, Short.MAX_VALUE))
         );
         groupLayout.setVerticalGroup(
             groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -435,15 +464,15 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                         .addComponent(lblDataNasc, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblCpf, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblRg, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addGap(5)
+                    .addGap(1)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(mName, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mBirthday, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mGender, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mBlood, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mMaritial, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mRG, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mCPF, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mName, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mBirthday, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mGender, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mBlood, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mMaritial, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mRG, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mCPF, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
                     .addGap(10)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblLider, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
@@ -452,14 +481,14 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                         .addComponent(lblTelResidencial, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblTelComercial, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addGap(5)
+                    .addGap(1)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(mLeader, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mGeneration, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mMobile, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mPhoneHome, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mPhoneWork, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mEmail, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mLeader, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mGeneration, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mMobile, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mPhoneHome, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mPhoneWork, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mEmail, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
                     .addGap(10)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblEndereo, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
@@ -467,13 +496,13 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                         .addComponent(lblCidade, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblCep, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblBairro, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addGap(5)
+                    .addGap(1)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(mAddress, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mAddressExtra, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mDistrict, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mCity, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mCEP, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mAddress, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mAddressExtra, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mDistrict, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mCity, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mCEP, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
                     .addGap(10)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblEntrada, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
@@ -482,19 +511,19 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                         .addComponent(lblComo, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblDesativao, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblDesativao_1, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addGap(5)
+                    .addGap(1)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(mStart, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mIsMember, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mMemberDate, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mMemberStartType, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mGraduation, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(mEnd, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mStart, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mIsMember, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mMemberDate, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mMemberStartType, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mGraduation, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mEnd, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
                     .addGap(10)
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                        .addComponent(lblHistricoCurso, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblHistricoLder, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addGap(5)
+                        .addComponent(lblHistricoLder, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblHistricoCurso, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+                    .addGap(1)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                         .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                         .addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
@@ -502,17 +531,17 @@ public class ViewMemberDetails extends JPanel implements CommandListener {
                     .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblHistricoClula, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblHistricoEncontro, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
-                    .addGap(5)
+                    .addGap(1)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                         .addGroup(groupLayout.createSequentialGroup()
                             .addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                             .addGap(10)
                             .addComponent(lblHistricoMinistrio, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
                         .addComponent(scrollPane_3, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
-                    .addGap(5)
-                    .addComponent(scrollPane_4, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+                    .addGap(1)
+                    .addComponent(scrollPane_4, GroupLayout.PREFERRED_SIZE, 96, GroupLayout.PREFERRED_SIZE)
                     .addGap(10)
-                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mProgressBar, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
                     .addGap(10))
         );
         setLayout(groupLayout);
